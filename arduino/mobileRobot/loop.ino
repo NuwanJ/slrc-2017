@@ -1,7 +1,4 @@
 int oldMode = mode;
-int i = 0, j = 0;
-int rnd = 0;
-
 
 void loop() {
   displayLoopStatus(mode);
@@ -14,7 +11,6 @@ void loop() {
 
       if (buttonStatus == 0 ) {
 
-     
       } else {
         delay(10);
       }

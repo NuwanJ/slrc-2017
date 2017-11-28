@@ -6,7 +6,6 @@
   --------------------------------------------------
 */
 
-
 void serialEvent() {
 
   while (Serial.available()) {

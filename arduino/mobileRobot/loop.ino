@@ -10,14 +10,14 @@ void loop() {
       buttonStatus = digitalRead(BUTTON_1);
 
       if (buttonStatus == 0 ) {
-
+        mode = TEST;
       } else {
         delay(10);
       }
       break;
 
 
-  
+
     //-------------------------------------------------------------------------------------------------------------- Test
     case TEST:
       test();
@@ -47,7 +47,7 @@ void displayLoopStatus(int mode) {
         Serial.println("BEGIN");
         break;
 
-        
+
       case TEST:
         Serial.println("TEST");
         break;

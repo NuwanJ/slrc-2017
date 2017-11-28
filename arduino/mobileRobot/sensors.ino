@@ -40,9 +40,11 @@ void sonarSensorBegin() {
 
   Serial.println(">> Sonar : Begin");
 
-  /*pinMode(PIN_TRIGGER, OUTPUT);
-    pinMode(PIN_ECHO, INPUT);
-    digitalWrite(PIN_TRIGGER, LOW);*/
+  for (int i = 0; i < NUM_SONAR; i++) {
+    pinMode(pinTrig[i], OUTPUT);
+    pinMode(pinEcho[i], INPUT);
+    digitalWrite(pinTrig[i], LOW);
+  }
 }
 
 
@@ -131,19 +133,19 @@ int readBoxColor() {
 }
 
 //-------------------------------------------------------------------------------------------------------------- readSonar
-int readSonar() {
-  
-  /*digitalWrite(PIN_TRIGGER, HIGH);
-  delayMicroseconds(20);
-  digitalWrite(PIN_TRIGGER, LOW);
+double readSonar(int sensor) {
 
-  duration = pulseIn(PIN_ECHO, HIGH, 30000); //30000 : timeout period
+  digitalWrite(pinTrig[sensor], HIGH);
+  delayMicroseconds(20);
+  digitalWrite(pinTrig[sensor], LOW);
+
+  duration = pulseIn(pinEcho[sensor], HIGH, 30000); //30000 : timeout period
   distance = duration / 58;
 
   if (distance > maxDistance) {
     //distance = maxDistance;
   }
-  return distance;*/
+  return distance;
 
 }
 
@@ -157,7 +159,7 @@ int readSonar() {
 
 
 
-//--- Private Functions ----------------------------------------------------------------------------------------------------------- 
+//--- Private Functions -----------------------------------------------------------------------------------------------------------
 
 int irSensorRead(int num) {
   int reading = analogRead(irPins[num]);

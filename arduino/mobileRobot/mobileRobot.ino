@@ -12,15 +12,20 @@ Adafruit_TCS34725 colorSensor = Adafruit_TCS34725(TCS34725_INTEGRATIONTIME_154MS
 volatile int mode = BEGIN;
 
 void setup() {
-  
+
   Serial.begin(115200);
   Serial.println(">> Robot: Begin");
-  
+
+
+  pinMode(BUTTON_1, INPUT_PULLUP);
+  pinMode(BUTTON_2, INPUT_PULLUP);
+  pinMode(BUTTON_3, INPUT_PULLUP);
+
   //beginDebugger();
-  //motorsBegin();
+  motorsBegin();
   //irSensorsBegin();
   //colorSensorBegin();
-  //sonarSensorBegin();
+  sonarSensorBegin();
 
 }
 
@@ -28,6 +33,12 @@ void setup() {
 
 void test() {
 
+  //motorWrite(100, 100);
 
+  Serial.print(readSonar(SONAR_1));
+  Serial.print("\t");
+  Serial.print(readSonar(SONAR_2));
+  Serial.println();
+  delay(500);
 }
 

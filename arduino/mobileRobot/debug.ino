@@ -1,3 +1,13 @@
+/*---------------------------------------------------------------------------
+  Functions
+    
+  void beginDebugger() 
+  void lcdBegin()
+  
+  void debugger(String txt)
+  void printArray(int [DEBUG_PORT | SERIAL_PORT], int* array, int length) 
+  void  lcdWrite(int line, String txt)
+---------------------------------------------------------------------------*/
 
 
 void beginDebugger() {
@@ -5,6 +15,7 @@ void beginDebugger() {
 
 }
 
+//-------------------------------------------------------------------------------------------------------------- Debugger
 void debugger(String txt) {
   Serial3.println(txt);
 }
@@ -24,7 +35,7 @@ void printArray(int port, int* arr, int n) {
       if ((i + 1) % 6 == 0) Serial3.println("");
     }
     Serial3.println("");
-    
+
   } else {
 
     for (int i = 0; i < n; i++) {
@@ -39,5 +50,18 @@ void printArray(int port, int* arr, int n) {
     }
     Serial.println("");
   }
+}
+
+//-------------------------------------------------------------------------------------------------------------- LCD Display
+void lcdBegin() {
+  lcd.begin(16, 2);
+  lcd.print("Robot : Begin");
+}
+
+void lcdWrite(int line, String txt) {
+  // Only first 16 letters will display
+  lcd.setCursor(0, line); //col, ro
+  lcd.print(txt);
+
 }
 

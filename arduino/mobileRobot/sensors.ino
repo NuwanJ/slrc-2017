@@ -1,22 +1,21 @@
-
-
-
-/****************************************************************************
+/*---------------------------------------------------------------------------
   Functions (public)
 
-  void    irSensorsBegin, colorSensorBegin sonarSensorBegin
+  void irSensorBegin()
+  void colorSensorBegin()
+  void sonarSensorBegin()
 
-  int     readIRSensors(*sensorValues)
-  String
-  int     getSonarDistance(sensorNo), readBoxColor()
+  int readIRSensors(*sensorValues)
+  int getSonarDistance(sensorNo)
+  int readBoxColor()              return [COLOR_RED,COLOR_GREEN,COLOR_BLUE]
 
   Functions (private)
 
   int   irSensorRead
-****************************************************************************/
+---------------------------------------------------------------------------*/
 
 
-void irSensorsBegin() {
+void irSensorBegin() {
 
   for (int i = 0; i < NUM_SENSORS; i++) {
     pinMode(irPins[i], INPUT);

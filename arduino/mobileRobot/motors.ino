@@ -1,16 +1,22 @@
-
-/****************************************************************************
+/*---------------------------------------------------------------------------
   Functions
 
-  motorsBegin()
-  motorWrite(left,right)
-  motorStop()
-  wait(duration)
-  calibrateSpeed()
+  void motorBegin()
 
-****************************************************************************/
+  void motorRight(int spd)
+  void motorLeft(int spd)
+  
+  void motorWrite(int leftSpd, int rightSpd)
+  void motorStop()
+  void motorWait(int duration)
 
-void motorsBegin() {
+  void motorRight(int spd)
+  void motorLeft(int spd)
+
+  void calibrateSpeed()
+---------------------------------------------------------------------------*/
+
+void motorBegin() {
 
   Serial.println(">> MotorControl : Begin");
 
@@ -101,11 +107,8 @@ void motorRight(int spd)
   motorWrite(spd, 0);
 }
 
-void wait() {
-  motorWrite(0, 0);
-}
 
-void wait(int d) {
+void motorWait(int d) {
   motorWrite(0, 0);
   delay(d);
 }

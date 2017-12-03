@@ -1,0 +1,118 @@
+*Pick And Place List
+*Company=
+*Author=
+*eMail=
+*
+*Project=mobile-main
+*Date=00:02:57
+*CreatedBy=Fritzing 0.9.3b.04.19.5c895d327c44a3114e5fcc9d8260daf0cbb52806
+*
+*
+*Coordinates in mm, always center of component
+*Origin 0/0=Lower left corner of PCB
+*Rotation in degree (0-360, math. pos.)
+*
+*No;Value;Package;X;Y;Rotation;Side;Name
+1;;;59.5797;-52.6963;-90;Bottom;Part1
+2;;THT;27.8297;-81.8641;0;Bottom;J39
+3;;tactile-pth-12mm;105.26;-14.4541;-90;Bottom;S9
+4;;THT;13.8661;-93.2877;-90;Bottom;R14
+5;;switch-spdt;105.3;-41.224;0;Bottom;S6
+6;;ksa_sealed_tac_switch;39.2597;-12.0141;-180;Bottom;S13
+7;;;98.9497;-116.154;0;Bottom;Jumper7
+8;470;THT;106.57;-127.584;-90;Bottom;R10
+9;;THT;119.27;-131.394;180;Bottom;J26
+10;;THT;88.7897;-119.964;0;Bottom;J37
+11;470;THT;78.6297;-128.854;0;Bottom;R12
+12;;THT;39.2597;-145.364;-90;Bottom;J49
+13;;THT;62.1197;-145.364;-90;Bottom;J46
+14;;THT;20.0296;-31.045;0;Bottom;J9
+15;;THT;29.0997;-53.9241;-90;Bottom;J40
+16;;THT;88.7897;-84.4041;0;Bottom;J38
+17;470;THT;44.3397;-128.854;0;Bottom;R8
+18;;THT;119.27;-42.4941;180;Bottom;J20
+19;;3 mm [THT];54.4999;-12.5931;180;Bottom;LED9
+20;;THT;92.5997;-20.9041;-90;Bottom;J44
+21;;THT;7.50974;-42.4941;0;Bottom;J22
+22;;;3.69974;-4.394;0;Bottom;Hole2
+23;;;112.285;-28.5241;0;Bottom;Jumper9
+24;470;THT;43.0697;-20.9041;0;Bottom;R17
+25;;3 mm [THT];86.2496;-126.965;0;Bottom;LED5
+26;;THT;39.2597;-147.904;-90;Bottom;J50
+27;;THT;65.9297;-142.824;-90;Bottom;J47
+28;;;35.4497;-114.884;0;Bottom;Jumper2
+29;;THT;93.8634;-109.81;90;Bottom;R3
+30;;3 mm [THT];18.9396;-126.965;0;Bottom;LED1
+31;;THT;112.92;-65.3541;0;Bottom;J29
+32;;ksa_sealed_tac_switch;26.5597;-12.0141;-180;Bottom;S12
+33;;THT;119.27;-14.5541;180;Bottom;J45
+34;;THT;105.3;-33.6041;-90;Bottom;J48
+35;;THT;37.9897;-50.1141;0;Bottom;J51
+36;;THT;116.73;-42.4941;0;Bottom;J21
+37;;;120.54;-4.394;0;Bottom;Hole1
+38;;THT;20.0297;-53.905;-6.36109e-15;Bottom;J8
+39;;3 mm [THT];64.6599;-12.5931;180;Bottom;LED10
+40;;THT;4.96974;-131.394;0;Bottom;J23
+41;;;110.38;-50.1141;0;Bottom;Hole10
+42;;3 mm [THT];48.1499;-12.5931;180;Bottom;LED8
+43;;3 mm [THT];36.7196;-126.965;0;Bottom;LED2
+44;;THT;49.4197;-90.7541;-90;Bottom;J16
+45;;THT;36.7197;-109.804;0;Bottom;J30
+46;;THT;12.5897;-62.8141;0;Bottom;J17
+47;;THT;7.50974;-131.394;0;Bottom;J24
+48;;;4.96973;-28.5241;0;Bottom;Hole5
+49;;;44.9747;-103.454;0;Bottom;Jumper4
+50;;THT;57.0334;-112.35;90;Bottom;R5
+51;;THT;29.0934;-109.81;90;Bottom;R2
+52;470;THT;93.8697;-128.854;0;Bottom;R11
+53;;THT;57.0397;-100.914;-90;Bottom;J13
+54;;tactile-pth-12mm;13.8197;-14.4539;-90;Bottom;S11
+55;;;4.96974;-51.3841;0;Bottom;Hole7
+56;470;THT;76.0897;-20.9041;180;Bottom;R13
+57;;THT;20.2097;-42.4941;-90;Bottom;L293D1
+58;470;THT;43.0697;-36.1441;0;Bottom;R18
+59;;;62.3737;-77.8382;0;Bottom;LCD1
+60;;THT;73.5497;-111.074;180;Bottom;J34
+61;470;THT;43.0697;-47.5741;0;Bottom;R20
+62;;ksa_sealed_tac_switch;92.5997;-12.0141;-180;Bottom;S8
+63;470;THT;15.1297;-127.584;-90;Bottom;R9
+64;220;THT;112.92;-85.6741;90;Bottom;R16
+65;;;120.54;-147.904;0;Bottom;Hole4
+66;;THT;49.4197;-111.074;180;Bottom;J35
+67;;;4.96974;-33.6041;0;Bottom;Hole6
+68;;3 mm [THT];53.2296;-126.965;0;Bottom;LED3
+69;;;24.0197;-116.154;0;Bottom;Jumper8
+70;470;THT;43.0697;-41.2241;0;Bottom;R19
+71;;THT;65.9234;-112.35;90;Bottom;R6
+72;;DIP (Dual Inline) [THT];79.8997;-114.884;0;Bottom;IC2
+73;;THT;12.5897;-72.9741;0;Bottom;J15
+74;;THT;4.96974;-42.4941;0;Bottom;J19
+75;;THT;86.2497;-109.804;0;Bottom;J36
+76;;;3.69974;-147.904;0;Bottom;Hole3
+77;;THT;34.1797;-119.964;0;Bottom;J31
+78;;THT;107.846;-93.2877;-90;Bottom;R15
+79;;THT;116.73;-131.394;0;Bottom;J25
+80;;;31.6397;-19.6341;0;Bottom;Jumper5
+81;;;22.7497;-95.1991;0;Bottom;Jumper6
+82;;THT;92.5997;-23.4441;-90;Bottom;J43
+83;;THT;51.9597;-119.964;0;Bottom;J32
+84;;THT;104.023;-109.81;90;Bottom;R4
+85;;;4.96974;-56.4641;0;Bottom;Hole8
+86;;THT;112.92;-71.7041;0;Bottom;J28
+87;;THT;95.3198;-52.6731;180;Bottom;J18
+88;;3 mm [THT];69.7396;-126.965;0;Bottom;LED4
+89;;THT;105.3;-66.6241;0;Bottom;J41
+90;;3 mm [THT];59.5799;-12.5931;180;Bottom;LED11
+91;;THT;73.5497;-93.2941;-90;Bottom;J52
+92;;THT;110.38;-122.504;0;Bottom;J27
+93;;THT;107.84;-85.6741;180;Bottom;J12
+94;;THT;71.0097;-119.964;0;Bottom;J33
+95;470;THT;29.0997;-128.854;0;Bottom;R7
+96;;3 mm [THT];102.76;-126.965;0;Bottom;LED6
+97;;THT;95.1397;-45.0341;90;Bottom;J10
+98;;3 mm [THT];71.0099;-12.5931;180;Bottom;LED7
+99;;;110.38;-55.1941;0;Bottom;Hole9
+100;;ksa_sealed_tac_switch;79.8997;-12.0141;0;Bottom;S10
+101;;DIP (Dual Inline) [THT];43.0697;-114.884;0;Bottom;IC1
+102;;THT;17.6634;-109.81;90;Bottom;R1
+103;;;86.2497;-114.884;0;Bottom;Jumper3

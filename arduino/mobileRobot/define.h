@@ -22,24 +22,26 @@ enum {BEGIN, TEST, BLUETOOTH};
 enum {eP, eI, eD, eMax, eBase, eDebug};
 
 #define DELAY_BUZZER 200
-
+#define DELAY_BLINK 200
 //-------------------------------------------------------------------------------------------------------------- Pin Mapping
 
-#define PIN_LED 13
+#define LED_GREEN 13
+#define LED_RED 11
 
-#define BUTTON_1 52
-#define BUTTON_2 53
-#define BUTTON_3 -1
-#define BUTTON_4 -1
+#define BUTTON_1 4
+#define BUTTON_2 3
+#define BUTTON_3 2
+#define BUTTON_4 A0
+#define BUTTON_5 A1
 
-#define PIN_BUZZER -1
+#define PIN_BUZZER 34
 
-#define rightMotor1 11
-#define rightMotor2 12
+#define rightMotor1 8
+#define rightMotor2 6
 #define rightMotorPWM 7
 
 #define leftMotor1 10
-#define leftMotor2 8
+#define leftMotor2 12
 #define leftMotorPWM 9
 
 //-------------------------------------------------------------------------------------------------------------- IR Sensors Array
@@ -50,7 +52,7 @@ enum {eP, eI, eD, eMax, eBase, eDebug};
 #define CENTER_EDGE_READING (NUM_SENSORS - 1) * 5
 
 unsigned int sensor_values[NUM_SENSORS];
-const unsigned int irPins[] = {A0, A1, A2, A3, A4, A5};
+const unsigned int irPins[] = {23, 25, 27, 49, 51, 53};
 
 boolean allOut = 0, allIn = 0;
 String irLineString = "000000";
@@ -82,8 +84,8 @@ int drift = 0;
 #define NUM_SONAR 4
 
 enum {SONAR_1, SONAR_2, SONAR_3, SONAR_4};
-const int pinTrig[] = { 5, 3, -1, -1};
-const int pinEcho[] = { 6, 4, -1, -1};
+const int pinTrig[] = { 31, 35, -1, -1};
+const int pinEcho[] = { 33, 37, -1, -1};
 
 double distance = 0, duration = 0;
 const int maxDistance = 100;

@@ -1,13 +1,13 @@
 /*---------------------------------------------------------------------------
   Functions
-    
-  void beginDebugger() 
+
+  void beginDebugger()
   void lcdBegin()
-  
+
   void debugger(String txt)
-  void printArray(int [DEBUG_PORT | SERIAL_PORT], int* array, int length) 
+  void printArray(int [DEBUG_PORT | SERIAL_PORT], int* array, int length)
   void  lcdWrite(int line, String txt)
----------------------------------------------------------------------------*/
+  ---------------------------------------------------------------------------*/
 
 
 void beginDebugger() {
@@ -55,13 +55,25 @@ void printArray(int port, int* arr, int n) {
 //-------------------------------------------------------------------------------------------------------------- LCD Display
 void lcdBegin() {
   lcd.begin(16, 2);
+  lcd.clear();
   lcd.print("Robot : Begin");
 }
 
 void lcdWrite(int line, String txt) {
   // Only first 16 letters will display
-  lcd.setCursor(0, line); //col, ro
+  lcd.clear();
+  lcd.setCursor(0, line); //col, row
   lcd.print(txt);
 
+}
+
+
+void lcdIRSensorUpdate() {
+  readIRSensors(sensor_values);
+  //Serial.println(irLineString);
+  lcd.clear();
+  lcd.setCursor(0, 1); //col, row
+  lcd.print("IR: " + irLineString);
+  delay(20);
 }
 

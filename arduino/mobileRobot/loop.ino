@@ -8,7 +8,9 @@ void loop() {
     //-------------------------------------------------------------------------------------------------------------- Begin
     case BEGIN:
       buttonStatus = digitalRead(BUTTON_1);
+      //Serial.println(analogRead(A1));
 
+      
       if (buttonStatus == 0 ) {
         mode = TEST;
       } else {
@@ -45,11 +47,13 @@ void displayLoopStatus(int mode) {
     switch (mode) {
       case BEGIN:
         Serial.println("BEGIN");
+        //lcdWrite(0,"Mode: Begin");
         break;
 
 
       case TEST:
         Serial.println("TEST");
+        lcdWrite(0,"Mode: Test");
         break;
     }
     Serial.println(F("--------------------------------------------------"));

@@ -10,38 +10,42 @@
 #include <LiquidCrystal.h>
 
 Adafruit_TCS34725 colorSensor = Adafruit_TCS34725(TCS34725_INTEGRATIONTIME_154MS, TCS34725_GAIN_1X);  // Integration=50, Grain [1,4]
-LiquidCrystal lcd(12, 11, 5, 4, 3, 2);    //RS,EN,D4,D5,D6,D7
+LiquidCrystal lcd(22, 26, 36, 38, 40, 42);    //RS,EN,D4,D5,D6,D7
 
 volatile int mode = BEGIN;
+
+
+const int PIN_RW = 24;
 
 void setup() {
 
   Serial.begin(115200);
   Serial.println(">> Robot: Begin");
 
+  pinMode(PIN_RW, OUTPUT);
+  digitalWrite(PIN_RW , LOW);
+
   pinMode(BUTTON_1, INPUT_PULLUP);
   pinMode(BUTTON_2, INPUT_PULLUP);
   pinMode(BUTTON_3, INPUT_PULLUP);
 
+  pinMode(LED_GREEN, OUTPUT);
+  pinMode(LED_RED, OUTPUT);
+  
   //beginDebugger();
   motorBegin();
   lcdBegin();
-  //irSensorBegin();
+  irSensorBegin();
   //colorSensorBegin();
   sonarSensorBegin();
   //beginDebugger();
+
 }
 
 
 
 void test() {
-
-  //motorWrite(100, 100);
-
-  Serial.print(readSonar(SONAR_1));
-  Serial.print("\t");
-  Serial.print(readSonar(SONAR_2));
-  Serial.println();
-  delay(500);
+beep(5);
+delay(2000);
 }
 

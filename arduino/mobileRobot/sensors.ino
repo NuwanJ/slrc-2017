@@ -161,7 +161,7 @@ double readSonar(int sensor) {
 //--- Private Functions -----------------------------------------------------------------------------------------------------------
 
 int irSensorRead(int num) {
-  int reading = analogRead(irPins[num]);
+  int reading = digitalRead(irPins[num]);
 
   reading = (reading > 512);
   if (lineType == WHITE) reading = 1 - reading;

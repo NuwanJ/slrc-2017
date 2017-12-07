@@ -1,5 +1,4 @@
 
-
 #define BLACK 0
 #define WHITE 1
 
@@ -16,23 +15,29 @@ int lineType =  WHITE;
 #define DEBUG_PORT 1
 
 // Modes
-enum {BEGIN, TEST, BLUETOOTH};
+enum {BEGIN, TEST, BLUETOOTH, MAZE_FOLLOW, WALL_FOLLOW, LINE_FOLLOW};
 
 // EEPROM
 enum {eP, eI, eD, eMax, eBase, eDebug};
 
-#define DELAY_BUZZER 200
+#define DELAY_BUZZER 100
 #define DELAY_BLINK 200
+
+//-------------------------------------------------------------------------------------------------------------- Define debug options
+
+//#define REALTIME_MOTOR_SPEEDS
+//#define DEBUG_MODE
+
 //-------------------------------------------------------------------------------------------------------------- Pin Mapping
 
 #define LED_GREEN 13
 #define LED_RED 11
 
-#define BUTTON_1 4
-#define BUTTON_2 3
-#define BUTTON_3 2
-#define BUTTON_4 A0
-#define BUTTON_5 A1
+#define BUTTON_0 4
+#define BUTTON_1 3
+#define BUTTON_2 2
+#define BUTTON_3 A0
+#define BUTTON_4 A1
 
 #define PIN_BUZZER 34
 

@@ -4,9 +4,13 @@
   void beep()
   void beep(int count)
 
+  void buttonRead(n)    n = [BUTTON_0,BUTTON_1,BUTTON_2,BUTTON_3,BUTTON_4]
+  
   void ledOb(n)         n = [LED_GREEN, LED_RED]
   void ledOff(n)        n = [LED_GREEN, LED_RED]
   void ledBlink(n,c)    n = [LED_GREEN, LED_RED], c = count
+
+  void knightRider()
   ---------------------------------------------------------------------------*/
 
 
@@ -22,6 +26,17 @@ void beep() {
 void beep(int count) {
   for (int i = 0; i < count; i++) {
     beep();
+  }
+}
+
+//-------------------------------------------------------------------------------------------------------------- Button Read
+
+int buttonRead(int btn) {
+
+  if (btn == BUTTON_3 || btn == BUTTON_4) {
+    return (analogRead(btn) == 0);
+  } else {
+    return (1 - digitalRead(btn));
   }
 }
 

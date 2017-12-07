@@ -25,13 +25,15 @@ void setup() {
   pinMode(PIN_RW, OUTPUT);
   digitalWrite(PIN_RW , LOW);
 
+  pinMode(BUTTON_0, INPUT_PULLUP);
   pinMode(BUTTON_1, INPUT_PULLUP);
   pinMode(BUTTON_2, INPUT_PULLUP);
-  pinMode(BUTTON_3, INPUT_PULLUP);
 
   pinMode(LED_GREEN, OUTPUT);
   pinMode(LED_RED, OUTPUT);
-  
+  pinMode(PIN_BUZZER, OUTPUT);
+
+  ledOn(LED_RED);
   //beginDebugger();
   motorBegin();
   lcdBegin();
@@ -40,12 +42,15 @@ void setup() {
   sonarSensorBegin();
   //beginDebugger();
 
+  ledOff(LED_RED);
 }
 
 
 
 void test() {
-beep(5);
-delay(2000);
+
+  motorWrite(60, 60);
+  //lcdMotorUpdate();
+  delay(1000);
 }
 

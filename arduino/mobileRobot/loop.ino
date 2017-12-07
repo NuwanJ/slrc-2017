@@ -7,18 +7,40 @@ void loop() {
 
     //-------------------------------------------------------------------------------------------------------------- Begin
     case BEGIN:
-      buttonStatus = digitalRead(BUTTON_1);
-      //Serial.println(analogRead(A1));
 
-      
-      if (buttonStatus == 0 ) {
+      if (buttonRead(BUTTON_0) == 1) {
+        // Button0 Option
+        delay(150);
         mode = TEST;
+
+      } else if (buttonRead(BUTTON_1) == 1) {
+        // Button1 Option
+        beep();
+        delay(150);
+        
+      } else if (buttonRead(BUTTON_3) == 1) {
+        // Button1 Option
+        mode = MAZE_FOLLOW;
+
+      } else if (buttonRead(BUTTON_4) == 1) {
+        // Button2 Option
+        mode = WALL_FOLLOW;
+
       } else {
         delay(10);
       }
       break;
 
+    //-------------------------------------------------------------------------------------------------------------- Explore the Maze
+    case MAZE_FOLLOW:
 
+      break;
+
+
+    //-------------------------------------------------------------------------------------------------------------- Follow the wall
+    case WALL_FOLLOW:
+
+      break;
 
     //-------------------------------------------------------------------------------------------------------------- Test
     case TEST:
@@ -46,14 +68,23 @@ void displayLoopStatus(int mode) {
     Serial.println(F("--------------------------------------------------"));
     switch (mode) {
       case BEGIN:
-        Serial.println("BEGIN");
+        Serial.println(F("BEGIN"));
         //lcdWrite(0,"Mode: Begin");
         break;
 
+      case MAZE_FOLLOW:
+        Serial.println(F(">>MazeFollow"));
+        lcdWrite(0, "Mode:MazeFollow");
+        break;
+
+      case WALL_FOLLOW:
+        Serial.println(F(">>WallFollow"));
+        lcdWrite(0, "Mode:WallFollow");
+        break;
 
       case TEST:
-        Serial.println("TEST");
-        lcdWrite(0,"Mode: Test");
+        Serial.println(F("TEST"));
+        lcdWrite(0, "Mode: Test");
         break;
     }
     Serial.println(F("--------------------------------------------------"));

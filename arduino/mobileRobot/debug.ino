@@ -6,18 +6,22 @@
 
   void debugger(String txt)
   void printArray(int [DEBUG_PORT | SERIAL_PORT], int* array, int length)
-  void  lcdWrite(int line, String txt)
+  void lcdWrite(int line, String txt)
+
+  void lcdIRSensorUpdate()
+  void lcdMotorUpdate()       Display Motor Speeds
   ---------------------------------------------------------------------------*/
 
 
 void beginDebugger() {
   Serial3.begin(115200);
-
+  delay(50);
 }
 
 //-------------------------------------------------------------------------------------------------------------- Debugger
 void debugger(String txt) {
   Serial3.println(txt);
+  delay(50);
 }
 
 void printArray(int port, int* arr, int n) {
@@ -50,6 +54,7 @@ void printArray(int port, int* arr, int n) {
     }
     Serial.println("");
   }
+  delay(50);
 }
 
 //-------------------------------------------------------------------------------------------------------------- LCD Display
@@ -57,6 +62,7 @@ void lcdBegin() {
   lcd.begin(16, 2);
   lcd.clear();
   lcd.print("Robot : Begin");
+  delay(50);
 }
 
 void lcdWrite(int line, String txt) {
@@ -67,13 +73,31 @@ void lcdWrite(int line, String txt) {
 
 }
 
-
 void lcdIRSensorUpdate() {
   readIRSensors(sensor_values);
   //Serial.println(irLineString);
   lcd.clear();
   lcd.setCursor(0, 1); //col, row
   lcd.print("IR: " + irLineString);
+  delay(20);
+}
+
+void lcdMotorUpdate() {
+
+  String temp = "";
+  lcd.clear();
+  lcd.setCursor(0, 1); //col, row
+  lcd.print("L:");
+
+  lcd.setCursor(3, 1);
+  lcd.print(leftSpd);
+
+  lcd.setCursor(8, 1);
+  lcd.print("R:");
+
+  lcd.setCursor(11, 1);
+  lcd.print(rightSpd);
+
   delay(20);
 }
 

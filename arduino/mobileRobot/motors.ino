@@ -5,7 +5,7 @@
 
   void motorRight(int spd)
   void motorLeft(int spd)
-  
+
   void motorWrite(int leftSpd, int rightSpd)
   void motorStop()
   void motorWait(int duration)
@@ -14,7 +14,7 @@
   void motorLeft(int spd)
 
   void calibrateSpeed()
----------------------------------------------------------------------------*/
+  ---------------------------------------------------------------------------*/
 
 void motorBegin() {
 
@@ -80,6 +80,11 @@ void motorWrite(int leftMotorSpeed, int rightMotorSpeed) {
   if (debug == true) {
     Serial.print(">> L:"); Serial.print(leftMotorSpeed); Serial.print(" R:"); Serial.println(rightMotorSpeed);
   }
+
+// Real time motor speed update to LCD Display
+#ifdef REALTIME_MOTOR_SPEEDS
+  lcdMotorUpdate();
+#endif
 }
 
 void motorStop() {

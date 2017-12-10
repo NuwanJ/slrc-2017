@@ -8,8 +8,9 @@
   void printArray(int [DEBUG_PORT | SERIAL_PORT], int* array, int length)
   void lcdWrite(int line, String txt)
 
-  void lcdIRSensorUpdate()
+  void lcdIRSensorUpdate()    Read and display IR sensor readings
   void lcdMotorUpdate()       Display Motor Speeds
+  void lcdMotorUpdate()       Measure & display sonar readings
   ---------------------------------------------------------------------------*/
 
 
@@ -97,6 +98,37 @@ void lcdMotorUpdate() {
 
   lcd.setCursor(11, 1);
   lcd.print(rightSpd);
+
+  delay(20);
+}
+
+void lcdSonarUpdate() {
+
+  for (int i = 0; i < 4; i++) {
+    sonarDist[i] = readSonar(i);
+  }
+
+  sonarDist[0] = readSonar(0);
+  sonarDist[1] = readSonar(1);
+
+  lcd.clear();
+
+  // Upper Right
+  lcd.setCursor(10, 0);     //16-(String(sonarDist[2]).length())
+  lcd.print(sonarDist[0]);
+  // Lowe Right
+  lcd.setCursor(10, 1);
+  lcd.print(sonarDist[1]);
+
+  sonarDist[3] = readSonar(3);
+  sonarDist[4] = readSonar(4);
+  // Upper Left
+  lcd.setCursor(0, 0);
+  lcd.print(sonarDist[2]);
+
+  //Lower Left
+  lcd.setCursor(0, 1);
+  lcd.print(sonarDist[3]);
 
   delay(20);
 }

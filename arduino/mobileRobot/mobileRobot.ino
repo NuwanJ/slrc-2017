@@ -49,8 +49,10 @@ void setup() {
 
 void test() {
 
-  motorWrite(60, 60);
+  //motorWrite(60, 60);
   //lcdMotorUpdate();
-  delay(1000);
+
+  lcdSonarUpdate();
+  //delay(500);
 }
 

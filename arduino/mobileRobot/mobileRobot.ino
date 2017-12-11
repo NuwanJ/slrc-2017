@@ -34,11 +34,11 @@ void setup() {
   pinMode(PIN_BUZZER, OUTPUT);
 
   ledOn(LED_RED);
-  //beginDebugger();
+  beginDebugger();
   motorBegin();
   lcdBegin();
   irSensorBegin();
-  //colorSensorBegin();
+  colorSensorBegin();
   sonarSensorBegin();
   //beginDebugger();
 
@@ -51,8 +51,8 @@ void test() {
 
   //motorWrite(60, 60);
   //lcdMotorUpdate();
-
-  lcdSonarUpdate();
-  //delay(500);
+  debugger("Test");
+  //lcdSonarUpdate();
+  delay(500);
 }
 

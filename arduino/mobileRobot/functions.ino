@@ -34,7 +34,7 @@ void beep(int count) {
 int buttonRead(int btn) {
 
   if (btn == BUTTON_3 || btn == BUTTON_4) {
-    return (analogRead(btn) == 0);
+    return 0;//(analogRead(btn) == 0);
   } else {
     return (1 - digitalRead(btn));
   }

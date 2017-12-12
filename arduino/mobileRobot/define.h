@@ -27,7 +27,7 @@ enum {eP, eI, eD, eMax, eBase, eDebug};
 
 //#define REALTIME_MOTOR_SPEEDS
 //#define DEBUG_MODE
-
+//#define LCD_SERIAL_DEBUG
 //-------------------------------------------------------------------------------------------------------------- Pin Mapping
 
 #define LED_GREEN 13
@@ -45,8 +45,8 @@ enum {eP, eI, eD, eMax, eBase, eDebug};
 #define rightMotor2 6
 #define rightMotorPWM 7
 
-#define leftMotor1 10
-#define leftMotor2 12
+#define leftMotor1 12
+#define leftMotor2 10
 #define leftMotorPWM 9
 
 //-------------------------------------------------------------------------------------------------------------- IR Sensors Array

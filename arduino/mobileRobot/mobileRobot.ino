@@ -37,10 +37,9 @@ void setup() {
   beginDebugger();
   motorBegin();
   lcdBegin();
-  irSensorBegin();
-  colorSensorBegin();
+  //irSensorBegin();
+  //colorSensorBegin();
   sonarSensorBegin();
-  //beginDebugger();
 
   ledOff(LED_RED);
 }
@@ -49,10 +48,16 @@ void setup() {
 
 void test() {
 
-  //motorWrite(60, 60);
+  /*motorWrite(160, 160);
+  delay(500);
+
+  motorWrite(-160, -160);
+  delay(500);
+  */
+  
   //lcdMotorUpdate();
-  debugger("Test");
-  //lcdSonarUpdate();
+  //debugger("Test");
+  lcdSonarUpdate();
   delay(500);
 }
 

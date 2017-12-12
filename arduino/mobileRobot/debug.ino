@@ -124,11 +124,11 @@ void lcdSonarUpdate() {
   sonarDist[4] = readSonar(4);
   // Upper Left
   lcd.setCursor(0, 0);
-  lcd.print(sonarDist[2]);
+  lcd.print(sonarDist[3]);
 
   //Lower Left
   lcd.setCursor(0, 1);
-  lcd.print(sonarDist[3]);
+  lcd.print(sonarDist[2]);
 
   delay(20);
 }

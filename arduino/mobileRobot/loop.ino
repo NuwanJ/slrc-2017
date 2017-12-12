@@ -8,6 +8,8 @@ void loop() {
     //-------------------------------------------------------------------------------------------------------------- Begin
     case BEGIN:
 
+      //knightRider();
+
       if (buttonRead(BUTTON_0) == 1) {
         // Button0 Option
         delay(150);
@@ -17,7 +19,7 @@ void loop() {
         // Button1 Option
         beep();
         delay(150);
-        
+
       } else if (buttonRead(BUTTON_3) == 1) {
         // Button1 Option
         mode = MAZE_FOLLOW;
@@ -45,8 +47,6 @@ void loop() {
     //-------------------------------------------------------------------------------------------------------------- Test
     case TEST:
       test();
-      delay(2000);
-
       break;
 
   }

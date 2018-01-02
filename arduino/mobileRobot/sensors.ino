@@ -60,7 +60,6 @@ int readIRSensors(unsigned int *sensor_values) {
 
   for (int i = 0; i < NUM_SENSORS; i++) {
     value = irSensorRead(i);
-
     sensor_values[i] = value;
     weight += value * (i * 10);
     sum += value;
@@ -161,8 +160,8 @@ double readSonar(int sensor) {
 int irSensorRead(int num) {
   int reading = digitalRead(irPins[num]);
 
-  reading = (reading > 512);
-  if (lineType == WHITE) reading = 1 - reading;
+  //reading = (reading > 512); //For analog mode
+  if (lineType == BLACK) reading = 1 - reading;
 
   //reading = reading; //BLACK=0, WHITE=1
   return reading;

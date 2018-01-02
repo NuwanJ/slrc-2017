@@ -37,7 +37,7 @@ void setup() {
   beginDebugger();
   motorBegin();
   lcdBegin();
-  //irSensorBegin();
+  irSensorBegin();
   //colorSensorBegin();
   sonarSensorBegin();
 
@@ -57,7 +57,8 @@ void test() {
   
   //lcdMotorUpdate();
   //debugger("Test");
-  lcdSonarUpdate();
+  //lcdSonarUpdate();
+  lcdIRSensorUpdate();
   delay(500);
 }
 

@@ -4,7 +4,7 @@
 
 boolean debug = 0;
 int buttonStatus = 1;
-int lineType =  WHITE;
+int lineType =  BLACK;
 
 #define FRONT 8
 #define LEFT 4
@@ -57,7 +57,7 @@ enum {eP, eI, eD, eMax, eBase, eDebug};
 #define CENTER_EDGE_READING (NUM_SENSORS - 1) * 5
 
 unsigned int sensor_values[NUM_SENSORS];
-const unsigned int irPins[] = {23, 25, 27, 49, 51, 53};
+const unsigned int irPins[] = {53, 51, 49, 27, 25, 23}; // 53, 51, 49, 27, 25, 23 // 53, 51, 49, 27, 25, 23
 
 boolean allOut = 0, allIn = 0;
 String irLineString = "000000";

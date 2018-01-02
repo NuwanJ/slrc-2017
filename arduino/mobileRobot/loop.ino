@@ -18,6 +18,7 @@ void loop() {
       } else if (buttonRead(BUTTON_1) == 1) {
         // Button1 Option
         beep();
+        mode = MAZE_FOLLOW;
         delay(150);
 
       } else if (buttonRead(BUTTON_3) == 1) {
@@ -35,7 +36,7 @@ void loop() {
 
     //-------------------------------------------------------------------------------------------------------------- Explore the Maze
     case MAZE_FOLLOW:
-
+      mazeFollow();
       break;
 
 

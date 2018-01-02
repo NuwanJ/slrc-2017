@@ -1,0 +1,48 @@
+
+************************************
+* Mobile Robot                     *
+************************************
+
+------------------------------------
+ Line following Section 
+------------------------------------
+
+6 x IR Sensor readings (bool)
+1 x IR Sensor (bool)
+1 x TCS34725 RGB Color Sensor readings (int R,G,B, Intensity)
+
+
+
+------------------------------------
+ Wall following Section
+------------------------------------
+
+4 x Sonar Sensors (int)
+1 x Sonar Sensor (optional, int)
+
+
+-----------------------------------
+ Communication Protocol 
+-----------------------------------
+
+Baud rate : 115200
+Protocol  : UART
+Device    : HC-12 (Serial Port Communication)
+
+Need to send colors R,G,B to stationary robot
+
+
+
+
+
+************************************
+* Stationary Robot                 *
+************************************
+
+
+3 x Stepper Motors 
+GRBL Shield / Direct code to control motion
+UART Communication - HC-12
+
+
+

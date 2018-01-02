@@ -1,0 +1,15 @@
+
+HCSR04 Ultrasonic Sensor
+
+Working voltage	DC 5V
+Working current	15mA
+
+Max range	4m
+Min range		3cm
+Effectual Angle	<15°
+Resolution		0.3 cm
+Measuring Angle	30 degree
+
+Trigger Input Pulse width
+		10uS
+Dimension		45mm x 20mm x 15mm

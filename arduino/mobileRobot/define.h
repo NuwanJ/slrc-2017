@@ -17,7 +17,7 @@ int linePos = 0 ;
 
 // Modes
 enum {BEGIN, TEST, BLUETOOTH, MAZE_FOLLOW, WALL_FOLLOW, LINE_FOLLOW};
-enum {CCW,CW};
+enum {CCW, CW};
 // EEPROM
 enum {eP, eI, eD, eMax, eBase, eDebug};
 
@@ -89,7 +89,8 @@ int drift = 0;
 
 #define NUM_SONAR 4
 
-enum {SONAR_1, SONAR_2, SONAR_3, SONAR_4};
+enum {SONAR_LeftFront, SONAR_LeftBack, SONAR_RightFront, SONAR_RightBack};
+enum {LEFT_WALL, RIGHT_WALL};
 const int pinTrig[] = { 31, 35, 39, 43};
 const int pinEcho[] = { 33, 37, 41, 45};
 

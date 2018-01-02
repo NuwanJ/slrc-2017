@@ -5,6 +5,7 @@
 boolean debug = 0;
 int buttonStatus = 1;
 int lineType =  BLACK;
+int linePos = 0 ;
 
 #define FRONT 8
 #define LEFT 4
@@ -16,7 +17,7 @@ int lineType =  BLACK;
 
 // Modes
 enum {BEGIN, TEST, BLUETOOTH, MAZE_FOLLOW, WALL_FOLLOW, LINE_FOLLOW};
-
+enum {CCW,CW};
 // EEPROM
 enum {eP, eI, eD, eMax, eBase, eDebug};
 

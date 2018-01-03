@@ -19,7 +19,7 @@
 
 void mazeFollow() {
   readIRSensors(sensor_values);
-
+  Serial.println(irLineString);
   if (sensor_values[5] > 0) turnCW(-90);
   else if (arsum(sensor_values) == 0) {
     goBack();

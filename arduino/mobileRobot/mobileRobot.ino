@@ -13,13 +13,12 @@ LiquidCrystal lcd(22, 26, 36, 38, 40, 42);    //RS,EN,D4,D5,D6,D7
 
 volatile int mode = BEGIN;
 
-
 const int PIN_RW = 24;
 
 void setup() {
 
   Serial.begin(115200);
-  Serial.println(">> Robot: Begin");
+  Serial.println(">> Robot: Begin...");
 
   pinMode(PIN_RW, OUTPUT);
   digitalWrite(PIN_RW , LOW);
@@ -53,11 +52,10 @@ void test() {
   motorWrite(-160, -160);
   delay(500);
   */
-  
+
   //lcdMotorUpdate();
   //debugger("Test");
   lcdSonarUpdate();
   //lcdIRSensorUpdate();
   delay(500);
 }
-

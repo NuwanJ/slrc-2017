@@ -42,12 +42,12 @@ enum {eP, eI, eD, eMax, eBase, eDebug};
 
 #define PIN_BUZZER 34
 
-#define rightMotor1 8
-#define rightMotor2 6
+#define rightMotor1 6
+#define rightMotor2 8
 #define rightMotorPWM 7
 
-#define leftMotor1 12
-#define leftMotor2 10
+#define leftMotor1 10
+#define leftMotor2 112
 #define leftMotorPWM 9
 
 //-------------------------------------------------------------------------------------------------------------- IR Sensors Array

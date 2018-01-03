@@ -12,7 +12,7 @@
   Functions (private)
 
   int   irSensorRead
----------------------------------------------------------------------------*/
+  ---------------------------------------------------------------------------*/
 
 
 void irSensorBegin() {
@@ -139,12 +139,19 @@ double readSonar(int sensor) {
   delayMicroseconds(20);
   digitalWrite(pinTrig[sensor], LOW);
 
-  duration = pulseIn(pinEcho[sensor], HIGH, 10000); //30000 : timeout period(us)
-  distance = duration / 58;
+  duration = pulseIn(pinEcho[sensor], HIGH, 30000); //30000 : timeout period(us)
 
-  if (distance > maxDistance) {
-    //distance = maxDistance;
+  if(duration !=0){
+    distance = duration / 58;  
+  }else{
+    distance = 0;
   }
+  
+  /*distance = max(1, distance);
+  distance = min(100, distance);*/
+  /*if (distance > maxDistance) {
+    distance = 100;
+  }*/
   return distance;
 
 }

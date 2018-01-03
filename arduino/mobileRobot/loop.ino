@@ -27,7 +27,7 @@ void loop() {
         // Button1 Option
         mode = WALL_FOLLOW;
 
-      } else if (buttonRead(BUTTON_4) == 1) {
+      } else if (buttonRead(BUTTON_2) == 1) {
         // Button2 Option
          beep();
         mode = WALL_FOLLOW;

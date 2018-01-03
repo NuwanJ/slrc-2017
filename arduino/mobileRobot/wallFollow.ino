@@ -13,6 +13,7 @@
 
 
 int fitToLeft(int * diff, int baseSpeed) {
+
   int left, right;
   if (diff[3] < 0 && diff[2] > 0) { // front left is too close to wall. going forward may hit the wall. therefore spin on the spot
     left = -50;
@@ -52,17 +53,39 @@ int fitToLeft(int * diff, int baseSpeed) {
 
 
 int fitToRight(int * diff, int baseSpeed) {
-
+  motorWrite(0, 0);
 }
 
 int wallFollow(int baseSpeed) {
   int thresh = 5;
   int diff[4];
 
+  motorWrite(0, 0);
   for (int i = 0; i < 4; i++) {
     dist[i] = readSonar(i);
     diff[i] = dist[i] - thresh;
   }
+
+  //----------------------------------------------------
+  lcd.clear();
+
+  // Upper Right
+  lcd.setCursor(10, 0);     //16-(String(sonarDist[2]).length())
+  lcd.print(dist[0]);
+  // Lowe Right
+  lcd.setCursor(10, 1);
+  lcd.print(dist[1]);
+
+  // Upper Left
+  lcd.setCursor(0, 0);
+  lcd.print(dist[3]);
+
+  //Lower Left
+  lcd.setCursor(0, 1);
+  lcd.print(dist[2]);
+
+  //-------------------------------------------------------
+
 
   int cost[2]; // cost to fit the robot. 0th-left 1st-right
   cost[0] = abs(diff[2]) + abs(diff[3]);

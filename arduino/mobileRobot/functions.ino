@@ -166,13 +166,14 @@ void findShelf() {
 }
 
 
-void backToPath(){
-  
+void backToPath() {
+  //This is enough to take the 180 degree turn
+  alignToPath(CCW);
 }
 
 /*
-void backToPath() {
-  
+  void backToPath() {
+
 
   // Go little back before start turn
   motorWrite(-150, -150);
@@ -214,15 +215,76 @@ void backToPath() {
   motorWrite(150, 150);
   delay(100);
   motorStop();
-}*/
+  }*/
 
+void util_readSensorAndUpdateRejectListCW(int* sensor_vals, boolean[] reject) {
+  readIRSensors(sensor_vals);
+  if (sensor_vals[5] == 0) reject[5] = false;
+  for (int x = 4; x > -1; x--) {
+    if ( (!reject[x + 1]) and (sensor_vals[x] == 0)) {
+      reject[x] = false;
+    }
+  }
+}
+
+int util_nonRejectSum(int* array, boolean[] reject) {
+  int summ = 0;
+  for (int x = 0; x < 6; x++)if (!reject[x])summ += array[x];
+  return summ;
+}
+
+
+void alignToPath2(int dir) {
+  /*
+     New version, uses rejection techniques
+  */
+
+  if (dir == CW) {
+    boolean reject = {true, true, true, true, true, true};
+
+    util_readSensorAndUpdateRejectListCW(sensor_values,reject);
+    
+
+
+
+
+    readIRSensors(sensor_values);
+    //Turn until the sensor panel leaves the first line.
+    while (sensor_values[5] != 0) {
+      motorWrite(150, 0);
+      delay(20);
+      motorWrite(0, 0);
+      readIRSensors(sensor_values);
+    }
+    //Turn until the sensor panel finds the new line.
+    while (sensor_values[5] == 0) {
+      motorWrite(150, 0);
+      delay(20);
+      motorWrite(0, 0);
+      readIRSensors(sensor_values);
+    }
+
+    //Take the sensor panel a little more into the new line
+    motorWrite(150, 0);
+    delay(100); //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< Tune-able parameter
+    motorWrite(0, 0);
+
+    //Now align the robot to the line
+    for (int i = 0; i < 5; i++) {
+      int r = readIRSensors(sensor_values) - 25;
+      motorWrite(r, -1 * r);
+      delay((6 - i) * 10);
+    }
+    //The sensor panel is alligned to the line, move forward
+  }
+}
 void alignToPath(int dir) {
   /*
-   * Gihan's 03/01/2017 version
-   * This should be used to replace the Nuwan's IESL version
-   * 
-   * (Test this function for 90deg turns and remove this line)
-   */
+     Gihan's 03/01/2017 version
+     This should be used to replace the Nuwan's IESL version
+
+     (Test this function for 90deg turns and remove this line)
+  */
 
   if (dir == CW) {
     readIRSensors(sensor_values);
@@ -292,7 +354,7 @@ void alignToPath(int dir) {
 
 
 /*void alignToPath(int dir) {
- * Nuwan's IESL version,
+   Nuwan's IESL version,
 
   // Rotate CCW/CW until middle sensor left line
   linePos = readIRSensors(sensor_values);

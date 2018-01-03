@@ -5,7 +5,7 @@
   void beep(int count)
 
   void buttonRead(n)    n = [BUTTON_0,BUTTON_1,BUTTON_2,BUTTON_3,BUTTON_4]
-  
+
   void ledOb(n)         n = [LED_GREEN, LED_RED]
   void ledOff(n)        n = [LED_GREEN, LED_RED]
   void ledBlink(n,c)    n = [LED_GREEN, LED_RED], c = count
@@ -166,7 +166,13 @@ void findShelf() {
 }
 
 
+void backToPath(){
+  
+}
+
+/*
 void backToPath() {
+  
 
   // Go little back before start turn
   motorWrite(-150, -150);
@@ -208,10 +214,85 @@ void backToPath() {
   motorWrite(150, 150);
   delay(100);
   motorStop();
+}*/
+
+void alignToPath(int dir) {
+  /*
+   * Gihan's 03/01/2017 version
+   * This should be used to replace the Nuwan's IESL version
+   * 
+   * (Test this function for 90deg turns and remove this line)
+   */
+
+  if (dir == CW) {
+    readIRSensors(sensor_values);
+    //Turn until the sensor panel leaves the first line.
+    while (sensor_values[5] != 0) {
+      motorWrite(150, 0);
+      delay(20);
+      motorWrite(0, 0);
+      readIRSensors(sensor_values);
+    }
+    //Turn until the sensor panel finds the new line.
+    while (sensor_values[5] == 0) {
+      motorWrite(150, 0);
+      delay(20);
+      motorWrite(0, 0);
+      readIRSensors(sensor_values);
+    }
+
+    //Take the sensor panel a little more into the new line
+    motorWrite(150, 0);
+    delay(100); //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< Tune-able parameter
+    motorWrite(0, 0);
+
+    //Now align the robot to the line
+    for (int i = 0; i < 5; i++) {
+      int r = readIRSensors(sensor_values) - 25;
+      motorWrite(r, -1 * r);
+      delay((6 - i) * 10);
+    }
+    //The sensor panel is alligned to the line, move forward
+
+  }
+  else { //<<<<<<<<<<<<<<<<<<<<<<<<<CCW
+    readIRSensors(sensor_values);
+    //Turn until the sensor panel leaves the first line.
+    while (sensor_values[5] != 0) {
+      motorWrite(0, 150);
+      delay(20);
+      motorWrite(0, 0);
+      readIRSensors(sensor_values);
+    }
+    //Turn until the sensor panel finds the new line.
+    while (sensor_values[5] == 0) {
+      motorWrite(0, 150);
+      delay(20);
+      motorWrite(0, 0);
+      readIRSensors(sensor_values);
+    }
+
+    //Take the sensor panel a little more into the new line
+    motorWrite(0, 150);
+    delay(100); //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< Tune-able parameter
+    motorWrite(0, 0);
+
+    //Now align the robot to the line
+    for (int i = 0; i < 5; i++) {
+      int r = readIRSensors(sensor_values) - 25;
+      motorWrite(-1 * r, r);
+      delay((6 - i) * 10);
+    }
+    //The sensor panel is alligned to the line, move forward
+
+  }
 }
 
 
-void alignToPath(int dir) {
+
+
+/*void alignToPath(int dir) {
+ * Nuwan's IESL version,
 
   // Rotate CCW/CW until middle sensor left line
   linePos = readIRSensors(sensor_values);
@@ -246,7 +327,7 @@ void alignToPath(int dir) {
 
   motorStop();
 
-}
+  }*/
 
 
 

@@ -2,7 +2,7 @@
   Functions
 ---------------------------------------------------------------------------*/
 
-// Contributor : Gihan
+// Contributor :
 // Last Update : 27/11/2017
 
 /* Remarks ------------------------------------
@@ -10,6 +10,7 @@
 
 
 ----------------------------------------------*/
+
 
 int fitToLeft(int * dist, int baseSpeed){
   int left,right;
@@ -85,4 +86,3 @@ int wallFollow(int baseSpeed){
   lcd.print(right);
   
 }
-

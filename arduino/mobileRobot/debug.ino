@@ -62,7 +62,7 @@ void printArray(int port, int* arr, int n) {
 void lcdBegin() {
   lcd.begin(16, 2);
   lcd.clear();
-  lcd.print("Robot : Begin");
+  lcd.print("Robot : Begin..");
   delay(50);
 }
 
@@ -144,4 +144,3 @@ void lcdSonarUpdate() {
 
   delay(20);
 }
-

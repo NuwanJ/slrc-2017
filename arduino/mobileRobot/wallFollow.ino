@@ -12,7 +12,7 @@
 ----------------------------------------------*/
 
 
-int fitToLeft(int * dist, int baseSpeed){
+int fitToLeft(int * diff, int baseSpeed){
   int left,right;
   if (diff[3]<0 && diff[2]>0){ // front left is too close to wall. going forward may hit the wall. therefore spin on the spot
     left=-50;
@@ -35,11 +35,23 @@ int fitToLeft(int * dist, int baseSpeed){
     left = baseSpeed - val;
     right = baseSpeed + val;
   }
+  
+  lcd.clear();
+  lcd.setCursor(0, 0);
+  lcd.print(diff[3]);
+  lcd.setCursor(0, 1);
+  lcd.print(diff[2]);
+  
+  lcd.setCursor(0, 0);
+  lcd.print(left);
+  lcd.setCursor(10, 1);
+  lcd.print(right);
+  
   motorWrite(-1*left,-1*right);
 }
 
 
-int fitToRight(int * dist){
+int fitToRight(int * diff, int baseSpeed){
   
 }
 
@@ -57,32 +69,10 @@ int wallFollow(int baseSpeed){
   cost[1] = abs(diff[0]) + abs(diff[1]);
 
   if (cost[0] < cost[1]){ // easy to fit the robot to the left wall
-    fitToLeft(dist, baseSpeed);
+    fitToLeft(diff, baseSpeed);
   }else{ // easy to fit to right wall
-    fitToRight(dist, baseSpeed);
+    fitToRight(diff, baseSpeed);
   }
-
-
   
-  int val = diff * 20 + prev * 5;
-  prev = diff;
-  
-  if (reading < thresh){
-    val = -1*val;
-  }
-  left = baseSpeed - val;
-  right = baseSpeed + val;
-  if (left<0){left=0;}
-  if (right<0){right=0;}
-  motorWrite(-1*left,-1*right);
-  
-  
-  lcd.clear();
-  lcd.setCursor(0, 0);
-  lcd.print(reading);
-  lcd.setCursor(0, 1);
-  lcd.print(left);
-  lcd.setCursor(10, 1);
-  lcd.print(right);
   
 }

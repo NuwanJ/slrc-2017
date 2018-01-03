@@ -18,7 +18,9 @@ void loop() {
       } else if (buttonRead(BUTTON_1) == 1) {
         // Button1 Option
         beep();
+
         mode = MAZE_FOLLOW;
+
         delay(150);
 
       } else if (buttonRead(BUTTON_3) == 1) {
@@ -27,6 +29,7 @@ void loop() {
 
       } else if (buttonRead(BUTTON_4) == 1) {
         // Button2 Option
+         beep();
         mode = WALL_FOLLOW;
 
       } else {
@@ -42,7 +45,8 @@ void loop() {
 
     //-------------------------------------------------------------------------------------------------------------- Follow the wall
     case WALL_FOLLOW:
-
+      wallFollow(100); // give the base speed
+      delay(300);
       break;
 
     //-------------------------------------------------------------------------------------------------------------- Test

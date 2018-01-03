@@ -6,7 +6,7 @@
   void sonarSensorBegin()
 
   int readIRSensors(*sensorValues)
-  int getSonarDistance(sensorNo)
+  int readSonar(sensorNo)
   int readBoxColor()              return [COLOR_RED,COLOR_GREEN,COLOR_BLUE]
 
   Functions (private)

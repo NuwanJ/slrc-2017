@@ -56,8 +56,8 @@ void test() {
   
   //lcdMotorUpdate();
   //debugger("Test");
-  //lcdSonarUpdate();
-  lcdIRSensorUpdate();
+  lcdSonarUpdate();
+  //lcdIRSensorUpdate();
   delay(500);
 }
 

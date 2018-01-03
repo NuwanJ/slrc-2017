@@ -23,7 +23,7 @@ void loop() {
 
       } else if (buttonRead(BUTTON_3) == 1) {
         // Button1 Option
-        mode = MAZE_FOLLOW;
+        mode = WALL_FOLLOW;
 
       } else if (buttonRead(BUTTON_4) == 1) {
         // Button2 Option
@@ -83,6 +83,12 @@ void displayLoopStatus(int mode) {
         lcdWrite(0, "Mode:WallFollow");
         break;
 
+
+      case LINE_FOLLOW:
+
+        break;
+
+        
       case TEST:
         Serial.println(F("TEST"));
         lcdWrite(0, "Mode: Test");

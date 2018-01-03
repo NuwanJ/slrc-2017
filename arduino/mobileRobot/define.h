@@ -4,7 +4,7 @@
 
 boolean debug = 0;
 int buttonStatus = 1;
-int lineType =  BLACK;
+int lineType =  WHITE;
 int linePos = 0 ;
 
 #define FRONT 8
@@ -42,12 +42,12 @@ enum {eP, eI, eD, eMax, eBase, eDebug};
 
 #define PIN_BUZZER 34
 
-#define rightMotor1 8
-#define rightMotor2 6
+#define rightMotor1 6
+#define rightMotor2 8
 #define rightMotorPWM 7
 
-#define leftMotor1 12
-#define leftMotor2 10
+#define leftMotor1 10
+#define leftMotor2 12
 #define leftMotorPWM 9
 
 //-------------------------------------------------------------------------------------------------------------- IR Sensors Array
@@ -70,10 +70,11 @@ int frontSensor[] = {0, 0 , 0, 0};
 
 //-------------------------------------------------------------------------------------------------------------- Line Following
 
-float kP = 0, kD = 0, kI = 0;
+float kP = 10, kD = 3, kI = 0;
 
 int pos = CENTER_EDGE_READING;
-int error = 0, lastError = 0;
+int error = 0;
+int previousErrors[]={0,0,0,0,0,0,0,0,0,0}; //zero initializing with 10 elements
 
 int leftSpd = 0, rightSpd = 0;
 const double slowFactor = 0.5, speedFactor = 1;
@@ -81,7 +82,7 @@ const double slowFactor = 0.5, speedFactor = 1;
 int rightMotorSpeed = 0, leftMotorSpeed = 0;
 
 int maxSpeed = 250;
-int baseSpeed = 150;
+int baseSpeed = 130;
 
 int drift = 0;
 

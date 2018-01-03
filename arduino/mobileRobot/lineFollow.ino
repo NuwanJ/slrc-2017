@@ -21,7 +21,7 @@ void lineFollow() {
   pos = readIRSensors(sensor_values);
   error = (pos - CENTER_EDGE_READING);
 
-  if (error != lastError) {
+  if (!(error != previousErrors[0])) {
 
     if (debug == true) {
       Serial.println(irLineString);
@@ -39,21 +39,28 @@ void lineFollow() {
     int leftMotorSpeed = baseSpeed - motorSpeed;
 
     //Remapping motor speed
-    //motorWrite(leftMotorSpeed, rightMotorSpeed);
+    motorWrite(leftMotorSpeed, rightMotorSpeed);
 
-    lastError = error;
   }
+
+  for (int x = 9; x > 0; x--)previousErrors[x] = previousErrors[x - 1];
+  previousErrors[0] = error;
 
 }
 int calculatePID(int error) {
-
   int P = error * kP;
-  int I = I + (error * kI);
-  int D = (error - lastError) * kD;
 
-  lastError = error;
+  int I = 0;
+  for (int x = 0; x < 10; x++) I += previousErrors[x];
+  I *= kI;
 
-  return (P + I + D);
+  int D = (error - previousErrors[0]) * kD;
+
+  /*  for (int x = 9; x > 0; x--)previousErrors[x] = previousErrors[x - 1];
+    previousErrors[0] = error;*/
+  /*This part is removed assuming the calculatePID() is called only from within lineFollow() */
+
+  return (int)(P + I + D);
 
 }
 

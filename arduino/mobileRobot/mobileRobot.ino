@@ -1,5 +1,3 @@
-#include <Adafruit_CircuitPlayground.h>
-#include <Adafruit_Circuit_Playground.h>
 
 
 #include <Arduino.h>
@@ -52,16 +50,20 @@ void setup() {
 void test() {
 
   /*motorWrite(160, 160);
-  delay(500);
+    delay(500);
 
-  motorWrite(-160, -160);
-  delay(500);
+    motorWrite(-160, -160);
+    delay(500);
   */
-  
+
+  //goForward();
+  //mazeFollow();
+
+
   //lcdMotorUpdate();
   //debugger("Test");
   //lcdSonarUpdate();
-  lcdIRSensorUpdate();
+  //lcdIRSensorUpdate();
   delay(500);
 }
 

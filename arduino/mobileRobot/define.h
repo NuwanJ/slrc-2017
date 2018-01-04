@@ -50,7 +50,7 @@ enum {eP, eI, eD, eMax, eBase, eDebug};
 #define leftMotor2 12
 #define leftMotorPWM 9
 
-#define PIN_RW = 24; // For LCD Module
+#define PIN_RW 24 // For LCD Module
 
 //-------------------------------------------------------------------------------------------------------------- IR Sensors Array
 

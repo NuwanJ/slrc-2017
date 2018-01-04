@@ -18,6 +18,8 @@
 // 02/01/2017
 
 void mazeFollow() {
+
+  
   readIRSensors(sensor_values);
   Serial.println(irLineString);
   if (sensor_values[5] > 0) turnCW(-90);

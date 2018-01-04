@@ -61,37 +61,11 @@ void ledBlink(int n, int count) {
     ledBlink(n);
     delay(DELAY_BLINK);
   }
-
 }
 
 
-//-------------------------------------------------------------------------------------------------------------- Knight Rider : Just for fun
-void knightRider() {
-
-  lcdWrite(0, "  Knight Rider");
-
-  for (int i = 0; i < NUM_SENSORS; i++) {
-    pinMode(irPins[i], OUTPUT);
-    digitalWrite(irPins[i], LOW);
-  }
-
-  for (int i = 0; i < NUM_SENSORS; i++) {
-    digitalWrite(irPins[i], HIGH);
-    delay(200);
-    digitalWrite(irPins[i], LOW);
-  }
-
-  for (int i = 0; i <= NUM_SENSORS; i++) {
-    digitalWrite(irPins[NUM_SENSORS - i], HIGH);
-    delay(200);
-    digitalWrite(irPins[NUM_SENSORS - i], LOW);
-  }
-
-}
 
 ///----------------------------------------------------------------------------------------------------------- IESL Functions
-
-
 
 //  50 | 25 | 00
 
@@ -145,6 +119,7 @@ void rotate90(int dir) {
 
 // few functions used for IESL, copy paste if they are need to use
 #ifdef IESL
+
 void findShelf() {
 
   linePos = readIRSensors(sensor_values);
@@ -244,4 +219,34 @@ void alignToPath(int dir) {
   motorStop();
 
 }
+#endif
+
+
+#ifdef TEMP
+
+//-------------------------------------------------------------------------------------------------------------- Knight Rider : Just for fun
+void knightRider() {
+
+  lcdWrite(0, "  Knight Rider");
+
+  for (int i = 0; i < NUM_SENSORS; i++) {
+    pinMode(irPins[i], OUTPUT);
+    digitalWrite(irPins[i], LOW);
+  }
+
+  for (int i = 0; i < NUM_SENSORS; i++) {
+    digitalWrite(irPins[i], HIGH);
+    delay(200);
+    digitalWrite(irPins[i], LOW);
+  }
+
+  for (int i = 0; i <= NUM_SENSORS; i++) {
+    digitalWrite(irPins[NUM_SENSORS - i], HIGH);
+    delay(200);
+    digitalWrite(irPins[NUM_SENSORS - i], LOW);
+  }
+
+}
+
+
 #endif

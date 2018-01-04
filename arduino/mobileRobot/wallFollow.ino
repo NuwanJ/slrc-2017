@@ -94,3 +94,4 @@ int wallFollow(int baseSpeed) {
   } else { // easy to fit to right wall
     fitToRight(diff, baseSpeed);
   }
+}

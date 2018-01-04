@@ -117,78 +117,6 @@ void rotate90(int dir) {
 }
 
 
-// few functions used for IESL, copy paste if they are need to use
-#ifdef IESL
-
-void findShelf() {
-
-  linePos = readIRSensors(sensor_values);
-
-  // If the robot meets the end, condition satisfy
-  while  (sum < 4) { //((allIn || ((linePos >= 30 || linePos <= 20) && sum == 4)) == 0) {
-    lineFollow();
-    Serial.println(linePos);
-    delay(20);
-    linePos = readIRSensors(sensor_values);
-  }
-  motorStop();
-  motorWrite(-150, -150);
-  delay(70);
-  motorStop();
-}
-
-
-void backToPath() {
-  //This is enough to take the 180 degree turn
-  alignToPath(CCW);
-}
-
-/*
-  void backToPath() {
-
-
-  // Go little back before start turn
-  motorWrite(-150, -150);
-  delay(100);
-
-  // Rotate CCW until robot left line
-  linePos = readIRSensors(sensor_values);
-  while (allOut == 0) {
-    motorWrite(-1 * baseSpeed, baseSpeed);
-    delay(10);
-    linePos = readIRSensors(sensor_values);
-  }
-  motorStop();
-  //delay(10);
-
-  // Rotate CCW until robot centered to new line segment
-  linePos = readIRSensors(sensor_values);
-
-  while (linePos != CENTER_EDGE_READING) {
-    if (linePos <= CENTER_EDGE_READING) error = 20;
-    else error = linePos - CENTER_EDGE_READING;
-
-    rightMotorSpeed = baseSpeed + (error * 10);
-    leftMotorSpeed = baseSpeed - (error * 10);
-    motorWrite(leftMotorSpeed, rightMotorSpeed);
-    delay(10);
-    linePos = readIRSensors(sensor_values);
-  }
-  motorStop();
-
-  // Now go forward until robot meet the main line
-  linePos = readIRSensors(sensor_values);
-  while (leftEnd != 1 && rightEnd != 1) {
-    lineFollow();
-    delay(10);
-    linePos = readIRSensors(sensor_values);
-  }
-
-  motorWrite(150, 150);
-  delay(100);
-  motorStop();
-  }*/
-
 void util_readSensorAndUpdateRejectListCW(int* sensor_vals, boolean reject[], int dir) {
   if (dir == CW) {
     readIRSensors(sensor_vals);
@@ -221,7 +149,7 @@ int util_nonRejectSum(int* array, boolean reject[]) {
 void alignToPath2(int dir) {
   /*
      New version, uses rejection techniques
-     Use this to replace 
+     Use this to replace
             void alignToPath(int dir)
   */
 
@@ -346,72 +274,3 @@ void alignToPath(int dir) {
   }
 }
 
-
-
-
-/*void alignToPath(int dir) {
-   Nuwan's IESL version,
-
-  // Rotate CCW/CW until middle sensor left line
-  linePos = readIRSensors(sensor_values);
-
-  // Away from line before take the turn
-  if (allOut == false) {
-    motorWrite(150, 150);
-    delay(10);
-    linePos = readIRSensors(sensor_values);
-  }
-  // Rotate CCW/CW until robot centered to new line segment
-
-  linePos = readIRSensors(sensor_values);
-  while (linePos != CENTER_EDGE_READING) {
-    linePos = readIRSensors(sensor_values);
-
-    if (dir == CCW) {
-      if (linePos <= CENTER_EDGE_READING) error = 20;
-      else error = linePos - CENTER_EDGE_READING;
-
-    } else {
-      if (linePos <= CENTER_EDGE_READING) error = -20;
-      else error = -1 * (linePos - CENTER_EDGE_READING);
-
-    }
-    rightMotorSpeed = baseSpeed / 2 + (error * 10);
-    leftMotorSpeed = baseSpeed / 2 - (error * 10);
-
-    motorWrite(leftMotorSpeed, rightMotorSpeed);
-    delay(10);
-  }
-
-  motorStop();
-#endif
-
-
-#ifdef TEMP
-
-//-------------------------------------------------------------------------------------------------------------- Knight Rider : Just for fun
-void knightRider() {
-
-  lcdWrite(0, "  Knight Rider");
-
-  for (int i = 0; i < NUM_SENSORS; i++) {
-    pinMode(irPins[i], OUTPUT);
-    digitalWrite(irPins[i], LOW);
-  }
-
-  for (int i = 0; i < NUM_SENSORS; i++) {
-    digitalWrite(irPins[i], HIGH);
-    delay(200);
-    digitalWrite(irPins[i], LOW);
-  }
-
-  for (int i = 0; i <= NUM_SENSORS; i++) {
-    digitalWrite(irPins[NUM_SENSORS - i], HIGH);
-    delay(200);
-    digitalWrite(irPins[NUM_SENSORS - i], LOW);
-  }
-
-}
-
-
-#endif

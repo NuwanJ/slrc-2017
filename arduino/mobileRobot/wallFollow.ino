@@ -1,8 +1,7 @@
 /*---------------------------------------------------------------------------
   Functions
   ---------------------------------------------------------------------------*/
-
-// Contributor :
+// Contributor : Gihan
 // Last Update : 27/11/2017
 
 /* Remarks ------------------------------------
@@ -10,7 +9,6 @@
 
 
   ----------------------------------------------*/
-
 
 int fitToLeft(int * diff, int baseSpeed) {
 
@@ -96,6 +94,3 @@ int wallFollow(int baseSpeed) {
   } else { // easy to fit to right wall
     fitToRight(diff, baseSpeed);
   }
-
-
-}

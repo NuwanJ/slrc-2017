@@ -1,6 +1,7 @@
 int oldMode = mode;
 
 void loop() {
+
   displayLoopStatus(mode);
 
   switch (mode) {
@@ -8,7 +9,6 @@ void loop() {
     //-------------------------------------------------------------------------------------------------------------- Begin
     case BEGIN:
 
-      //knightRider();
 
       if (buttonRead(BUTTON_0) == 1) {
         // Button0 Option
@@ -38,7 +38,6 @@ void loop() {
         delay(10);
       }
       break;
-
     //-------------------------------------------------------------------------------------------------------------- Explore the Maze
     case MAZE_FOLLOW:
       mazeFollow();
@@ -50,6 +49,12 @@ void loop() {
       wallFollow(100); // give the base speed
       delay(300);
       break;
+
+    case LINE_FOLLOW:
+      lineFollow();
+      delay(50);
+      break;
+
 
     //-------------------------------------------------------------------------------------------------------------- Test
     case TEST:
@@ -82,8 +87,14 @@ void displayLoopStatus(int mode) {
       case MAZE_FOLLOW:
         Serial.println(F(">>MazeFollow"));
         lcdWrite(0, "Mode:MazeFollow");
+        while (true) {
+          mazeFollow();
+        }
         break;
-
+      case LINE_FOLLOW:
+        Serial.println(F(">>LineFollow"));
+        lcdWrite(0, "Mode:LineFollow");
+        break;
       case WALL_FOLLOW:
         Serial.println(F(">>WallFollow"));
         lcdWrite(0, "Mode:WallFollow");

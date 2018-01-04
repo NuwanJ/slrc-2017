@@ -4,7 +4,7 @@
 
 boolean debug = 0;
 int buttonStatus = 1;
-int lineType =  BLACK;
+int lineType =  WHITE;
 int linePos = 0 ;
 
 #define FRONT 8
@@ -17,7 +17,7 @@ int linePos = 0 ;
 
 // Modes
 enum {BEGIN, TEST, BLUETOOTH, MAZE_FOLLOW, WALL_FOLLOW, LINE_FOLLOW};
-enum {CCW,CW};
+enum {CCW, CW};
 // EEPROM
 enum {eP, eI, eD, eMax, eBase, eDebug};
 
@@ -47,7 +47,7 @@ enum {eP, eI, eD, eMax, eBase, eDebug};
 #define rightMotorPWM 7
 
 #define leftMotor1 10
-#define leftMotor2 112
+#define leftMotor2 12
 #define leftMotorPWM 9
 
 #define PIN_RW = 24; // For LCD Module
@@ -72,10 +72,11 @@ int frontSensor[] = {0, 0 , 0, 0};
 
 //-------------------------------------------------------------------------------------------------------------- Line Following
 
-float kP = 0, kD = 0, kI = 0;
+float kP = 10, kD = 3, kI = 0;
 
 int pos = CENTER_EDGE_READING;
-int error = 0, lastError = 0;
+int error = 0;
+int previousErrors[]={0,0,0,0,0,0,0,0,0,0}; //zero initializing with 10 elements
 
 int leftSpd = 0, rightSpd = 0;
 const double slowFactor = 0.5, speedFactor = 1;
@@ -83,7 +84,7 @@ const double slowFactor = 0.5, speedFactor = 1;
 int rightMotorSpeed = 0, leftMotorSpeed = 0;
 
 int maxSpeed = 250;
-int baseSpeed = 150;
+int baseSpeed = 130;
 
 int drift = 0;
 
@@ -95,7 +96,8 @@ int prev = 0;
 
 #define NUM_SONAR 4
 
-enum {SONAR_1, SONAR_2, SONAR_3, SONAR_4};
+enum {SONAR_LeftFront, SONAR_LeftBack, SONAR_RightFront, SONAR_RightBack};
+enum {LEFT_WALL, RIGHT_WALL};
 const int pinTrig[] = { 31, 35, 39, 43};
 const int pinEcho[] = { 33, 37, 41, 45};
 

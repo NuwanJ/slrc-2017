@@ -51,7 +51,7 @@ int frontSensor[] = {0, 0 , 0, 0};
 //-------------------------------------------------------------------------------------------------------------- Line Following
 
 float kP = 0, kD = 0, kI = 0;
-
+ 
 int pos = CENTER_EDGE_READING;
 int error = 0;
 int lastError = 0;
@@ -78,6 +78,6 @@ int baseSpeed = 150;
 
 int drift = 0;
 int linePos = 0;
-
-
-
+//-------------------------------------------------------------------------------------------------------------Serial
+#include <SoftwareSerial.h>
+SoftwareSerial mySerial(10, 11); // RX, TX This is the communication between the UNO and the GRBL

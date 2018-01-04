@@ -16,6 +16,7 @@
 
 void beginDebugger() {
   Serial3.begin(9600);
+  Serial3.println("Hello");
   delay(50);
 }
 

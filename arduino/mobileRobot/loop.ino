@@ -17,32 +17,37 @@ void loop() {
 
       } else if (buttonRead(BUTTON_1) == 1) {
         // Button1 Option
-        mode = LINE_FOLLOW;
+        beep();
+        mode = MAZE_FOLLOW;
         delay(150);
 
       } else if (buttonRead(BUTTON_2) == 1) {
         // Button1 Option
-        mode = MAZE_FOLLOW;
-
-      } else if (buttonRead(BUTTON_4) == 1) {
-        // Button2 Option
+        beep();
         mode = WALL_FOLLOW;
+        delay(150);
+
+      } else if (buttonRead(BUTTON_3) == 1) {   // Temporally not working
+        beep();
+
+      } else if (buttonRead(BUTTON_4) == 1) {   // Temporally not working
+        // Button2 Option
+        beep();
 
       } else {
         delay(10);
       }
       break;
-
     //-------------------------------------------------------------------------------------------------------------- Explore the Maze
     case MAZE_FOLLOW:
       mazeFollow();
-      
       break;
 
 
     //-------------------------------------------------------------------------------------------------------------- Follow the wall
     case WALL_FOLLOW:
-
+      wallFollow(100); // give the base speed
+      delay(300);
       break;
 
     case LINE_FOLLOW:
@@ -95,6 +100,12 @@ void displayLoopStatus(int mode) {
         lcdWrite(0, "Mode:WallFollow");
         break;
 
+
+      case LINE_FOLLOW:
+
+        break;
+
+        
       case TEST:
         Serial.println(F("TEST"));
         lcdWrite(0, "Mode: Test");

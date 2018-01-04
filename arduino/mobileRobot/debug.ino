@@ -10,7 +10,7 @@
 
   void lcdIRSensorUpdate()    Read and display IR sensor readings
   void lcdMotorUpdate()       Display Motor Speeds
-  void lcdMotorUpdate()       Measure & display sonar readings
+  void lcdSonarUpdate()       Measure & display sonar readings
   ---------------------------------------------------------------------------*/
 
 
@@ -63,9 +63,10 @@ void printArray(int port, int* arr, int n) {
 void lcdBegin() {
   lcd.begin(16, 2);
   lcd.clear();
-  lcd.print("Robot : Begin");
+  lcd.print("Robot : Begin..");
   delay(50);
 }
+
 
 void lcdWrite(int line, String txt) {
   // Only first 16 letters will display
@@ -74,6 +75,17 @@ void lcdWrite(int line, String txt) {
   lcd.print(txt);
 
 }
+
+
+
+void lcdWriteInt(int line, int txt) {
+  // Only first 16 letters will display
+  lcd.clear();
+  lcd.setCursor(0, line); //col, row
+  lcd.print(txt);
+
+}
+
 
 void lcdIRSensorUpdate() {
   readIRSensors(sensor_values);
@@ -133,4 +145,3 @@ void lcdSonarUpdate() {
 
   delay(20);
 }
-

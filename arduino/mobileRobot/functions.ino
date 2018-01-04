@@ -65,12 +65,6 @@ void ledBlink(int n, int count) {
 }
 
 
-
-
-
-
-
-
 //-------------------------------------------------------------------------------------------------------------- Knight Rider : Just for fun
 void knightRider() {
 
@@ -148,6 +142,9 @@ void rotate90(int dir) {
 
 }
 
+
+// few functions used for IESL, copy paste if they are need to use
+#ifdef IESL
 void findShelf() {
 
   linePos = readIRSensors(sensor_values);
@@ -412,8 +409,4 @@ void alignToPath(int dir) {
   }
 
   motorStop();
-
-  }*/
-
-
-
+#endif

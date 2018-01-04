@@ -18,6 +18,7 @@
 // 02/01/2017
 
 void mazeFollow() {
+
   pos = readIRSensors(sensor_values);
   error = (pos - CENTER_EDGE_READING);
   Serial.println(irLineString);

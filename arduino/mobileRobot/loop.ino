@@ -19,7 +19,7 @@ void loop() {
         // Button1 Option
         beep();
 
-        mode = MAZE_FOLLOW;
+        mode = WALL_FOLLOW;
 
         delay(150);
 

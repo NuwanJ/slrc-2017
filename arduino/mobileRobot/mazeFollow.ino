@@ -24,26 +24,23 @@ void mazeFollow() {
   Serial.println(irLineString);
 
   if (sensor_values[5] > 0) {
-    lcdWrite(0, "Maze:trnCW90");
+    lcdWrite(0, "Maze:trnCW");
     alignToPath2(CW);
   }
   else if (arsum(sensor_values) == 0) {
-    goBack();
+    //goBack();
     if (lastReading <= -15) {
-      lcdWrite(0, "Maze:turn90");
-      motorWrite(150, 150);
-      delay(100);
-      turnCW(90);
+      lcdWrite(0, "Maze:trnCCW");
+      alignToPath2(CCW);
     }
     else {
       lcdWrite(0, "Maze:turnBck");
-      alignToPath2(CW);
+      alignToPath2(CCW);
     }
   }
   else if (sensor_values[0] > 0) {
     lcdWrite(0, "Maze:GoFwd");
     goForward();
-    delay(100);
   }
   else {
     lcdWrite(0, "Maze:line");

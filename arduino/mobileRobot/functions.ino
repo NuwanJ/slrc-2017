@@ -154,11 +154,11 @@ void alignToPath2(int dir) {
   */
 
 
-  int motorSpeeds[] = {150, 0};
+  int motorSpeeds[] = {150, -150};
   int cornerSensor = 5;
   if (dir == CCW) {
-    motorSpeeds[0] = 0;
-    motorSpeeds[1] = 150;
+    motorSpeeds[0] *= -1;
+    motorSpeeds[1] *= -1;
     cornerSensor = 0;
   }
 
@@ -174,7 +174,7 @@ void alignToPath2(int dir) {
   }
 
   //Turn until the sensor panel finds the new line.
-  while (sensor_values[cornerSensor] == 0) {
+  while (util_nonRejectSum(sensor_values, reject) == 0) {
     motorWrite(motorSpeeds[0], motorSpeeds[1]);
     delay(20);
     motorWrite(0, 0);
@@ -187,17 +187,22 @@ void alignToPath2(int dir) {
   motorWrite(0, 0);
 
   //Now align the robot to the line
-  for (int i = 0; i < 5; i++) {
+  while (true) {
     util_readSensorAndUpdateRejectListCW(sensor_values, reject, dir);
-    float s = 0.0f;
+    int s = 0;
     for (int x = 0; x < 6; x++) {
       if (!reject[x]) {
-        s += (5 * (x - 2.5) * sensor_values[x]);
+        s += ( (10 * x - 25) * sensor_values[x]);
       }
     }
-    s *= 1.0; //<<<<<<<<<<<<<<<<<<<<<< A TUNE-ABLE PARAMETER
-    motorWrite(s * -1, s);
-    delay((6 - i) * 10);
+    if (abs(s) < 10) break;
+
+
+    motorWrite(120+2*s,120-2*s);
+    delay(20);
+    motorWrite(0,0);
+    delay(20);
+
   }
   //The sensor panel is alligned to the line, move forward
 

@@ -139,11 +139,12 @@ double readSonar(int sensor) {
   delayMicroseconds(20);
   digitalWrite(pinTrig[sensor], LOW);
 
-  duration = pulseIn(pinEcho[sensor], HIGH, 10000); //30000 : timeout period(us)
-  distance = duration / 58;
+  duration = pulseIn(pinEcho[sensor], HIGH, 30000); //30000 : timeout period(us)  
 
-  if (distance > maxDistance) {
-    //distance = maxDistance;
+  if (duration == 0){
+    distance = 1000;
+  }else{
+    distance = duration / 58;
   }
   return distance;
 

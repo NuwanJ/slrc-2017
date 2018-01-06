@@ -65,7 +65,7 @@ int readIRSensors(unsigned int *sensor_values) {
     sensor_values[i] = value;
     weight += value * (i * 10);
     sum += value;
-    irLineString = (String)value + " " + irLineString;
+    irLineString = irLineString + " " + (String)value;
   }
 
   if (sum == NUM_SENSORS) allIn = true;
@@ -141,17 +141,17 @@ double readSonar(int sensor) {
 
   duration = pulseIn(pinEcho[sensor], HIGH, 30000); //30000 : timeout period(us)
 
-  if(duration !=0){
-    distance = duration / 58;  
-  }else{
+  if (duration != 0) {
+    distance = duration / 58;
+  } else {
     distance = 0;
   }
-  
+
   /*distance = max(1, distance);
-  distance = min(100, distance);*/
+    distance = min(100, distance);*/
   /*if (distance > maxDistance) {
     distance = 100;
-  }*/
+    }*/
   return distance;
 
 }

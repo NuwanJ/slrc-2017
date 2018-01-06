@@ -59,6 +59,13 @@ void printArray(int port, int* arr, int n) {
   delay(50);
 }
 
+void printArray(int port, boolean arr[], int n) {
+  for (int i = 0; i < n; i++) {
+    Serial.print(arr[i]);
+  }
+  delay(50);
+}
+
 //-------------------------------------------------------------------------------------------------------------- LCD Display
 void lcdBegin() {
   lcd.begin(16, 2);
@@ -68,7 +75,7 @@ void lcdBegin() {
 }
 
 
-void lcdWrite(int line, String txt) {
+void lcdWrite0(int line, String txt) {
   // Only first 16 letters will display
   lcd.clear();
   lcd.setCursor(0, line); //col, row
@@ -76,7 +83,25 @@ void lcdWrite(int line, String txt) {
 
 }
 
+void lcdWrite(int line, String txt) {
+  // Only first 16 letters will display
+  lcd.clear();
+  lcd.setCursor(0, line); //col, row
+  lcd.print("               ");
+  lcd.print(txt);
+  delay(15);
+}
 
+/*void lcdPrintln(String line1, String line2) {
+  // Only first 16 letters will display
+  lcd.clear();
+  lcd.setCursor(0, line1); //col, row
+  lcd.print(line1);
+
+  lcd.setCursor(1, line2); //col, row
+  lcd.print(line2);
+  delay(15);
+  }*/
 
 void lcdWriteInt(int line, int txt) {
   // Only first 16 letters will display

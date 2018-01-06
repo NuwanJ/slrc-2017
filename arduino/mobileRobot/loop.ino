@@ -95,7 +95,7 @@ void displayLoopStatus(int mode) {
         Serial.println(F(">>LineFollow"));
         lcdWrite(0, "Mode:LineFollow");
         lineFollow();
-        
+
         break;
 
       case WALL_FOLLOW:

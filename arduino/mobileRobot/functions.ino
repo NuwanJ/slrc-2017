@@ -10,7 +10,11 @@
   void ledOff(n)        n = [LED_GREEN, LED_RED]
   void ledBlink(n,c)    n = [LED_GREEN, LED_RED], c = count
 
-  void knightRider()
+  void util_readSensorAndUpdateRejectListCW(int* sensor_vals, boolean reject[], int dir)
+  void pr(int *sensor_values, boolean reject[])
+  int util_nonRejectSum(int* array, boolean reject[])
+  int alignToPath(int dir)
+  
   ---------------------------------------------------------------------------*/
 
 
@@ -69,53 +73,6 @@ void ledBlink(int n, int count) {
 
 //  50 | 25 | 00
 
-void rotate90(int dir) {
-
-  // Rotate CCW/CW until middle sensor left line
-  linePos = readIRSensors(sensor_values);
-
-  if (dir == CCW) {    // 25 -> 0 -> 50
-    while (linePos <= CENTER_EDGE_READING) {
-      motorWrite( -1 * baseSpeed, baseSpeed);
-      linePos = readIRSensors(sensor_values);
-      delay(10);
-    }
-  } else {             // 25 -> 50 -> 00
-    while (linePos >= CENTER_EDGE_READING) {
-      motorWrite(baseSpeed, -1 * baseSpeed);
-      linePos = readIRSensors(sensor_values);
-      delay(10);
-    }
-  }
-  motorStop();
-  delay(10);
-
-  // Rotate CCW/CW until robot centered to new line segment
-
-  linePos = readIRSensors(sensor_values);
-  while (linePos != CENTER_EDGE_READING) {
-    linePos = readIRSensors(sensor_values);
-
-    if (dir == CCW) {
-      if (linePos <= CENTER_EDGE_READING) error = 20;
-      else error = linePos - CENTER_EDGE_READING;
-
-    } else {
-      if (linePos <= CENTER_EDGE_READING) error = -20;
-      else error = -1 * (linePos - CENTER_EDGE_READING);
-
-    }
-    rightMotorSpeed = baseSpeed / 2 + (error * 10);
-    leftMotorSpeed = baseSpeed / 2 - (error * 10);
-
-    motorWrite(leftMotorSpeed, rightMotorSpeed);
-    delay(10);
-  }
-
-  motorStop();
-
-}
-
 void util_readSensorAndUpdateRejectListCW(int* sensor_vals, boolean reject[], int dir) {
   if (dir == CW) {
     readIRSensors(sensor_vals);
@@ -152,7 +109,7 @@ int util_nonRejectSum(int* array, boolean reject[]) {
 }
 
 
-void alignToPath2(int dir) {
+void alignToPath(int dir) {
   /*
      New version, uses rejection techniques
      Use this to replace
@@ -231,7 +188,6 @@ void alignToPath2(int dir) {
       motorWrite(100,100);
     }
 
-
     delay(50);
     motorWrite(0, 0);
     delay(20);
@@ -240,6 +196,5 @@ void alignToPath2(int dir) {
   lcdWrite(1, "----");
 
   //The sensor panel is alligned to the line, move forward
-
 
 }

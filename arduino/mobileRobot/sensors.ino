@@ -12,7 +12,7 @@
   Functions (private)
 
   int   irSensorRead
----------------------------------------------------------------------------*/
+  ---------------------------------------------------------------------------*/
 
 
 void irSensorBegin() {
@@ -146,6 +146,12 @@ double readSonar(int sensor) {
   }else{
     distance = duration / 58;
   }
+  
+  /*distance = max(1, distance);
+  distance = min(100, distance);*/
+  /*if (distance > maxDistance) {
+    distance = 100;
+  }*/
   return distance;
 
 }

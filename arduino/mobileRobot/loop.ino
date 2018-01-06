@@ -1,6 +1,7 @@
 int oldMode = mode;
 
 void loop() {
+
   displayLoopStatus(mode);
 
   switch (mode) {
@@ -8,7 +9,6 @@ void loop() {
     //-------------------------------------------------------------------------------------------------------------- Begin
     case BEGIN:
 
-      //knightRider();
 
       if (buttonRead(BUTTON_0) == 1) {
         // Button0 Option
@@ -18,25 +18,26 @@ void loop() {
       } else if (buttonRead(BUTTON_1) == 1) {
         // Button1 Option
         beep();
-
-        mode = WALL_FOLLOW;
-
+        mode = MAZE_FOLLOW;
         delay(150);
 
-      } else if (buttonRead(BUTTON_3) == 1) {
+      } else if (buttonRead(BUTTON_2) == 1) {
         // Button1 Option
-        mode = MAZE_FOLLOW;
-
-      } else if (buttonRead(BUTTON_4) == 1) {
-        // Button2 Option
-         beep();
+        beep();
         mode = WALL_FOLLOW;
+        delay(150);
+
+      } else if (buttonRead(BUTTON_3) == 1) {   // Temporally not working
+        beep();
+
+      } else if (buttonRead(BUTTON_4) == 1) {   // Temporally not working
+        // Button2 Option
+        beep();
 
       } else {
         delay(10);
       }
       break;
-
     //-------------------------------------------------------------------------------------------------------------- Explore the Maze
     case MAZE_FOLLOW:
       mazeFollow();
@@ -48,6 +49,12 @@ void loop() {
       wallFollow(150); // give the base speed
       delay(300);
       break;
+
+    case LINE_FOLLOW:
+      lineFollow();
+      delay(50);
+      break;
+
 
     //-------------------------------------------------------------------------------------------------------------- Test
     case TEST:
@@ -80,13 +87,20 @@ void displayLoopStatus(int mode) {
       case MAZE_FOLLOW:
         Serial.println(F(">>MazeFollow"));
         lcdWrite(0, "Mode:MazeFollow");
+        while (true) {
+          mazeFollow();
+        }
         break;
-
+      case LINE_FOLLOW:
+        Serial.println(F(">>LineFollow"));
+        lcdWrite(0, "Mode:LineFollow");
+        break;
+        
       case WALL_FOLLOW:
         Serial.println(F(">>WallFollow"));
         lcdWrite(0, "Mode:WallFollow");
         break;
-
+        
       case TEST:
         Serial.println(F("TEST"));
         lcdWrite(0, "Mode: Test");

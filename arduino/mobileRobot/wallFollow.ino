@@ -1,15 +1,8 @@
 /*---------------------------------------------------------------------------
-  Functions
----------------------------------------------------------------------------*/
-
-// Contributor : harshana
-// Last Update : 5/1/2018
-
-/* Remarks ------------------------------------
-
-
-
-----------------------------------------------*/
+/* --------------------------------------------------------------------------
+Contributor : Harshana
+Last Update : 06/01/2018
+/* --------------------------------------------------------------------------*/
 
 int fitpid(int front, int back, int flag, int baseSpeed){
   
@@ -36,6 +29,7 @@ int fit(int front, int back, int flag, int baseSpeed){
     motorWrite(0,0);
     left = 0;
     right = 0;
+    
   }else if (back == front){ // oriented towards the wall.
     left = baseSpeed;
     right = baseSpeed;

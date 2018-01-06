@@ -12,7 +12,7 @@
   Functions (private)
 
   int   irSensorRead
----------------------------------------------------------------------------*/
+  ---------------------------------------------------------------------------*/
 
 
 void irSensorBegin() {
@@ -65,7 +65,7 @@ int readIRSensors(unsigned int *sensor_values) {
     sensor_values[i] = value;
     weight += value * (i * 10);
     sum += value;
-    irLineString = (String)value + " " + irLineString;
+    irLineString = irLineString + " " + (String)value;
   }
 
   if (sum == NUM_SENSORS) allIn = true;
@@ -146,6 +146,12 @@ double readSonar(int sensor) {
   }else{
     distance = duration / 58;
   }
+
+  /*distance = max(1, distance);
+    distance = min(100, distance);*/
+  /*if (distance > maxDistance) {
+    distance = 100;
+    }*/
   return distance;
 
 }

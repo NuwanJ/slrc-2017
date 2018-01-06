@@ -10,7 +10,11 @@
   void ledOff(n)        n = [LED_GREEN, LED_RED]
   void ledBlink(n,c)    n = [LED_GREEN, LED_RED], c = count
 
-  void knightRider()
+  void util_readSensorAndUpdateRejectListCW(int* sensor_vals, boolean reject[], int dir)
+  void pr(int *sensor_values, boolean reject[])
+  int util_nonRejectSum(int* array, boolean reject[])
+  int alignToPath(int dir)
+  
   ---------------------------------------------------------------------------*/
 
 
@@ -61,187 +65,136 @@ void ledBlink(int n, int count) {
     ledBlink(n);
     delay(DELAY_BLINK);
   }
-
 }
 
 
-//-------------------------------------------------------------------------------------------------------------- Knight Rider : Just for fun
-void knightRider() {
-
-  lcdWrite(0, "  Knight Rider");
-
-  for (int i = 0; i < NUM_SENSORS; i++) {
-    pinMode(irPins[i], OUTPUT);
-    digitalWrite(irPins[i], LOW);
-  }
-
-  for (int i = 0; i < NUM_SENSORS; i++) {
-    digitalWrite(irPins[i], HIGH);
-    delay(200);
-    digitalWrite(irPins[i], LOW);
-  }
-
-  for (int i = 0; i <= NUM_SENSORS; i++) {
-    digitalWrite(irPins[NUM_SENSORS - i], HIGH);
-    delay(200);
-    digitalWrite(irPins[NUM_SENSORS - i], LOW);
-  }
-
-}
 
 ///----------------------------------------------------------------------------------------------------------- IESL Functions
 
-
-
 //  50 | 25 | 00
 
-void rotate90(int dir) {
-
-  // Rotate CCW/CW until middle sensor left line
-  linePos = readIRSensors(sensor_values);
-
-  if (dir == CCW) {    // 25 -> 0 -> 50
-    while (linePos <= CENTER_EDGE_READING) {
-      motorWrite( -1 * baseSpeed, baseSpeed);
-      linePos = readIRSensors(sensor_values);
-      delay(10);
+void util_readSensorAndUpdateRejectListCW(int* sensor_vals, boolean reject[], int dir) {
+  if (dir == CW) {
+    readIRSensors(sensor_vals);
+    if (sensor_vals[5] == 0) reject[5] = false;
+    for (int x = 4; x > -1; x--) {
+      if ( (!reject[x + 1]) and (sensor_vals[x] == 0)) {
+        reject[x] = false;
+      }
     }
-  } else {             // 25 -> 50 -> 00
-    while (linePos >= CENTER_EDGE_READING) {
-      motorWrite(baseSpeed, -1 * baseSpeed);
-      linePos = readIRSensors(sensor_values);
-      delay(10);
+    printArray(SERIAL_PORT, sensor_vals, 6);
+    printArray(SERIAL_PORT, reject, 6);
+  }
+  else {
+    readIRSensors(sensor_vals);
+    if (sensor_vals[0] == 0) reject[0] = false;
+    for (int x = 1; x < 6; x++) {
+      if ( (!reject[x - 1]) and (sensor_vals[x] == 0)) {
+        reject[x] = false;
+      }
     }
   }
-  motorStop();
-  delay(10);
+}
 
-  // Rotate CCW/CW until robot centered to new line segment
-
-  linePos = readIRSensors(sensor_values);
-  while (linePos != CENTER_EDGE_READING) {
-    linePos = readIRSensors(sensor_values);
-
-    if (dir == CCW) {
-      if (linePos <= CENTER_EDGE_READING) error = 20;
-      else error = linePos - CENTER_EDGE_READING;
-
-    } else {
-      if (linePos <= CENTER_EDGE_READING) error = -20;
-      else error = -1 * (linePos - CENTER_EDGE_READING);
-
-    }
-    rightMotorSpeed = baseSpeed / 2 + (error * 10);
-    leftMotorSpeed = baseSpeed / 2 - (error * 10);
-
-    motorWrite(leftMotorSpeed, rightMotorSpeed);
-    delay(10);
-  }
-
-  motorStop();
-
+void pr(int *sensor_values, boolean reject[]) {
+  Serial.print("S: "); Serial.print(sensor_values[0]); Serial.print(sensor_values[1]); Serial.print(sensor_values[2]); Serial.print(sensor_values[3]); Serial.print(sensor_values[4]); Serial.print(sensor_values[5]); Serial.print('\n');
+  Serial.print("R: "); Serial.print(reject[0]); Serial.print(reject[1]); Serial.print(reject[2]); Serial.print(reject[3]); Serial.print(reject[4]); Serial.print(reject[5]); Serial.print('\n');
 }
 
 
-// few functions used for IESL, copy paste if they are need to use
-#ifdef IESL
-void findShelf() {
-
-  linePos = readIRSensors(sensor_values);
-
-  // If the robot meets the end, condition satisfy
-  while  (sum < 4) { //((allIn || ((linePos >= 30 || linePos <= 20) && sum == 4)) == 0) {
-    lineFollow();
-    Serial.println(linePos);
-    delay(20);
-    linePos = readIRSensors(sensor_values);
-  }
-  motorStop();
-  motorWrite(-150, -150);
-  delay(70);
-  motorStop();
-}
-
-
-void backToPath() {
-
-  // Go little back before start turn
-  motorWrite(-150, -150);
-  delay(100);
-
-  // Rotate CCW until robot left line
-  linePos = readIRSensors(sensor_values);
-  while (allOut == 0) {
-    motorWrite(-1 * baseSpeed, baseSpeed);
-    delay(10);
-    linePos = readIRSensors(sensor_values);
-  }
-  motorStop();
-  //delay(10);
-
-  // Rotate CCW until robot centered to new line segment
-  linePos = readIRSensors(sensor_values);
-
-  while (linePos != CENTER_EDGE_READING) {
-    if (linePos <= CENTER_EDGE_READING) error = 20;
-    else error = linePos - CENTER_EDGE_READING;
-
-    rightMotorSpeed = baseSpeed + (error * 10);
-    leftMotorSpeed = baseSpeed - (error * 10);
-    motorWrite(leftMotorSpeed, rightMotorSpeed);
-    delay(10);
-    linePos = readIRSensors(sensor_values);
-  }
-  motorStop();
-
-  // Now go forward until robot meet the main line
-  linePos = readIRSensors(sensor_values);
-  while (leftEnd != 1 && rightEnd != 1) {
-    lineFollow();
-    delay(10);
-    linePos = readIRSensors(sensor_values);
-  }
-
-  motorWrite(150, 150);
-  delay(100);
-  motorStop();
+int util_nonRejectSum(int* array, boolean reject[]) {
+  int summ = 0;
+  for (int x = 0; x < 6; x++)if (!reject[x])summ += array[x];
+  return summ;
 }
 
 
 void alignToPath(int dir) {
+  /*
+     New version, uses rejection techniques
+     Use this to replace
+            void alignToPath(int dir)
+  */
 
-  // Rotate CCW/CW until middle sensor left line
-  linePos = readIRSensors(sensor_values);
-
-  // Away from line before take the turn
-  if (allOut == false) {
-    motorWrite(150, 150);
-    delay(10);
-    linePos = readIRSensors(sensor_values);
+//  beep(1);
+//  delay(2000);
+  int motorSpeeds[] = { 150, -150};
+  int cornerSensor = 5;
+  if (dir == CCW) {
+    motorSpeeds[0] *= -1;
+    motorSpeeds[1] *= -1;
+    cornerSensor = 0;
   }
-  // Rotate CCW/CW until robot centered to new line segment
 
-  linePos = readIRSensors(sensor_values);
-  while (linePos != CENTER_EDGE_READING) {
-    linePos = readIRSensors(sensor_values);
+  boolean reject[] = {true, true, true, true, true, true};
 
-    if (dir == CCW) {
-      if (linePos <= CENTER_EDGE_READING) error = 20;
-      else error = linePos - CENTER_EDGE_READING;
+  //Turn until the sensor panel leaves the first line.
+  Serial.println("Turn until the sensor panel leaves the first line.");
+  while (reject[cornerSensor]) {
+    motorWrite(motorSpeeds[0], motorSpeeds[1]);
+    delay(20);
+    util_readSensorAndUpdateRejectListCW(sensor_values, reject, dir);
+  }
+  motorWrite(0, 0);
 
-    } else {
-      if (linePos <= CENTER_EDGE_READING) error = -20;
-      else error = -1 * (linePos - CENTER_EDGE_READING);
 
+
+//  beep(2);
+//  delay(2000);
+
+  //Turn until the sensor panel finds the new line.
+  Serial.println("Turn until the sensor panel finds the new line.");
+  while (util_nonRejectSum(sensor_values, reject) == 0) {
+    motorWrite(motorSpeeds[0], motorSpeeds[1]);
+    delay(20);
+    util_readSensorAndUpdateRejectListCW(sensor_values, reject, dir);
+    pr(sensor_values, reject);
+  }
+  motorWrite(0, 0);
+
+
+
+//  beep(3);
+//  delay(2000);
+  Serial.println("Take the sensor panel a little more into the new line");
+  //Take the sensor panel a little more into the new line
+  motorWrite(motorSpeeds[0], motorSpeeds[1]);
+  delay(20); //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< Tune-able parameter
+  motorWrite(0, 0);
+
+
+
+//  beep(10);
+//  delay(2000);
+  //Now align the robot to the line
+  int i = 0;
+
+  while (true && i < 10) {
+    util_readSensorAndUpdateRejectListCW(sensor_values, reject, dir);
+    int s = 0;
+    for (int x = 0; x < 6; x++) {
+      if (!reject[x]) {
+        s += ( (10 * x - 25) * sensor_values[x]);
+      }
     }
-    rightMotorSpeed = baseSpeed / 2 + (error * 10);
-    leftMotorSpeed = baseSpeed / 2 - (error * 10);
 
-    motorWrite(leftMotorSpeed, rightMotorSpeed);
-    delay(10);
+    if(s<-5){
+      motorWrite(100,-100);
+    }
+    else if(s>5){
+      motorWrite(-100,100);
+    }
+    else{
+      motorWrite(100,100);
+    }
+
+    delay(50);
+    motorWrite(0, 0);
+    delay(20);
+    i = i + 1;
   }
+  lcdWrite(1, "----");
 
-  motorStop();
+  //The sensor panel is alligned to the line, move forward
 
 }
-#endif

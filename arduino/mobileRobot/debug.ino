@@ -16,6 +16,7 @@
 
 void beginDebugger() {
   Serial3.begin(9600);
+  Serial3.println("Hello");
   delay(50);
 }
 
@@ -58,6 +59,13 @@ void printArray(int port, int* arr, int n) {
   delay(50);
 }
 
+void printArray(int port, boolean arr[], int n) {
+  for (int i = 0; i < n; i++) {
+    Serial.print(arr[i]);
+  }
+  delay(50);
+}
+
 //-------------------------------------------------------------------------------------------------------------- LCD Display
 void lcdBegin() {
   lcd.begin(16, 2);
@@ -67,7 +75,7 @@ void lcdBegin() {
 }
 
 
-void lcdWrite(int line, String txt) {
+void lcdWrite0(int line, String txt) {
   // Only first 16 letters will display
   lcd.clear();
   lcd.setCursor(0, line); //col, row
@@ -75,7 +83,14 @@ void lcdWrite(int line, String txt) {
 
 }
 
-
+void lcdWrite(int line, String txt) {
+  // Only first 16 letters will display
+  lcd.clear();
+  lcd.setCursor(0, line); //col, row
+  lcd.print("               ");
+  lcd.print(txt);
+  delay(15);
+}
 
 void lcdWriteInt(int line, int txt) {
   // Only first 16 letters will display
@@ -84,7 +99,6 @@ void lcdWriteInt(int line, int txt) {
   lcd.print(txt);
 
 }
-
 
 void lcdIRSensorUpdate() {
   readIRSensors(sensor_values);

@@ -116,7 +116,6 @@ void rotate90(int dir) {
 
 }
 
-
 void util_readSensorAndUpdateRejectListCW(int* sensor_vals, boolean reject[], int dir) {
   if (dir == CW) {
     readIRSensors(sensor_vals);

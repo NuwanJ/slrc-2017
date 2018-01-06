@@ -46,7 +46,7 @@ void loop() {
 
     //-------------------------------------------------------------------------------------------------------------- Follow the wall
     case WALL_FOLLOW:
-      wallFollow(100); // give the base speed
+      wallFollow(150); // give the base speed
       delay(300);
       break;
 

@@ -24,6 +24,9 @@ void loop() {
       } else if (buttonRead(BUTTON_2) == 1) {
         // Button1 Option
         beep();
+        delay(10000);
+        beep(5);
+        delay(1000);
         mode = LINE_FOLLOW;
         delay(150);
 

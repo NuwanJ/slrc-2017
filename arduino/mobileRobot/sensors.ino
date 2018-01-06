@@ -73,10 +73,10 @@ int readIRSensors(unsigned int *sensor_values) {
 
   if (allOut)
   {
-    if ((lastReading > RIGHT_EDGE_READING) && (CENTER_EDGE_READING - 10 > lastReading )) {        // <---***>
+    if ((lastReading < RIGHT_EDGE_READING) && (CENTER_EDGE_READING + 10 > lastReading )) {        // <---***>
       lastReading = RIGHT_EDGE_READING;
 
-    } else if ((LEFT_EDGE_READING > lastReading) && ( lastReading  > CENTER_EDGE_READING) + 10) { // <***--->
+    } else if ((LEFT_EDGE_READING < lastReading) && ( lastReading  > CENTER_EDGE_READING) - 10) { // <***--->
       lastReading = LEFT_EDGE_READING;
 
     } else if (lastReading == CENTER_EDGE_READING) {                                       // <--**-->

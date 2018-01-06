@@ -42,7 +42,6 @@ void setup() {
 
 void test() {
 
-  lcdIRSensorUpdate();
-  //alignToPath(CW);
-  //delay(500);
+  alignToPath(CCW);
+  
 }

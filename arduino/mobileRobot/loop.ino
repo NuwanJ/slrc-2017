@@ -1,7 +1,6 @@
 int oldMode = mode;
 
 void loop() {
-
   displayLoopStatus(mode);
 
   switch (mode) {

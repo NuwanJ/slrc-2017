@@ -117,7 +117,7 @@ int readBoxColor() {
   else if (boxColor == 3)Serial.println("B");
   else Serial.println("None");
 
-  if (0) {
+  if (1) {
     Serial.print(raw_blue);
     Serial.print(" ");
     Serial.print(raw_red);
@@ -129,21 +129,24 @@ int readBoxColor() {
     //Serial.print(colorSensor.calculateColorTemperature(raw_red, raw_green, raw_blue) );
     //Serial.print(" ");
   }
+  delay(50);
   return boxColor;
 }
 
 //-------------------------------------------------------------------------------------------------------------- readSonar
 double readSonar(int sensor) {
 
+  digitalWrite(pinTrig[sensor], LOW);
+  delayMicroseconds(2);
   digitalWrite(pinTrig[sensor], HIGH);
-  delayMicroseconds(20);
+  delayMicroseconds(10);
   digitalWrite(pinTrig[sensor], LOW);
 
-  duration = pulseIn(pinEcho[sensor], HIGH, 30000); //30000 : timeout period(us)  
+  duration = pulseIn(pinEcho[sensor], HIGH, 30000); //30000 : timeout period(us)
 
-  if (duration == 0){
+  if (duration == 0) {
     distance = 1000;
-  }else{
+  } else {
     distance = duration / 58;
   }
 

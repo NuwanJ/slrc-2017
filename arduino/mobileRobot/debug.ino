@@ -92,17 +92,6 @@ void lcdWrite(int line, String txt) {
   delay(15);
 }
 
-/*void lcdPrintln(String line1, String line2) {
-  // Only first 16 letters will display
-  lcd.clear();
-  lcd.setCursor(0, line1); //col, row
-  lcd.print(line1);
-
-  lcd.setCursor(1, line2); //col, row
-  lcd.print(line2);
-  delay(15);
-  }*/
-
 void lcdWriteInt(int line, int txt) {
   // Only first 16 letters will display
   lcd.clear();
@@ -110,7 +99,6 @@ void lcdWriteInt(int line, int txt) {
   lcd.print(txt);
 
 }
-
 
 void lcdIRSensorUpdate() {
   readIRSensors(sensor_values);

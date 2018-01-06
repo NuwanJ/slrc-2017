@@ -1,21 +1,8 @@
-/* -------------------------------------------------------------------------- -
+/* --------------------------------------------------------------------------
+Contributor : Gihan
+Last Update : 06/01/2018
+--------------------------------------------------------------------------*/
 
-  -------------------------------------------------------------------------- -* /
-
-  // Contributor : Harshana
-  // Last Update : 28/11/2017
-
-  /* Remarks ------------------------------------
-
-
-
-
-  ---------------------------------------------*/
-
-
-
-//
-// 02/01/2017
 
 void mazeFollow() {
   pos = readIRSensors(sensor_values);
@@ -29,10 +16,10 @@ void mazeFollow() {
     delay(1000);
     lcdWrite(0, "Maze:trnCW");
     //    delay(1000);
-    alignToPath2(CW);
+    alignToPath(CW);
   }
   else if (allOut) {
-    alignToPath2(CCW);
+    alignToPath(CCW);
   }
   else if (sensor_values[0] > 0) {
     lcdWrite(0, "Maze:GoFwd");

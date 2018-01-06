@@ -29,21 +29,20 @@ void setup() {
   pinMode(PIN_BUZZER, OUTPUT);
 
   ledOn(LED_RED);
-  
+
   beginDebugger();
   motorBegin();
   lcdBegin();
   irSensorBegin();
   //colorSensorBegin();
   sonarSensorBegin();
-  
+
   ledOff(LED_RED);
 }
 
-
-
 void test() {
 
-
-  delay(500);
+  lcdIRSensorUpdate();
+  //alignToPath2(CW);
+  //delay(500);
 }

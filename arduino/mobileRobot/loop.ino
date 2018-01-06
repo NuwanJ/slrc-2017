@@ -24,7 +24,7 @@ void loop() {
       } else if (buttonRead(BUTTON_2) == 1) {
         // Button1 Option
         beep();
-        mode = WALL_FOLLOW;
+        mode = LINE_FOLLOW;
         delay(150);
 
       } else if (buttonRead(BUTTON_3) == 1) {   // Temporally not working
@@ -94,13 +94,15 @@ void displayLoopStatus(int mode) {
       case LINE_FOLLOW:
         Serial.println(F(">>LineFollow"));
         lcdWrite(0, "Mode:LineFollow");
-        break;
+        lineFollow();
         
+        break;
+
       case WALL_FOLLOW:
         Serial.println(F(">>WallFollow"));
         lcdWrite(0, "Mode:WallFollow");
         break;
-        
+
       case TEST:
         Serial.println(F("TEST"));
         lcdWrite(0, "Mode: Test");

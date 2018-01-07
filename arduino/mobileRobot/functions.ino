@@ -17,7 +17,6 @@
 
   ---------------------------------------------------------------------------*/
 
-
 void util_readSensorAndUpdateRejectListCW(int* sensor_vals, boolean reject[], int dir) {
   if (dir == CW) {
     readIRSensors(sensor_vals);
@@ -53,6 +52,7 @@ int util_nonRejectSum(int* array, boolean reject[]) {
   return summ;
 }
 
+
 void alignToPath(int dir) {
   /*
      New version, uses rejection techniques
@@ -60,8 +60,8 @@ void alignToPath(int dir) {
             void alignToPath(int dir)
   */
 
-  //  beep(1);
-  //  delay(2000);
+  beep(1);
+  delay(250);
   int motorSpeeds[] = { 150, -150};
   int cornerSensor = 5;
   if (dir == CCW) {
@@ -77,37 +77,43 @@ void alignToPath(int dir) {
   while (reject[cornerSensor]) {
     motorWrite(motorSpeeds[0], motorSpeeds[1]);
     delay(20);
+    motorWrite(0, 0);
+    delay(50);
     util_readSensorAndUpdateRejectListCW(sensor_values, reject, dir);
   }
   motorWrite(0, 0);
 
-  //  beep(2);
-  //  delay(2000);
+
+
+  beep(2);
+  delay(500);
 
   //Turn until the sensor panel finds the new line.
   Serial.println("Turn until the sensor panel finds the new line.");
   while (util_nonRejectSum(sensor_values, reject) == 0) {
     motorWrite(motorSpeeds[0], motorSpeeds[1]);
     delay(20);
+    motorWrite(0, 0);
+    delay(20);
     util_readSensorAndUpdateRejectListCW(sensor_values, reject, dir);
-    pr(sensor_values, reject);
-  }
-  motorWrite(0, 0);
 
-  //  beep(3);
-  //  delay(2000);
+  }
+
+
   Serial.println("Take the sensor panel a little more into the new line");
   //Take the sensor panel a little more into the new line
   motorWrite(motorSpeeds[0], motorSpeeds[1]);
-  delay(20); //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< Tune-able parameter
+  delay(20);
   motorWrite(0, 0);
+  delay(50);
 
-  //  beep(10);
-  //  delay(2000);
-  
+  beep(3);
+  delay(500);
+
+
   //Now align the robot to the line
-  
   int i = 0;
+
   while (true && i < 10) {
     util_readSensorAndUpdateRejectListCW(sensor_values, reject, dir);
     int s = 0;
@@ -117,33 +123,29 @@ void alignToPath(int dir) {
       }
     }
 
-    if (s < -5) {
+    if (s > 5) {
       motorWrite(100, -100);
     }
-    else if (s > 5) {
+    else if (s < - 5) {
       motorWrite(-100, 100);
     }
     else {
-      motorWrite(100, 100);
+      motorWrite(0, 0);
+      break;
     }
 
     delay(50);
     motorWrite(0, 0);
     delay(20);
     i = i + 1;
+    beep(1);
+
   }
   lcdWrite(1, "----");
 
   //The sensor panel is alligned to the line, move forward
 
 }
-
-
-
-
-
-
-
 
 
 

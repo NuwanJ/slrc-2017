@@ -46,6 +46,7 @@ void setup() {
 }
 
 void test() {
+  
   //readBoxColor();
   //lcdIRSensorUpdate();
   //alignToPath(CW);

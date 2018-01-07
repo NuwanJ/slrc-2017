@@ -1,7 +1,6 @@
 int oldMode = mode;
 
 void loop() {
-
   displayLoopStatus(mode);
 
   switch (mode) {
@@ -43,38 +42,67 @@ void loop() {
       break;
     //-------------------------------------------------------------------------------------------------------------- Explore the Maze
     case MAZE_FOLLOW:
+
+      // Need to write a check statement here to find the white color box
+      // If box found, mode= ENTER_WALL_FOLLOW
       mazeFollow();
+      
       break;
 
+    //-------------------------------------------------------------------------------------------------------------- RETURN_TO_MAZE
+    case RETURN_TO_MAZE:
+      // In here, do necessary arrangements to start maze explore
+      // Ex : Go back little and take a 180deg turn
+      // After, mode = MAZE_FOLLOW;
 
-    //-------------------------------------------------------------------------------------------------------------- Follow the wall
-    case WALL_FOLLOW:
-      wallFollow(150); // give the base speed
+      break;
+
+    //-------------------------------------------------------------------------------------------------------------- Enter to the wall following mode
+    case ENTER_WALL_FOLLOW:
+
+      // Do necessary arrangements to enter wall following mode
+      // after, mode = WALL_FOLLOW;
       delay(300);
       break;
 
+    //-------------------------------------------------------------------------------------------------------------- Follow the wall
+    case WALL_FOLLOW:
+
+      // Need to implement a statement to detect the end of the wall section, then need to align the robot to path again and line follow
+      // Then mode = ??
+
+      wallFollow(150); // base speed
+      delay(100);
+      
+      break;
+
+    //-------------------------------------------------------------------------------------------------------------- Follow the Line
     case LINE_FOLLOW:
       lineFollow();
       delay(50);
+      
+      break;
+
+    //-------------------------------------------------------------------------------------------------------------- WAIT_UNTIL_FEEDBACK
+    case WAIT_UNTIL_FEEDBACK:
+      // Check Serial Event
+      // If feedback received, mode = RETURN_TO_MAZE
+
       break;
 
 
     //-------------------------------------------------------------------------------------------------------------- Test
     case TEST:
       test();
+      
       break;
 
   }
   displayLoopStatus(mode);
 }
 
-boolean detectColorChange(unsigned int *sensor_values) {
-  if (sensor_values[0] == 1 && sensor_values[NUM_SENSORS - 1] == 1) {
-    return true;
-  } else {
-    return false;
-  }
-}
+
+// !!! Don't add functions here, this section is only for display status !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 void displayLoopStatus(int mode) {
 
@@ -90,20 +118,31 @@ void displayLoopStatus(int mode) {
       case MAZE_FOLLOW:
         Serial.println(F(">>MazeFollow"));
         lcdWrite(0, "Mode:MazeFollow");
-        while (true) {
-          mazeFollow();
-        }
         break;
+
       case LINE_FOLLOW:
         Serial.println(F(">>LineFollow"));
         lcdWrite(0, "Mode:LineFollow");
-        lineFollow();
-
         break;
 
       case WALL_FOLLOW:
         Serial.println(F(">>WallFollow"));
         lcdWrite(0, "Mode:WallFollow");
+        break;
+
+      case RETURN_TO_MAZE:
+        Serial.println(F(">>Return to Maze"));
+        lcdWrite(0, "Mode:ReturnMaze");
+        break;
+
+      case WAIT_UNTIL_FEEDBACK:
+        Serial.println(F(">>Wait until a feedback"));
+        lcdWrite(0, "Mode:WaitFeed");
+        break;
+
+      case ENTER_WALL_FOLLOW:
+        Serial.println(F(">>Enter to wall following mode"));
+        lcdWrite(0, "Mode:EnterWall");
         break;
 
       case TEST:
@@ -118,6 +157,6 @@ void displayLoopStatus(int mode) {
 
 
 void debugProcedure() {
-
+    //TODO: Need to implement a debugging
 
 }

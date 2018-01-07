@@ -16,7 +16,7 @@ int linePos = 0 ;
 #define DEBUG_PORT 1
 
 // Modes
-enum {BEGIN, TEST, BLUETOOTH, MAZE_FOLLOW, WALL_FOLLOW, LINE_FOLLOW};
+enum {BEGIN, TEST, BLUETOOTH, MAZE_FOLLOW, WALL_FOLLOW, LINE_FOLLOW, WAIT_UNTIL_FEEDBACK, RETURN_TO_MAZE, ENTER_WALL_FOLLOW};
 enum {CCW, CW};
 // EEPROM
 enum {eP, eI, eD, eMax, eBase, eDebug};
@@ -52,6 +52,7 @@ enum {eP, eI, eD, eMax, eBase, eDebug};
 
 #define PIN_RW 24 // For LCD Module
 
+#define PIN_BOX_SENSOR A8
 //-------------------------------------------------------------------------------------------------------------- IR Sensors Array
 
 #define NUM_SENSORS 6
@@ -112,3 +113,7 @@ int boxColor = 0;
 #define WHITE_THERSOLD  800 // **This depends with the distance from sensor to the object
 #define RED_GB_GAP 100
 
+int boxSensor = 150;
+boolean boxFound = false;
+
+#define BOX_FOUND_THERSOLD 50

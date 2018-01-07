@@ -7,6 +7,8 @@
 
   int readIRSensors(*sensorValues)
   int readSonar(sensorNo)
+
+  boolean isBoxFound()
   int readBoxColor()              return [COLOR_RED,COLOR_GREEN,COLOR_BLUE]
 
   Functions (private)
@@ -79,7 +81,7 @@ int readIRSensors(unsigned int *sensor_values) {
     } else if ((LEFT_EDGE_READING < lastReading) && ( lastReading  > CENTER_EDGE_READING) - 10) { // <***--->
       lastReading = LEFT_EDGE_READING;
 
-    } else if (lastReading == CENTER_EDGE_READING) {                                       // <--**-->
+    } else if (lastReading == CENTER_EDGE_READING) {                                              // <--**-->
       lastReading = CENTER_EDGE_READING;
     }
   } else {
@@ -112,11 +114,12 @@ int readBoxColor() {
     boxColor = COLOR_OPEN;                // NO COLOR
   }
 
-  if (boxColor == 1)Serial.println("R");
-  else if (boxColor == 2)Serial.println("G");
-  else if (boxColor == 3)Serial.println("B");
-  else Serial.println("None");
-
+  /*
+    if (boxColor == 1)Serial.println("R");
+    else if (boxColor == 2)Serial.println("G");
+    else if (boxColor == 3)Serial.println("B");
+    else Serial.println("None");
+  */
   if (0) {
     Serial.print(raw_blue);
     Serial.print(" ");
@@ -129,21 +132,33 @@ int readBoxColor() {
     //Serial.print(colorSensor.calculateColorTemperature(raw_red, raw_green, raw_blue) );
     //Serial.print(" ");
   }
+  delay(50);
   return boxColor;
+}
+
+//-------------------------------------------------------------------------------------------------------------- readBoz
+
+boolean isBoxFound() {
+  boxSensor = analogRead(PIN_BOX_SENSOR);
+  boxFound = (boxSensor > BOX_FOUND_THERSOLD);
+  //Serial.println(boxSsensor);
+  return boxFound;
 }
 
 //-------------------------------------------------------------------------------------------------------------- readSonar
 double readSonar(int sensor) {
 
+  digitalWrite(pinTrig[sensor], LOW);
+  delayMicroseconds(2);
   digitalWrite(pinTrig[sensor], HIGH);
-  delayMicroseconds(20);
+  delayMicroseconds(10);
   digitalWrite(pinTrig[sensor], LOW);
 
-  duration = pulseIn(pinEcho[sensor], HIGH, 30000); //30000 : timeout period(us)  
+  duration = pulseIn(pinEcho[sensor], HIGH, 30000); //30000 : timeout period(us)
 
-  if (duration == 0){
+  if (duration == 0) {
     distance = 1000;
-  }else{
+  } else {
     distance = duration / 58;
   }
 

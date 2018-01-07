@@ -17,62 +17,6 @@
 
   ---------------------------------------------------------------------------*/
 
-
-
-//-------------------------------------------------------------------------------------------------------------- Beep
-void beep() {
-  digitalWrite(PIN_BUZZER, HIGH);
-  delay(DELAY_BUZZER);
-  digitalWrite(PIN_BUZZER, LOW);
-  delay(DELAY_BUZZER);
-}
-
-void beep(int count) {
-  for (int i = 0; i < count; i++) {
-    beep();
-  }
-}
-
-//-------------------------------------------------------------------------------------------------------------- Button Read
-
-int buttonRead(int btn) {
-
-  if (btn == BUTTON_3 || btn == BUTTON_4) {
-    return 0;//(analogRead(btn) == 0);
-  } else {
-    return (1 - digitalRead(btn));
-  }
-}
-
-//-------------------------------------------------------------------------------------------------------------- LED On/ Off/ Blink
-void ledOn(int n) {
-  digitalWrite(n, HIGH);
-}
-
-void ledOff(int n) {
-  digitalWrite(n, LOW);
-}
-
-void ledBlink(int n) {
-  digitalWrite(n, HIGH);
-  delay(DELAY_BLINK);
-  digitalWrite(n, LOW);
-}
-
-void ledBlink(int n, int count) {
-
-  for (int i = 0; i < count; i++) {
-    ledBlink(n);
-    delay(DELAY_BLINK);
-  }
-}
-
-
-
-///----------------------------------------------------------------------------------------------------------- IESL Functions
-
-//  50 | 25 | 00
-
 void util_readSensorAndUpdateRejectListCW(int* sensor_vals, boolean reject[], int dir) {
   if (dir == CW) {
     readIRSensors(sensor_vals);
@@ -202,3 +146,56 @@ void alignToPath(int dir) {
   //The sensor panel is alligned to the line, move forward
 
 }
+
+
+
+
+
+//-------------------------------------------------------------------------------------------------------------- Beep
+void beep() {
+  digitalWrite(PIN_BUZZER, HIGH);
+  delay(DELAY_BUZZER);
+  digitalWrite(PIN_BUZZER, LOW);
+  delay(DELAY_BUZZER);
+}
+
+void beep(int count) {
+  for (int i = 0; i < count; i++) {
+    beep();
+  }
+}
+
+//-------------------------------------------------------------------------------------------------------------- Button Read
+
+int buttonRead(int btn) {
+
+  if (btn == BUTTON_3 || btn == BUTTON_4) {
+    return 0;//(analogRead(btn) == 0);
+  } else {
+    return (1 - digitalRead(btn));
+  }
+}
+
+//-------------------------------------------------------------------------------------------------------------- LED On/ Off/ Blink
+void ledOn(int n) {
+  digitalWrite(n, HIGH);
+}
+
+void ledOff(int n) {
+  digitalWrite(n, LOW);
+}
+
+void ledBlink(int n) {
+  digitalWrite(n, HIGH);
+  delay(DELAY_BLINK);
+  digitalWrite(n, LOW);
+}
+
+void ledBlink(int n, int count) {
+
+  for (int i = 0; i < count; i++) {
+    ledBlink(n);
+    delay(DELAY_BLINK);
+  }
+}
+

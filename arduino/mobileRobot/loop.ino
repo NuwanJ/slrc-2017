@@ -125,33 +125,6 @@ void loop() {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 // !!! Don't add functions here, this section is only for display status !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 void displayLoopStatus(int mode) {

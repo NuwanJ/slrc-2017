@@ -7,6 +7,8 @@
 
   int readIRSensors(*sensorValues)
   int readSonar(sensorNo)
+
+  boolean isBoxFound()
   int readBoxColor()              return [COLOR_RED,COLOR_GREEN,COLOR_BLUE]
 
   Functions (private)
@@ -79,7 +81,7 @@ int readIRSensors(unsigned int *sensor_values) {
     } else if ((LEFT_EDGE_READING > lastReading) && ( lastReading  > CENTER_EDGE_READING) + 10) { // <***--->
       lastReading = LEFT_EDGE_READING;
 
-    } else if (lastReading == CENTER_EDGE_READING) {                                       // <--**-->
+    } else if (lastReading == CENTER_EDGE_READING) {                                              // <--**-->
       lastReading = CENTER_EDGE_READING;
     }
   } else {
@@ -112,12 +114,13 @@ int readBoxColor() {
     boxColor = COLOR_OPEN;                // NO COLOR
   }
 
-  if (boxColor == 1)Serial.println("R");
-  else if (boxColor == 2)Serial.println("G");
-  else if (boxColor == 3)Serial.println("B");
-  else Serial.println("None");
-
-  if (1) {
+  /*
+    if (boxColor == 1)Serial.println("R");
+    else if (boxColor == 2)Serial.println("G");
+    else if (boxColor == 3)Serial.println("B");
+    else Serial.println("None");
+  */
+  if (0) {
     Serial.print(raw_blue);
     Serial.print(" ");
     Serial.print(raw_red);
@@ -131,6 +134,15 @@ int readBoxColor() {
   }
   delay(50);
   return boxColor;
+}
+
+//-------------------------------------------------------------------------------------------------------------- readBoz
+
+boolean isBoxFound() {
+  boxSensor = analogRead(PIN_BOX_SENSOR);
+  boxFound = (boxSensor > BOX_FOUND_THERSOLD);
+  //Serial.println(boxSsensor);
+  return boxFound;
 }
 
 //-------------------------------------------------------------------------------------------------------------- readSonar

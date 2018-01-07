@@ -56,7 +56,6 @@ void goForward() {
 
 }
 
-
 void goBack() {
   //The robot should go back just one step
   motorWrite(-200, -200);

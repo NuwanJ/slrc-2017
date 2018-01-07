@@ -16,7 +16,7 @@ int linePos = 0 ;
 #define DEBUG_PORT 1
 
 // Modes
-enum {BEGIN, TEST, BLUETOOTH, MAZE_FOLLOW, WALL_FOLLOW, LINE_FOLLOW};
+enum {BEGIN, TEST, BLUETOOTH, MAZE_FOLLOW, WALL_FOLLOW, LINE_FOLLOW, WAIT_UNTIL_FEEDBACK, RETURN_TO_MAZE, ENTER_WALL_FOLLOW};
 enum {CCW, CW};
 // EEPROM
 enum {eP, eI, eD, eMax, eBase, eDebug};
@@ -52,6 +52,7 @@ enum {eP, eI, eD, eMax, eBase, eDebug};
 
 #define PIN_RW 24 // For LCD Module
 
+#define PIN_BOX_SENSOR A8
 //-------------------------------------------------------------------------------------------------------------- IR Sensors Array
 
 #define NUM_SENSORS 6
@@ -60,7 +61,7 @@ enum {eP, eI, eD, eMax, eBase, eDebug};
 #define CENTER_EDGE_READING (NUM_SENSORS - 1) * 5
 
 unsigned int sensor_values[NUM_SENSORS];
-const unsigned int irPins[] = {23, 25, 27, 49, 51, 53}; // 53, 51, 49, 27, 25, 23 
+const unsigned int irPins[] = {23, 25, 27, 49, 51, 53}; // 53, 51, 49, 27, 25, 23
 
 boolean allOut = 0, allIn = 0;
 String irLineString = "000000";
@@ -74,7 +75,7 @@ float kP = 10, kD = 3, kI = 0;
 
 int pos = CENTER_EDGE_READING;
 int error = 0;
-int previousErrors[]={0,0,0,0,0,0,0,0,0,0}; //zero initializing with 10 elements
+int previousErrors[] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}; //zero initializing with 10 elements
 
 int leftSpd = 0, rightSpd = 0;
 const double slowFactor = 0.5, speedFactor = 1;
@@ -112,3 +113,7 @@ int boxColor = 0;
 #define WHITE_THERSOLD  800 // **This depends with the distance from sensor to the object
 #define RED_GB_GAP 100
 
+int boxSensor = 150;
+boolean boxFound = false;
+
+#define BOX_FOUND_THERSOLD 50

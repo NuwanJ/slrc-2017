@@ -87,7 +87,6 @@ void lcdWrite(int line, String txt) {
   // Only first 16 letters will display
   lcd.clear();
   lcd.setCursor(0, line); //col, row
-  lcd.print("               ");
   lcd.print(txt);
   delay(15);
 }
@@ -97,7 +96,6 @@ void lcdWriteInt(int line, int txt) {
   lcd.clear();
   lcd.setCursor(0, line); //col, row
   lcd.print(txt);
-
 }
 
 void lcdIRSensorUpdate() {
@@ -134,27 +132,60 @@ void lcdSonarUpdate() {
     sonarDist[i] = readSonar(i);
   }
 
-  sonarDist[0] = readSonar(0);
-  sonarDist[1] = readSonar(1);
+  sonarDist[2] = readSonar(2);
+  sonarDist[3] = readSonar(3);
 
   lcd.clear();
 
   // Upper Right
   lcd.setCursor(10, 0);     //16-(String(sonarDist[2]).length())
-  lcd.print(sonarDist[0]);
+  lcd.print(sonarDist[3]);
   // Lowe Right
   lcd.setCursor(10, 1);
-  lcd.print(sonarDist[1]);
+  lcd.print(sonarDist[2]);
 
-  sonarDist[3] = readSonar(3);
-  sonarDist[4] = readSonar(4);
+  sonarDist[0] = readSonar(0);
+  sonarDist[1] = readSonar(1);
   // Upper Left
   lcd.setCursor(0, 0);
-  lcd.print(sonarDist[3]);
+  lcd.print(sonarDist[0]);
 
   //Lower Left
   lcd.setCursor(0, 1);
-  lcd.print(sonarDist[2]);
+  lcd.print(sonarDist[1]);
 
   delay(20);
 }
+
+void lcdBoxSensorUpdate() {
+
+  // Update latest status
+  isBoxFound();
+
+  lcd.clear();
+
+  lcd.setCursor(0, 0); //col, row
+  lcd.print("Box: ");
+  lcd.print(boxFound);
+  lcd.print(" (");
+  lcd.print(boxSensor);
+  lcd.print(")");
+
+  lcd.setCursor(0, 1); //col, row
+
+  if (boxFound) {
+    readBoxColor();
+
+    if (boxColor == 1) lcd.print("R ");
+    else if (boxColor == 2) lcd.print("G ");
+    else if (boxColor == 3) lcd.print("B ");
+    else Serial.println("None");
+
+    lcd.print(raw_blue);
+    lcd.print(" ");
+    lcd.print(raw_red);
+    lcd.print(" ");
+    lcd.print(raw_green);
+  }
+}
+

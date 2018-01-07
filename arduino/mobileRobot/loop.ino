@@ -23,7 +23,7 @@ void loop() {
       } else if (buttonRead(BUTTON_2) == 1) {
         // Button2 Option
         beep();
-        mode = LINE_FOLLOW;
+        mode = WALL_FOLLOW;
         delay(150);
 
       } else if (buttonRead(BUTTON_3) == 1) {   // Temporally not working
@@ -167,7 +167,6 @@ void displayLoopStatus(int mode) {
         Serial.println(F(">>Return to Maze"));
         lcdWrite(0, "Mode:ReturnMaze");
         break;
-
 
       case TEST:
         Serial.println(F("TEST"));

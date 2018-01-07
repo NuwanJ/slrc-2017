@@ -56,8 +56,8 @@ enum {eP, eI, eD, eMax, eBase, eDebug};
 //-------------------------------------------------------------------------------------------------------------- IR Sensors Array
 
 #define NUM_SENSORS 6
-#define RIGHT_EDGE_READING 0
-#define LEFT_EDGE_READING (NUM_SENSORS - 1) * 10
+#define RIGHT_EDGE_READING (NUM_SENSORS - 1) * 10
+#define LEFT_EDGE_READING 0
 #define CENTER_EDGE_READING (NUM_SENSORS - 1) * 5
 
 unsigned int sensor_values[NUM_SENSORS];
@@ -71,7 +71,7 @@ int leftEnd = 0, rightEnd = 0;
 
 //-------------------------------------------------------------------------------------------------------------- Line Following
 
-float kP = 10, kD = 3, kI = 0;
+
 
 int pos = CENTER_EDGE_READING;
 int error = 0;

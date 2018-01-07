@@ -10,12 +10,11 @@ int lineType =  BLACK;
 
 enum{RED_BOX, GREEN_BOX, BLUE_BOX, FINAL_BOX};
 
-#define PIN_SERVO 9
-#define PIN_SPINNER 8
+#define PIN_STEPPER_EN 7
+#define PIN_SERVO 8
+#define PIN_SPINNER 9
 
 #define SERVO_RELEASE 90
 #define SERVO_LOAD 90
 
-#define SPINNER_LOW 10
-#define SPINNER_HIGH 170
-#define SPINNER_SHOOT 90
+#define SPINNER_PWM 100

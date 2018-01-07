@@ -1,68 +1,22 @@
-int oldMode = mode;
-int i = 0, j = 0;
-int rnd = 0;
-
 
 void loop() {
-  displayLoopStatus(mode);
 
-  switch (mode) {
+  // read from port 3, send to port 2:   Stationary <- GRBL   
+  if (Serial3.available()) {
+    int inByte = Serial3.read();
 
-    //-------------------------------------------------------------------------------------------------------------- Begin
-    case BEGIN:
-      buttonStatus = digitalRead(BUTTON_1);
-
-      if (buttonStatus == 0 ) {
-
-     
-      } else {
-        delay(10);
-      }
-      break;
-
-
-  
-    //-------------------------------------------------------------------------------------------------------------- Test
-    case TEST:
-      test();
-      delay(2000);
-
-      break;
-
+    // Reply String from GRBL
+    
+    //Serial2.write(inByte);
   }
-  displayLoopStatus(mode);
-}
 
-boolean detectColorChange(unsigned int *sensor_values) {
-  if (sensor_values[0] == 1 && sensor_values[NUM_SENSORS - 1] == 1) {
-    return true;
-  } else {
-    return false;
+  // read from port 2, send to port 3:   Mobile -> GRBL
+  if (Serial2.available()) {
+    int inByte = Serial2.read();
+
+    // Incomming data need to process from here
+    
+    //Serial3.write(inByte);
   }
 }
 
-void displayLoopStatus(int mode) {
-
-  if (mode != oldMode) {
-    oldMode = mode;
-    Serial.println(F("--------------------------------------------------"));
-    switch (mode) {
-      case BEGIN:
-        Serial.println("BEGIN");
-        break;
-
-        
-      case TEST:
-        Serial.println("TEST");
-        break;
-    }
-    Serial.println(F("--------------------------------------------------"));
-  }
-}
-
-
-
-void debugProcedure() {
-
-
-}

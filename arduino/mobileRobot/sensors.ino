@@ -17,6 +17,8 @@
   ---------------------------------------------------------------------------*/
 
 
+
+
 void irSensorBegin() {
 
   for (int i = 0; i < NUM_SENSORS; i++) {
@@ -50,8 +52,6 @@ void sonarSensorBegin() {
 
 
 //-------------------------------------------------------------------------------------------------------------- readIRSensor
-
-
 
 int readIRSensors(unsigned int *sensor_values) {
   delay(10);
@@ -89,6 +89,17 @@ int readIRSensors(unsigned int *sensor_values) {
   }
 
   //if (0)Serial.print(">> IR : "); Serial.println(irLineString);
+
+  long tt = millis();
+  for (int x = 4; x > 0; x--) {
+    for (int y = 0; y < 6; y++) {
+      irHistory[x][y] = irHistory[x - 1][y];
+    }
+  }
+  for (int y = 0; y < 6; y++) {
+    irHistory[0][y] = sensor_values[y];
+  }
+  Serial.print("T: "); Serial.println(millis() - tt);
 
   return lastReading;
 }

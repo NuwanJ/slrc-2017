@@ -46,6 +46,14 @@ void loop() {
       
       break;
 
+    //-------------------------------------------------------------------------------------------------------------- WAIT_UNTIL_FEEDBACK
+    case WAIT_UNTIL_FEEDBACK:
+      // Check Serial Event
+      // If feedback received, mode = RETURN_TO_MAZE
+
+      break;
+
+
     //-------------------------------------------------------------------------------------------------------------- RETURN_TO_MAZE
     case RETURN_TO_MAZE:
       // In here, do necessary arrangements to start maze explore
@@ -80,12 +88,6 @@ void loop() {
       
       break;
 
-    //-------------------------------------------------------------------------------------------------------------- WAIT_UNTIL_FEEDBACK
-    case WAIT_UNTIL_FEEDBACK:
-      // Check Serial Event
-      // If feedback received, mode = RETURN_TO_MAZE
-
-      break;
 
 
     //-------------------------------------------------------------------------------------------------------------- Test
@@ -117,6 +119,16 @@ void displayLoopStatus(int mode) {
         lcdWrite(0, "Mode:MazeFollow");
         break;
 
+      case WAIT_UNTIL_FEEDBACK:
+        Serial.println(F(">>Wait until a feedback"));
+        lcdWrite(0, "Mode:WaitFeed");
+        break;
+
+      case ENTER_WALL_FOLLOW:
+        Serial.println(F(">>Enter to wall following mode"));
+        lcdWrite(0, "Mode:EnterWall");
+        break;
+
       case LINE_FOLLOW:
         Serial.println(F(">>LineFollow"));
         lcdWrite(0, "Mode:LineFollow");
@@ -132,15 +144,6 @@ void displayLoopStatus(int mode) {
         lcdWrite(0, "Mode:ReturnMaze");
         break;
 
-      case WAIT_UNTIL_FEEDBACK:
-        Serial.println(F(">>Wait until a feedback"));
-        lcdWrite(0, "Mode:WaitFeed");
-        break;
-
-      case ENTER_WALL_FOLLOW:
-        Serial.println(F(">>Enter to wall following mode"));
-        lcdWrite(0, "Mode:EnterWall");
-        break;
 
       case TEST:
         Serial.println(F("TEST"));

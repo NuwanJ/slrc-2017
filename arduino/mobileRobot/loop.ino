@@ -170,7 +170,6 @@ void displayLoopStatus(int mode) {
         lcdWrite(0, "Mode:ReturnMaze");
         break;
 
-
       case TEST:
         Serial.println(F("TEST"));
         lcdWrite(0, "Mode: Test");

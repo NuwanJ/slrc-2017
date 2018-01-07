@@ -15,8 +15,61 @@
   int util_nonRejectSum(int* array, boolean reject[])
   int alignToPath(int dir)
 
-  ---------------------------------------------------------------------------*/
+  ------------------------------------------------------------------------------------------------------------------------*/
 
+/*
+   Procedure to see whether there is a box and get the colour
+*/
+
+int findBox() {
+  /*
+   * This function checks whether there is a box or not,
+   * The robot will go fowards for a few steps to check
+   */
+  int TRIES = 10; //This is a TUNE-ABLE parameter
+  float COLOUR_CONFIDENCE = 0.7; ////This is a TUNE-ABLE parameter
+  int STEPS = 10; //This is the number of steps the robot is going to go forward looking for a box;
+  int boxFound = 0;
+
+  
+  for (int s = 0; s < STEPS; s++) {
+    goForward();
+    if (isBoxFound() || isBoxFound() || isBoxFound()) {
+      int rFound = 0, gFound = 0, bFound = 0;
+
+      for (int t = 0; t < TRIES; t++) {
+        switch (readBoxColor()) {
+          case COLOR_RED:
+            rFound++;
+          case COLOR_GREEN:
+            gFound++;
+          case COLOR_BLUE:
+            bFound++;
+        }
+      }
+      if (rFound > (int)(COLOUR_CONFIDENCE * TRIES))return COLOR_RED;
+      if (gFound > (int)(COLOUR_CONFIDENCE * TRIES))return COLOR_GREEN;
+      if (bFound > (int)(COLOUR_CONFIDENCE * TRIES))return COLOR_BLUE;
+
+
+    }
+    
+  }
+  return COLOR_OPEN;
+
+}
+
+
+
+
+
+
+
+
+
+
+
+//------------------------------------------------------------------------------------------------------------------------------
 void util_readSensorAndUpdateRejectListCW(int* sensor_vals, boolean reject[], int dir) {
   if (dir == CW) {
     readIRSensors(sensor_vals);

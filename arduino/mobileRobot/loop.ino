@@ -21,7 +21,7 @@ void loop() {
         delay(150);
 
       } else if (buttonRead(BUTTON_2) == 1) {
-        // Button1 Option
+        // Button2 Option
         beep();
         mode = LINE_FOLLOW;
         delay(150);
@@ -43,22 +43,24 @@ void loop() {
       // Need to write a check statement here to find the white color box
       // If box found, mode= ENTER_WALL_FOLLOW
       mazeFollow();
-      
+
       break;
 
     //-------------------------------------------------------------------------------------------------------------- WAIT_UNTIL_FEEDBACK
     case WAIT_UNTIL_FEEDBACK:
-      // Check Serial Event
-      // If feedback received, mode = RETURN_TO_MAZE
-
+      if (millis() - timeOfShootCommand < 10000) {
+        beep(3);
+        mode = RETURN_TO_MAZE;
+      }
+      delay(1000);
+      beep();
       break;
 
 
     //-------------------------------------------------------------------------------------------------------------- RETURN_TO_MAZE
     case RETURN_TO_MAZE:
-      // In here, do necessary arrangements to start maze explore
-      // Ex : Go back little and take a 180deg turn
-      // After, mode = MAZE_FOLLOW;
+      returnToMaze();
+      mode = MAZE_FOLLOW;
 
       break;
 
@@ -78,14 +80,14 @@ void loop() {
 
       wallFollow(150); // base speed
       delay(100);
-      
+
       break;
 
     //-------------------------------------------------------------------------------------------------------------- Follow the Line
     case LINE_FOLLOW:
       lineFollow();
       delay(50);
-      
+
       break;
 
 
@@ -93,12 +95,61 @@ void loop() {
     //-------------------------------------------------------------------------------------------------------------- Test
     case TEST:
       test();
-      
+
       break;
 
   }
   displayLoopStatus(mode);
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 // !!! Don't add functions here, this section is only for display status !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -157,6 +208,6 @@ void displayLoopStatus(int mode) {
 
 
 void debugProcedure() {
-    //TODO: Need to implement a debugging
+  //TODO: Need to implement a debugging
 
 }

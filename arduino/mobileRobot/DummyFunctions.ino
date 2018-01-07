@@ -35,6 +35,16 @@ void goForward() {
 
 }
 
+
+void takeOneStepBack() {
+  //The robot should go one step forward. This is to ignore the turns to left while following lines
+  motorWrite(-200, -200);
+  delay(20);
+  motorWrite(0,0);
+  delay(50);
+
+}
+
 void goBack() {
   //The robot should go back just one step
   motorWrite(-200, -200);

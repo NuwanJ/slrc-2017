@@ -53,7 +53,6 @@ void sonarSensorBegin() {
 
 //-------------------------------------------------------------------------------------------------------------- readIRSensor
 
-int irHistory[5][6];
 int readIRSensors(unsigned int *sensor_values) {
   delay(10);
 

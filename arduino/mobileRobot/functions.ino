@@ -21,17 +21,37 @@
    Procedure to see whether there is a box and get the colour
 */
 
+void rotateServo(int n, int deg) {
+
+  deg = max(10, deg);
+  deg = min(170, deg);
+
+  if (n == LEFT) {
+    //  < =90  ^=10    \|/=170
+    leftServo.attach(18);
+    leftServo.write(deg);
+  } else {
+    rightServo.attach(19);
+    rightServo.write(180 - deg);
+  }
+  delay(500);
+
+  leftServo.detach();
+  rightServo.detach();
+}
+
+
 int findBox() {
   /*
-   * This function checks whether there is a box or not,
-   * The robot will go fowards for a few steps to check
-   */
+     This function checks whether there is a box or not,
+     The robot will go fowards for a few steps to check
+  */
   int TRIES = 10; //This is a TUNE-ABLE parameter
   float COLOUR_CONFIDENCE = 0.7; ////This is a TUNE-ABLE parameter
   int STEPS = 10; //This is the number of steps the robot is going to go forward looking for a box;
   int boxFound = 0;
 
-  
+
   for (int s = 0; s < STEPS; s++) {
     goForward();
     if (isBoxFound() || isBoxFound() || isBoxFound()) {
@@ -53,7 +73,7 @@ int findBox() {
 
 
     }
-    
+
   }
   return COLOR_OPEN;
 

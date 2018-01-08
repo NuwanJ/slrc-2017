@@ -52,6 +52,10 @@ void test() {
   //alignToPath(CW);
   //lcdSonarUpdate();
 
+  
+  showFrontLeftSonar();
+  delay(200);
+  
 
   /*
     boolean found = isBoxFound();
@@ -74,6 +78,7 @@ void test() {
     }
 
   */
-  lcdBoxSensorUpdate();
-  delay(500);
+  //lcdBoxSensorUpdate();
+  //lcdSonarUpdate();
+  //delay(1500);
 }

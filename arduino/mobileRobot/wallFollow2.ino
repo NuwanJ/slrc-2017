@@ -3,7 +3,7 @@
   Last Update : 06/01/2018
   These are the functions written by Hashana, dont mix with what Gihan has written on the file wallFollow.ino
 
---------------------------------------------------------------------------*/
+  --------------------------------------------------------------------------*/
 
 
 
@@ -16,8 +16,68 @@
 float wall_kI = 0.0f, wall_kP = 1.0f, wall_kD = 0.0f;
 float prevF[10] = {0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f};
 float prevB[10] = {0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f};
-
 int iterWallFollow = 0;
+int f = 0, b = 0;
+
+int ff() {
+  return f = (int)readSonar(0);
+}
+int bb() {
+  return b = (int)readSonar(1);
+}
+
+
+void followLeftSimple() {
+  followLeftSimpleIteration();
+}
+
+void showFrontLeftSonar() {
+  float dd=10000;
+  for(int x=0;x<5;x++){
+    dd=min(dd,readSonar(0));
+    delay(50);
+  }
+  
+  lcd.clear();
+  lcd.setCursor(0, 0); //col, row
+  lcd.print(dd);
+}
+
+void followLeftSimpleIteration() {
+  for (int i = 0; i < 5; i++) {
+    delay(1000);
+    int diff = ff() - bb();
+
+    lcd.clear();
+    lcd.setCursor(0, 0); //col, row
+    lcd.print(f);
+
+    lcd.setCursor(0, 1); //col, row
+    lcd.print(b);
+
+
+    if (abs(diff) > 0) {
+      if (diff > 0) {
+        motorWrite(-150, 150);
+      }
+      else {
+        motorWrite(150, -150);
+      }
+      delay(80 - (15 * i));
+      motorWrite(0, 0);
+      beep(2);
+      delay(1000);
+
+    }
+  }
+
+  motorWrite(150, 150);
+  lcdWrite(0, "GoFwd");
+  delay(200);
+  motorWrite(0, 0);
+  delay(100);
+
+}
 
 
 
@@ -52,11 +112,12 @@ void followLeft(float front, float back) {
     motorWrite(0, 0);
     delay(30);
   }
-  Serial.print(iterWallFollow);
+
+
+
+  Serial.print("wall follow iter: "); Serial.println(iterWallFollow);
   Serial.print("F: "); Serial.print(prevF[0]); Serial.print(" "); Serial.print(prevF[1]); Serial.print(" "); Serial.println(prevF[2]);
   Serial.print("B: "); Serial.print(prevB[0]); Serial.print(" "); Serial.print(prevB[1]); Serial.print(" "); Serial.println(prevB[2]);
-
-
 }
 
 

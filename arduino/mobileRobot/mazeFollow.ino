@@ -21,6 +21,11 @@ void mazeFollow() {
   error = (pos - CENTER_EDGE_READING);
   Serial.println(irLineString);
 
+  if (allIn) {
+    if(checkEnd())return;
+
+  }
+
   if (sensor_values[5] == 1) {
     goForward(); goForward(); goForward();
     alignToPath(CW);
@@ -33,8 +38,6 @@ void mazeFollow() {
     else {
       motorWrite(0, 0);
       int boxColor = findBox();
-      temp_debugFunctionBoxDetection(boxColor);
-
 
       if (boxColor != COLOR_OPEN)shoot(boxColor);
       else mode = RETURN_TO_MAZE;
@@ -52,11 +55,15 @@ void mazeFollow() {
 
 void returnToMaze() {
   readIRSensors(sensor_values);
+  while (!allOut) {
+    takeOneStepBack();
+    readIRSensors(sensor_values);
+  }
   while (allOut) {
     takeOneStepBack();
     readIRSensors(sensor_values);
   }
-  for (int s = 0; s < 5; s++)goForward();  //   s < (TUNE-ABLE parameter);
+  //  for (int s = 0; s < 5; s++)goForward();  //   s < (TUNE-ABLE parameter);
   alignToPath(CCW);
 
 }
@@ -91,4 +98,6 @@ void temp_debugFunctionBoxDetection(int boxColor) {
       return;
   }
 }
+
+
 

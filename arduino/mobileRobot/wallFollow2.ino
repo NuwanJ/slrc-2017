@@ -17,13 +17,14 @@ float wall_kI = 0.0f, wall_kP = 1.0f, wall_kD = 0.0f;
 float prevF[10] = {0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f};
 float prevB[10] = {0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f};
 int iterWallFollow = 0;
-int f = 0, b = 0;
+float f = 0, b = 0;
 
-int ff() {
-  return f = (int)readSonar(0);
+float ff() {
+  return f = (float)readSonar(0);
 }
-int bb() {
-  return b = (int)readSonar(1);
+
+float bb() {
+  return b = (float)readSonar(1);
 }
 
 
@@ -134,5 +135,24 @@ void util_ShiftRight(float front, float back) {
   }
   prevF[0] = front;
   prevB[0] = back;
+}
+
+
+
+
+
+void followLeft2(){
+  for(int i=0;i<9;i++){
+    prevF[i+1]=prevF[i];
+    prevB[i+1]=prevB[i];
+  }
+  ff();
+  bb();
+}
+
+
+void checkFrontRightSonar(){
+  Serial.println(ff());
+  delay(100);
 }
 

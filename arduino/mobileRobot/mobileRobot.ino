@@ -46,17 +46,19 @@ void setup() {
 }
 
 void test() {
-  
+
   //readBoxColor();
   //lcdIRSensorUpdate();
   //alignToPath(CW);
   //lcdSonarUpdate();
 
-  
-  showFrontLeftSonar();
-  delay(200);
-  
 
+  //  showFrontLeftSonar();
+  //  delay(200);
+
+
+
+  checkFrontRightSonar();
   /*
     boolean found = isBoxFound();
 

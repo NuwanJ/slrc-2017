@@ -22,16 +22,48 @@
 */
 
 int findBox() {
+  int TRIES = 10; //This is a TUNE-ABLE parameter
+  float COLOUR_CONFIDENCE = 0.7; ////This is a TUNE-ABLE parameter
+  int STEPS = 10; //This is the number of steps the robot is going to go forward looking for a box;
+  int boxFound = 0;
+  int rFound = 0, gFound = 0, bFound = 0;
+
+  readIRSensors(sensor_values);
+  int s = 0;
+  while (allOut & s < STEPS) {
+    goForward();
+    readIRSensors(sensor_values);
+    s++;
+  }
+  if (!isBoxFound())return COLOR_OPEN;
+  else {
+    for (int t = 0; t < TRIES; t++) {
+      switch (readBoxColor()) {
+        case COLOR_RED:
+          rFound++;
+        case COLOR_GREEN:
+          gFound++;
+        case COLOR_BLUE:
+          bFound++;
+      }
+    }
+    if (rFound > (int)(COLOUR_CONFIDENCE * TRIES))return COLOR_RED;
+    if (gFound > (int)(COLOUR_CONFIDENCE * TRIES))return COLOR_GREEN;
+    if (bFound > (int)(COLOUR_CONFIDENCE * TRIES))return COLOR_BLUE;
+  }
+  return COLOR_OPEN;
+}
+int findBoxOld() {
   /*
-   * This function checks whether there is a box or not,
-   * The robot will go fowards for a few steps to check
-   */
+     This function checks whether there is a box or not,
+     The robot will go fowards for a few steps to check
+  */
   int TRIES = 10; //This is a TUNE-ABLE parameter
   float COLOUR_CONFIDENCE = 0.7; ////This is a TUNE-ABLE parameter
   int STEPS = 10; //This is the number of steps the robot is going to go forward looking for a box;
   int boxFound = 0;
 
-  
+
   for (int s = 0; s < STEPS; s++) {
     goForward();
     if (isBoxFound() || isBoxFound() || isBoxFound()) {
@@ -53,7 +85,7 @@ int findBox() {
 
 
     }
-    
+
   }
   return COLOR_OPEN;
 
@@ -133,6 +165,7 @@ void alignToPath(int dir) {
     motorWrite(0, 0);
     delay(50);
     util_readSensorAndUpdateRejectListCW(sensor_values, reject, dir);
+    if (allIn)if(checkEnd())return;
   }
   motorWrite(0, 0);
 
@@ -143,13 +176,17 @@ void alignToPath(int dir) {
 
   //Turn until the sensor panel finds the new line.
   Serial.println("Turn until the sensor panel finds the new line.");
+  int i = 0;
   while (util_nonRejectSum(sensor_values, reject) == 0) {
     motorWrite(motorSpeeds[0], motorSpeeds[1]);
     delay(20);
     motorWrite(0, 0);
     delay(20);
     util_readSensorAndUpdateRejectListCW(sensor_values, reject, dir);
-
+    i++;
+    if (i >= 10) {
+      //for(int x=0;x<6;x++)reject[x]=false;
+    }
   }
 
 
@@ -165,7 +202,7 @@ void alignToPath(int dir) {
 
 
   //Now align the robot to the line
-  int i = 0;
+  i = 0;
 
   while (true && i < 10) {
     util_readSensorAndUpdateRejectListCW(sensor_values, reject, dir);
@@ -251,4 +288,38 @@ void ledBlink(int n, int count) {
     delay(DELAY_BLINK);
   }
 }
+
+//---------------------------------------------------------------------------------------------------
+void beginBigBox() {
+  readIRSensors(sensor_values);
+  while (allIn) {
+    goForward();
+    readIRSensors(sensor_values);
+
+  }
+}
+
+//-------------------------------------------------------------------------------------------------------
+
+boolean checkEnd() {
+  int T = 4;
+  int allInCount = 0;
+  for (int tt = 0; tt < T; tt++) {
+    int sum = 0;
+    for (int x = 0; x < 6; x++)sum += irHistory[tt][x];
+    if (sum == 6)allInCount++;
+  }
+
+  if (allInCount == T-1) {
+    mode = FINISH_MAZE;
+    return true;
+  }
+  else {
+    return false;
+  }
+
+
+
+}
+
 

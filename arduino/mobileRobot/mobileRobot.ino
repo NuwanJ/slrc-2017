@@ -52,18 +52,18 @@ void setup() {
 
   ledOff(LED_RED);
 
+  /*
+    for (int i = 30; i < 130; i+=10) {
+      rotateServo(LEFT, i);
 
-  for (int i = 30; i < 130; i+=10) {
-    rotateServo(LEFT, i);
-    
-    rotateServo(RIGHT, i);
-  }
+      rotateServo(RIGHT, i);
+    }
 
-  for (int i = 130; i >30; i-=10) {
-    rotateServo(LEFT, i);
-    rotateServo(RIGHT, i);
-  }
-
+    for (int i = 130; i >30; i-=10) {
+      rotateServo(LEFT, i);
+      rotateServo(RIGHT, i);
+    }
+  */
 
 }
 

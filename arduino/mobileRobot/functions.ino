@@ -27,7 +27,7 @@ void rotateServo(int n, int deg) {
   deg = min(170, deg);
 
   if (n == LEFT) {
-    //  < =90  ^=10    \|/=170
+    //  < =90  ^=10 a   \|/=170
     leftServo.attach(18);
     leftServo.write(deg);
   } else {
@@ -158,6 +158,10 @@ int util_nonRejectSum(int* array, boolean reject[]) {
 }
 
 
+int readIRSensors(){
+    return readIRSensors(sensor_values);
+}
+
 void alignToPath(int dir) {
   /*
      New version, uses rejection techniques
@@ -175,6 +179,12 @@ void alignToPath(int dir) {
     cornerSensor = 0;
   }
 
+  readIRSensors();
+  while(sensor_values[cornerSensor]==1){
+    goForward();
+    readIRSensors();
+  }
+
   boolean reject[] = {true, true, true, true, true, true};
 
   //Turn until the sensor panel leaves the first line.
@@ -182,14 +192,12 @@ void alignToPath(int dir) {
   while (reject[cornerSensor]) {
     motorWrite(motorSpeeds[0], motorSpeeds[1]);
     delay(20);
-    motorWrite(0, 0);
-    delay(50);
+    //motorWrite(0, 0);   /*Nuwan*/
+    //delay(50);          /*Nuwan*/
     util_readSensorAndUpdateRejectListCW(sensor_values, reject, dir);
-    if (allIn)if(checkEnd())return;
+    if (allIn)if (checkEnd())return;
   }
   motorWrite(0, 0);
-
-
 
   beep(2);
   delay(500);
@@ -204,9 +212,6 @@ void alignToPath(int dir) {
     delay(20);
     util_readSensorAndUpdateRejectListCW(sensor_values, reject, dir);
     i++;
-    if (i >= 10) {
-      //for(int x=0;x<6;x++)reject[x]=false;
-    }
   }
 
 
@@ -243,7 +248,6 @@ void alignToPath(int dir) {
       motorWrite(0, 0);
       break;
     }
-
     delay(50);
     motorWrite(0, 0);
     delay(20);
@@ -330,7 +334,7 @@ boolean checkEnd() {
     if (sum == 6)allInCount++;
   }
 
-  if (allInCount == T-1) {
+  if (allInCount == T - 1) {
     mode = FINISH_MAZE;
     return true;
   }

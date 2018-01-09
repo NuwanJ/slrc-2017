@@ -1,13 +1,14 @@
 
 
 void loop() {
-  //displayLoopStatus(mode);
+  displayLoopStatus(mode);
 
   switch (mode) {
 
     //-------------------------------------------------------------------------------------------------------------- Begin
     case BEGIN:
-    
+
+
       if (buttonRead(BUTTON_0) == 1) {
         // Button0 Option
         delay(150);
@@ -53,7 +54,8 @@ void loop() {
 
     //-------------------------------------------------------------------------------------------------------------- WAIT_UNTIL_FEEDBACK
     case WAIT_UNTIL_FEEDBACK:
-      if (millis() - timeOfShootCommand > 20000) {
+      if (0) {
+        //if (millis() - timeOfShootCommand < 12000) {
         beep(3);
         mode = RETURN_TO_MAZE;
       }
@@ -111,7 +113,7 @@ void loop() {
       break;
 
   }
-  //displayLoopStatus(mode);
+  displayLoopStatus(mode);
 }
 
 

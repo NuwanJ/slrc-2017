@@ -35,11 +35,11 @@ void lineFollow() {
     int motorSpeed = calculatePID(error);
 
     //Assigning motor speeds
-    int rightMotorSpeed = baseSpeed- motorSpeed;
-    int leftMotorSpeed = baseSpeed +motorSpeed;
+    int rightMotorSpeed = baseSpeed - motorSpeed;
+    int leftMotorSpeed = baseSpeed + motorSpeed;
 
-    //Remapping motor speed
-    motorWrite(leftMotorSpeed, rightMotorSpeed);
+    //Remapping motor speed, true = line following mode override
+    motorWrite(leftMotorSpeed, rightMotorSpeed, true);
 
   }
 
@@ -48,8 +48,7 @@ void lineFollow() {
 
 }
 
-
-float kP = 18, kD = 3, kI = 0.5;
+float kP = 20, kD = 5, kI = 0.5;
 //kP=18 works
 
 int calculatePID(int error) {
@@ -68,6 +67,7 @@ int calculatePID(int error) {
   return (int)(P + I + D);
 
 }
+
 
 
 

@@ -37,7 +37,6 @@ void serialEvent() {
   }
 }
 
-
 void SerialEvent3() {
   //This happens if the stationary bot says it finished shooting
 
@@ -47,7 +46,6 @@ void SerialEvent3() {
     int r = Serial3.read();
     char inChar = (char)r;
 
-    Serial.println(inChar)
     if (inChar == 'd') {
       mode = RETURN_TO_MAZE;
     }

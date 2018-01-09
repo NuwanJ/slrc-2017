@@ -50,6 +50,25 @@ void loop() {
       Serial.println(">> Robot : Test");
       test();
 
+    //------------------------------------------------------------------------------RGB
+
+    } else if (inByte == 'R') {      
+      Serial.println(">> Robot : Red");
+      processColor('r');
+      
+    } else if (inByte == 'G') {      
+      Serial.println(">> Robot : Red");
+      processColor('g');
+      
+    } else if (inByte == 'B') {      
+      Serial.println(">> Robot : Red");
+      processColor('b');
+
+
+
+    //------------------------------------------------------------------------------
+
+
     } else {
       // Reply String to GRBL
       Serial2.write(inByte);

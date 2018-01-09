@@ -21,6 +21,7 @@ Servo rightServo;
 //Ultrasonic sonar0(pinTrig[0], pinEcho[0]);
 
 volatile int mode = BEGIN;
+int oldMode = mode;
 
 void setup() {
 
@@ -40,7 +41,6 @@ void setup() {
 
   //leftServo.attach(18);
 
-
   ledOn(LED_RED);
 
   beginDebugger();
@@ -52,19 +52,6 @@ void setup() {
 
   ledOff(LED_RED);
 
-  /*
-    for (int i = 30; i < 130; i+=10) {
-      rotateServo(LEFT, i);
-
-      rotateServo(RIGHT, i);
-    }
-
-    for (int i = 130; i >30; i-=10) {
-      rotateServo(LEFT, i);
-      rotateServo(RIGHT, i);
-    }
-  */
-
 }
 
 void test() {
@@ -74,35 +61,9 @@ void test() {
   //alignToPath(CW);
   //lcdSonarUpdate();
 
-
   //  showFrontLeftSonar();
   //  delay(200);
-
-
-
-  checkFrontRightSonar();
-  /*
-    boolean found = isBoxFound();
-
-    if (found) {
-
-      // Suggestion : while (all are not same) take 5
-
-      readBoxColor();
-      if (boxColor == 1)Serial.println("R");
-      else if (boxColor == 2)Serial.println("G");
-      else if (boxColor == 3)Serial.println("B");
-      else Serial.println("None");
-
-      // Send the char to Stationary robot
-      // Mode = WAIT_UNTIL_FEEDBACK
-      // ------------------------
-    } else {
-      Serial.println("0");
-    }
-
-  */
-  //lcdBoxSensorUpdate();
-  //lcdSonarUpdate();
-  //delay(1500);
+  
+  shoot(COLOR_RED);
+  
 }

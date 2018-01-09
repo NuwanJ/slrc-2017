@@ -6,7 +6,7 @@
 // Last Update : 6/1/2018
 
 /* Remarks ------------------------------------
- *  These are the functions written by Hashana, dont mix with what Gihan has written on the file wallFollow2.ino
+    These are the functions written by Hashana, dont mix with what Gihan has written on the file wallFollow2.ino
   ----------------------------------------------*/
 
 int fit(double front, double back, int flag, int baseSpeed) {
@@ -75,40 +75,45 @@ int fit(double front, double back, int flag, int baseSpeed) {
 
 int wallFollow(int baseSpeed) {
   int thresh = 10;
-  for (int i = 0; i < 4; i++) {
+  for (int i = 3; i >= 0; i--) {
     for (int j = 0; j < 4; j++) {
-      hist[i][j] = hist[i + 1][j];
+      hist[i+1][j] = hist[i][j];
     }
   }
-
+  if (leftServoAngle != 0){
+    leftServoAngle = 0;
+    
+  }
   for (int i = 0; i < 4; i++) {
     dist[i] = readSonar(i);
     if (dist[i] > 200) {
       dist[i] = 200;
     }
-    hist[4][i] = dist[i];
+    hist[0][i] = dist[i];
   }
-  
-  
-  
-  
-  
-    int cost[2]; // cost to fit the robot. 0th-left 1st-right
-    cost[0] = dist[0] + dist[1];
-    cost[1] = dist[2] + dist[3];
 
-    if (1 || cost[0] < cost[1]) { // easy to fit the robot to the left wall
-      fit(dist[0], dist[1], -1, baseSpeed);
-    } else { // easy to fit to right wall
-      //fit(dist[3], dist[2], 1, baseSpeed);
-    }
   
+//  if (!verify(dist)){
+//    getReadingsFromRotating(dist);
+//  }
+  
+  
+  int cost[2]; // cost to fit the robot. 0th-left 1st-right
+  cost[0] = dist[0] + dist[1];
+  cost[1] = dist[2] + dist[3];
+
+  if (1 || cost[0] < cost[1]) { // easy to fit the robot to the left wall
+    fit(dist[0], dist[1], -1, baseSpeed);
+  } else { // easy to fit to right wall
+    //fit(dist[3], dist[2], 1, baseSpeed);
+  }
+
 }
 
 
 
 /*
-int wallFollow(int baseSpeed) {
+  int wallFollow(int baseSpeed) {
   int thresh = 10;
   int diff[4];
 
@@ -121,7 +126,7 @@ int wallFollow(int baseSpeed) {
     diff[i] = thresh - dist[i];
   }
   followLeft(dist[0], dist[1]);
-}
+  }
 */
 int fitpid(int front, int back, int flag, int baseSpeed) {
 

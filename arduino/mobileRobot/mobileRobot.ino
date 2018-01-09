@@ -53,13 +53,13 @@ void setup() {
   ledOff(LED_RED);
 
 
-  for (int i = 30; i < 130; i+=10) {
+  for (int i = 30; i < 130; i += 10) {
     rotateServo(LEFT, i);
-    
+
     rotateServo(RIGHT, i);
   }
 
-  for (int i = 130; i >30; i-=10) {
+  for (int i = 130; i > 30; i -= 10) {
     rotateServo(LEFT, i);
     rotateServo(RIGHT, i);
   }
@@ -105,4 +105,11 @@ void test() {
   //lcdBoxSensorUpdate();
   //lcdSonarUpdate();
   //delay(1500);
+  // 1 minute
+  
+  shoot(COLOR_RED);
+  for (int i = 0; i < 6; i++) {
+    delay(10000);
+  }
+
 }

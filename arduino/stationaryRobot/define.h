@@ -20,5 +20,5 @@ enum{RED_BOX, GREEN_BOX, BLUE_BOX, FINAL_BOX};
 #define SPINNER_PWM 100
 
 
-int x[] = {10, 20, 30, 40};
-int y[] = {0, 0, 0, 0};
+int x[] = {20, 35, 50, 40};
+int y[] = {5,5, 5, 0};

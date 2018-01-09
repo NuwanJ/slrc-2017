@@ -1,28 +1,56 @@
 
-
 void releaseBall() {
 
-  myservo.attach(9PIN_SERVO);
+  servoMotor.attach(PIN_SERVO);
+
   servoMotor.write(SERVO_RELEASE);
-  delay(1000); // Let some time to turn and release the TT Ball
+  delay(2000); // Let some time to turn and release the TT Ball
   servoMotor.write(SERVO_LOAD);
   delay(1000);
-  myservo.detach();
+  servoMotor.detach();
 
 }
 
-void shootBall( ) {
+void shootBall() {
 
-  // Turn on the spinner motor
-  spinnerMotor.write(SPINNER_SHOOT);
+  motorOn();
+  delay(5000);
+  releaseBall();
+  motorOff();
 
-  // Give some time to reach it's speed
-  delay(1500);
-
-  // Release a Ball from the storage
-  relaeseBall();
-
-  // Turn off the Spinner motor
-  spinnerMotor.write(SPINNER_SLOW);
 }
+
+
+
+void processColor(char c) {
+
+  if (c == 'r') {
+    Serial.println(">> Target : Red Box");
+    moveRobot(x[RED_BOX], y[RED_BOX]);
+
+    Serial.println(">> Shooting : Red Box");
+    shootBall();
+
+    // Reply as done
+    writeMobile('d');
+
+    Serial.println(">> Done");
+
+  } else if (c == 'g') {
+
+  } else if (c == 'b') {
+
+  }
+
+}
+
+void motorOn() {
+  analogWrite(PIN_SPINNER, SPINNER_PWM);
+}
+
+void motorOff() {
+  analogWrite(PIN_SPINNER, 0);
+}
+
+
 

@@ -1,0 +1,24 @@
+float distN = 0, oldDistN = 0;
+
+
+wallFollowNuwan() {
+
+  distN = readSonar(0);
+  distN2 = readSonar(1); // ?
+  
+  if (distN != 200 && distN != oldDistN) {
+
+      int eN = distN - oldDistN;
+      int cN = eN * 10 
+      motorWrite(baseSpeed + cN, baseSpeed - cN); // Need to change 10 and + - 
+      delay(100);
+  
+  }else if (disrN == 200){
+    // ??
+  }else{
+ 
+    // Do nothing special
+    
+  }
+  
+}

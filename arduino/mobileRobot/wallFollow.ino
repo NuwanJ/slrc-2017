@@ -48,7 +48,7 @@ int fit(double front, double back, int flag, int baseSpeed) {
     }
     I /= c;
 
-    I *= 0 * flag;
+    I *= 1 * flag;
     Serial.print(P);
     Serial.print(" ");
     Serial.print(I);

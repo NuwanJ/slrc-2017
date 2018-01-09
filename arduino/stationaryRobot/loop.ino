@@ -1,68 +1,107 @@
-int oldMode = mode;
-int i = 0, j = 0;
-int rnd = 0;
+//--------------------------------------------------------------
+// Command Map
+//--------------------------------------------------------------
+// a = motor on
+// b = motor off
+// c = release the ball
+// d = shooting (full prograss)
+
+// h = home
+// x = unlock
+// t = call test function
+//--------------------------------------------------------------
 
 
 void loop() {
-  displayLoopStatus(mode);
 
-  switch (mode) {
+  // read from port 0, send to port 2:   PC -> GRBL
+  if (Serial.available()) {
+    char inByte = Serial.read();
 
-    //-------------------------------------------------------------------------------------------------------------- Begin
-    case BEGIN:
-      buttonStatus = digitalRead(BUTTON_1);
+    if (inByte == 'a') {
+      // Turn on motor
+      Serial.println(">> Motor : ON");
+      motorOn();
 
-      if (buttonStatus == 0 ) {
+    } else if (inByte == 'b') {
+      // Turn off motor
+      Serial.println(">> Motor : OFF");
+      motorOff();
 
-     
-      } else {
-        delay(10);
-      }
-      break;
+    } else if (inByte == 'c') {
+      // Release a TT Ball
+      Serial.println(">> Spinner : Release");
+      releaseBall();
 
+    } else if (inByte == 'd') {
+      // Shooting
+      Serial.println(">> Shooting : Load");
+      shootBall();
 
-  
-    //-------------------------------------------------------------------------------------------------------------- Test
-    case TEST:
+    } else if (inByte == 'x') {
+      Serial.println(">> Robot : Unlock GRBL");
+      unlock();
+
+    } else if (inByte == 'h') {
+      Serial.println(">> Robot : Homing GRBL");
+      homing();
+
+    } else if (inByte == 't') {      
+      Serial.println(">> Robot : Test");
       test();
-      delay(2000);
 
-      break;
-
-  }
-  displayLoopStatus(mode);
-}
-
-boolean detectColorChange(unsigned int *sensor_values) {
-  if (sensor_values[0] == 1 && sensor_values[NUM_SENSORS - 1] == 1) {
-    return true;
-  } else {
-    return false;
-  }
-}
-
-void displayLoopStatus(int mode) {
-
-  if (mode != oldMode) {
-    oldMode = mode;
-    Serial.println(F("--------------------------------------------------"));
-    switch (mode) {
-      case BEGIN:
-        Serial.println("BEGIN");
-        break;
-
-        
-      case TEST:
-        Serial.println("TEST");
-        break;
+    } else {
+      // Reply String to GRBL
+      Serial2.write(inByte);
     }
-    Serial.println(F("--------------------------------------------------"));
+
+  }
+
+  // read from port 2, send to port 3:   Mobile -> Mega
+  if (Serial3.available()) {
+    char inByte = Serial3.read();
+
+    // Incomming data need to process from here
+
+    if (inByte == 'r' || inByte == 'g' || inByte == 'b') {
+      Serial.println(">> Color Received");
+      processColor(inByte);
+
+    } else {
+      Serial.write(inByte);
+    }
+    /*---------------------------------------------------------------------------
+      char targetColor = '\0';
+      char temp = '\0';
+
+      while ((temp = Serial3.read()) != '\0')targetColor = temp;
+
+      unsigned long time = millis();
+      while (!mySerial.available() & (millis() - time < 10000)) {
+      //wait
+      }
+
+      String responseFromGRBL = "";
+      while (mySerial.available()) {
+      responseFromGRBL = responseFromGRBL + mySerial.read();
+      }
+      if (0 == strcmp(responseFromGRBL.c_str() , "ok")) { //strcmp return 0 when equal
+      Serial.write("done");
+      }
+      else {
+      Serial.write("error");
+      }
+      Serial.flush();
+      //---------------------------------------------------------------------------*/
+  }
+
+
+  // read from port 2, send to port 3:   GRBL -> PC
+  if (Serial2.available()) {
+    char inByte = Serial2.read();
+
+    // Incomming data need to process from here
+    Serial.write(inByte);
   }
 }
 
-
-
-void debugProcedure() {
-
-
-}

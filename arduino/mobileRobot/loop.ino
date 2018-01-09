@@ -17,7 +17,7 @@ void loop() {
       } else if (buttonRead(BUTTON_1) == 1) {
         // Button1 Option
         beep();
-        mode = MAZE_FOLLOW;
+        mode = BEGIN_BIG_BOX;
         delay(150);
 
       } else if (buttonRead(BUTTON_2) == 1) {
@@ -37,6 +37,12 @@ void loop() {
         delay(10);
       }
       break;
+    //-------------------------------------------------------------------------------------------------------------- Start here
+    case BEGIN_BIG_BOX:
+      beginBigBox();
+      mode=MAZE_FOLLOW;
+      break;
+    
     //-------------------------------------------------------------------------------------------------------------- Explore the Maze
     case MAZE_FOLLOW:
 
@@ -90,8 +96,15 @@ void loop() {
 
       break;
 
+//-------------------------------------------------------------------------------------------------------------- Finish the maze
+    case FINISH_MAZE:
+      while(true){
+        beep(3);
+      }
 
+      break;
 
+    
     //-------------------------------------------------------------------------------------------------------------- Test
     case TEST:
       test();

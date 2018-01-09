@@ -50,7 +50,6 @@ void mazeFollow() {
   }
 }
 
-
 void returnToMaze() {
   readIRSensors(sensor_values);
   while (!allOut) {

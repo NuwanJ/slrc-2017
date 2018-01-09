@@ -7,6 +7,7 @@ int buttonStatus = 1;
 int lineType =  WHITE;
 int linePos = 0 ;
 
+
 #define FRONT 8
 #define LEFT 4
 #define RIGHT 6
@@ -79,7 +80,7 @@ int error = 0;
 int previousErrors[] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}; //zero initializing with 10 elements
 
 int leftSpd = 0, rightSpd = 0;
-const double slowFactor =1, speedFactor = 1;
+const double slowFactor =0.5, speedFactor = 1;
 int rightMotorSpeed = 0, leftMotorSpeed = 0;
 
 int maxSpeed = 250;
@@ -118,3 +119,4 @@ int boxSensor = 150;
 boolean boxFound = false;
 
 #define BOX_FOUND_THERSOLD 50
+

@@ -103,19 +103,12 @@ int findBoxOld() {
       if (gFound > (int)(COLOUR_CONFIDENCE * TRIES))return COLOR_GREEN;
       if (bFound > (int)(COLOUR_CONFIDENCE * TRIES))return COLOR_BLUE;
 
-
     }
 
   }
   return COLOR_OPEN;
 
 }
-
-
-
-
-
-
 
 
 
@@ -255,10 +248,7 @@ void alignToPath(int dir) {
     beep(1);
 
   }
-  lcdWrite(1, "----");
-
   //The sensor panel is alligned to the line, move forward
-
 }
 
 

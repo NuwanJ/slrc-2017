@@ -38,7 +38,7 @@ void lineFollow() {
     int rightMotorSpeed = baseSpeed - motorSpeed;
     int leftMotorSpeed = baseSpeed + motorSpeed;
 
-    //Remapping motor speed
+    //Remapping motor speed, true = line following mode override
     motorWrite(leftMotorSpeed, rightMotorSpeed, true);
 
   }

@@ -1,7 +1,7 @@
 
 
 void loop() {
-  displayLoopStatus(mode);
+  //displayLoopStatus(mode);
 
   switch (mode) {
 
@@ -111,7 +111,7 @@ void loop() {
       break;
 
   }
-  displayLoopStatus(mode);
+  //displayLoopStatus(mode);
 }
 
 

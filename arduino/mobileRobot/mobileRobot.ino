@@ -55,6 +55,7 @@ void setup() {
 
   for (int i = 30; i < 130; i+=10) {
     rotateServo(LEFT, i);
+    
     rotateServo(RIGHT, i);
   }
 

@@ -10,11 +10,15 @@ int lineType =  BLACK;
 
 enum{RED_BOX, GREEN_BOX, BLUE_BOX, FINAL_BOX};
 
-#define PIN_STEPPER_EN 7
-#define PIN_SERVO 8
-#define PIN_SPINNER 9
+#define PIN_STEPPER_EN 22
+#define PIN_SERVO 10
+#define PIN_SPINNER 4
 
-#define SERVO_RELEASE 90
+#define SERVO_RELEASE 170
 #define SERVO_LOAD 90
 
 #define SPINNER_PWM 100
+
+
+int x[] = {10, 20, 30, 40};
+int y[] = {0, 0, 0, 0};

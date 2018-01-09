@@ -80,7 +80,11 @@ int error = 0;
 int previousErrors[] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}; //zero initializing with 10 elements
 
 int leftSpd = 0, rightSpd = 0;
+<<<<<<< HEAD
 const double slowFactor =0.5,speedFactor = 1;
+=======
+const double slowFactor = 0.5, speedFactor = 1;
+>>>>>>> parent of 4762f59... Almost everything in the maze is okay :-)
 int rightMotorSpeed = 0, leftMotorSpeed = 0;
 
 int maxSpeed = 250;

@@ -52,6 +52,22 @@ void setup() {
 
   ledOff(LED_RED);
 
+<<<<<<< HEAD
+=======
+
+  for (int i = 30; i < 130; i+=10) {
+    rotateServo(LEFT, i);
+    
+    rotateServo(RIGHT, i);
+  }
+
+  for (int i = 130; i >30; i-=10) {
+    rotateServo(LEFT, i);
+    rotateServo(RIGHT, i);
+  }
+
+
+>>>>>>> parent of 4762f59... Almost everything in the maze is okay :-)
 }
 
 void test() {

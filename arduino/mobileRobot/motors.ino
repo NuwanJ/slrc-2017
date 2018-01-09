@@ -33,13 +33,13 @@ void motorBegin() {
 
 
 // General calling
-void motorWrite(int leftMotorSpeed, int rightMotorSpeed) {
-  motorWrite( leftMotorSpeed, rightMotorSpeed, false);
+void motorWrite(int leftM_Speed, int rightM_Speed) {
+  motorWrite(leftM_Speed, rightM_Speed, false);
 
 }
 
 // Overidded function
-void motorWrite(int leftMotorSpeed, int rightMotorSpeed, boolean lineFollow) {
+void motorWrite(int leftMotorSpeed, int rightMotorSpeed, boolean varLinefollow) {
 
   //leftMotorSpeed += drift;
   //rightMotorSpeed -= drift;
@@ -53,7 +53,7 @@ void motorWrite(int leftMotorSpeed, int rightMotorSpeed, boolean lineFollow) {
 
     } else if (leftMotorSpeed < 0) {
 
-      if (lineFollow) {
+      if (varLinefollow==true) {
         leftMotorSpeed  *= - slowFactor;
       } else {
         leftMotorSpeed  *= - 1;
@@ -76,7 +76,7 @@ void motorWrite(int leftMotorSpeed, int rightMotorSpeed, boolean lineFollow) {
       digitalWrite(rightMotor2, LOW);
     } else if (rightMotorSpeed < 0) {
 
-      if (lineFollow) {
+      if (varLinefollow==true) {
         leftMotorSpeed  *= - slowFactor;
       } else {
         leftMotorSpeed  *= - 1;

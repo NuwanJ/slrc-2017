@@ -25,7 +25,7 @@ void mazeFollow() {
   }
 
   if (sensor_values[5] == 1) {
-    goForward(); goForward(); goForward();
+    goForward(); goForward(); goForward();goForward(); goForward(); goForward();
     alignToPath(CW);
   }
   else if (allOut) {

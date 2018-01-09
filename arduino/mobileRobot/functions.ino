@@ -185,8 +185,8 @@ void alignToPath(int dir) {
   while (reject[cornerSensor]) {
     motorWrite(motorSpeeds[0], motorSpeeds[1]);
     delay(20);
-    //motorWrite(0, 0);   /*Nuwan*/
-    //delay(50);          /*Nuwan*/
+    motorWrite(0, 0);   /*Nuwan*/
+    delay(50);          /*Nuwan*/
     util_readSensorAndUpdateRejectListCW(sensor_values, reject, dir);
     if (allIn)if (checkEnd())return;
   }

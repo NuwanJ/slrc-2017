@@ -63,7 +63,7 @@ void test() {
 
   //  showFrontLeftSonar();
   //  delay(200);
-  
-  shoot(COLOR_RED);
-  
+  lineFollow();
+  //shoot(COLOR_RED);
+
 }

@@ -118,3 +118,7 @@ int boxSensor = 150;
 boolean boxFound = false;
 
 #define BOX_FOUND_THERSOLD 50
+
+
+//---Harshana
+boolean currentlyFollowing=false;

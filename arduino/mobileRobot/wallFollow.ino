@@ -73,7 +73,7 @@ int fit(double front, double back, int flag, int baseSpeed) {
 }
 
 
-int wallFollow(int baseSpeed) {
+int wallFollowSonar(int baseSpeed) {
   int thresh = 10;
   for (int i = 0; i < 4; i++) {
     for (int j = 0; j < 4; j++) {

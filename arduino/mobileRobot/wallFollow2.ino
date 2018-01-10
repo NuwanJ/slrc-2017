@@ -13,6 +13,10 @@ int irWall_RightSensorPin = A9;
 bool is_init = false;
 bool is_changed = false;
 
+void irWall_ReadSensors(int iterations) {
+  for (int i = 0; i < iterations; i++)irWall_ReadSensors();
+}
+
 void irWall_ReadSensors() {
   for (int x = 9; x > 0; x--) {
     irWall_LeftSensorHistory[x - 1] = irWall_LeftSensorHistory[x];
@@ -29,9 +33,7 @@ void irWall_ReadSensors() {
 
 void irWall_Follow(int baseSpeed, int side) {
 
-  for (int x = 0; x < 10; x++) {
-    irWall_ReadSensors();
-  }
+  irWall_ReadSensors(10);
 
 
   float* ir_hist;
@@ -60,6 +62,30 @@ void irWall_Follow(int baseSpeed, int side) {
   }
   delay(30);
 }
+
+
+void irWall_WallFollow() {
+  int currentSide = RIGHT;
+  while (true) {
+    irWall_ReadSensors(10);
+    if (currentSide==RIGHT && irWall_RightSensorHistory[0] >= irWall_LeftSensorHistory[0]) {
+      motorWrite(0, 0);
+      int i = 0, shouldTurn = 1;
+      for (i = 0; i < 10; i++) {
+        goForward();
+        irWall_ReadSensors(10);
+        if (irWall_RightSensorHistory[0] >= irWall_LeftSensorHistory[0])shouldTurn++;
+      }
+      if (shouldTurn > 8) {
+
+        currentSide = LEFT;
+        beep(3);
+      }
+    }
+    irWall_Follow(80, currentSide);
+  }
+}
+
 
 int wallFollow(int baseSpeed) {
   for (int x = 0; x < 10; x++) {

@@ -47,6 +47,9 @@ void setup() {
 
 void test() {
 
+
+  irWall_WallFollow();
+  
   //readBoxColor();
   //lcdIRSensorUpdate();
   //alignToPath(CW);
@@ -58,7 +61,7 @@ void test() {
 
 
 
-  checkFrontRightSonar();
+//  checkFrontRightSonar();
   /*
     boolean found = isBoxFound();
 

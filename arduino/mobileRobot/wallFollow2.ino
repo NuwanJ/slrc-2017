@@ -1,97 +1,7 @@
-///~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~IR WALL FOLLOW ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~START
-
-float irWall_LeftSensorHistory[10];
-float irWall_RightSensorHistory[10];
-float irWall_SensorAdaptiveFactor = 0.1;
-float irWall_kP = 5.0f, irWall_kD = 0.0f, irWall_kI = 0.0f;
-float irWall_expectedLeftReading = 705.0f;
-int irWall_LeftSensorPin=A10;
-int irWall_RightSensorPin=A9;
-
-void irWall_ReadSensors() {
-  for (int x = 1; x < 10; x++) {
-    irWall_LeftSensorHistory[x] = irWall_LeftSensorHistory[x - 1];
-    irWall_RightSensorHistory[x] = irWall_RightSensorHistory[x - 1];
-  }
-  irWall_LeftSensorHistory[0] = 1024 - analogRead(irWall_LeftSensorPin);
-  irWall_RightSensorHistory[0] = 1024 - analogRead(irWall_RightSensorPin);
-
-  irWall_LeftSensorHistory[0] = (irWall_LeftSensorHistory[0] * irWall_SensorAdaptiveFactor) + ((1 - irWall_SensorAdaptiveFactor) * irWall_LeftSensorHistory[1]);
-}
-
-
-void irWall_FollowLeft() {
-
-  for(int x=0;x<10;x++){
-    irWall_ReadSensors();
-  }
-  float P = irWall_LeftSensorHistory[0] - irWall_expectedLeftReading;
-  float D = (irWall_LeftSensorHistory[0] - irWall_expectedLeftReading) - (irWall_LeftSensorHistory[1] - irWall_expectedLeftReading);
-  float I = 0.0f;
-  for (int x = 1; x < 10; x++)I += irWall_LeftSensorHistory[x] - irWall_expectedLeftReading;
-
-  Serial.print(P);Serial.print(" ");Serial.print(0);Serial.print(" ");Serial.print(D);Serial.println(" ");
-  
-  float PID=P*irWall_kP + D*irWall_kD + irWall_kI*I;
-
-  motorWrite(150-PID,150+PID);
-  delay(30);
-  motorWrite(0,0);
-  delay(30);
-
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-///~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~IR WALL FOLLOW ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~END
-
-
-
-
-
-
-
-
-
-
-
 /* --------------------------------------------------------------------------
   Contributor : Gihan
   Last Update : 06/01/2018
+  These are the functions written by Hashana, dont mix with what Gihan has written on the file wallFollow.ino
 
   --------------------------------------------------------------------------*/
 
@@ -103,8 +13,6 @@ void irWall_FollowLeft() {
    DO NOT mix the wall_kI,wall_kP,wall_kD with the PID paarameters for maze following :-)
    06/01/2018
 */
-
-
 float wall_kI = 0.0f, wall_kP = 1.0f, wall_kD = 0.0f;
 float prevF[10] = {0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f};
 float prevB[10] = {0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f};
@@ -125,12 +33,12 @@ void followLeftSimple() {
 }
 
 void showFrontLeftSonar() {
-  float dd = 10000;
-  for (int x = 0; x < 5; x++) {
-    dd = min(dd, readSonar(0));
+  float dd=10000;
+  for(int x=0;x<5;x++){
+    dd=min(dd,readSonar(0));
     delay(50);
   }
-
+  
   lcd.clear();
   lcd.setCursor(0, 0); //col, row
   lcd.print(dd);
@@ -233,19 +141,18 @@ void util_ShiftRight(float front, float back) {
 
 
 
-void followLeft2() {
-  for (int i = 0; i < 9; i++) {
-    prevF[i + 1] = prevF[i];
-    prevB[i + 1] = prevB[i];
+void followLeft2(){
+  for(int i=0;i<9;i++){
+    prevF[i+1]=prevF[i];
+    prevB[i+1]=prevB[i];
   }
   ff();
   bb();
 }
 
 
-void checkFrontRightSonar() {
+void checkFrontRightSonar(){
   Serial.println(ff());
   delay(100);
 }
-
 

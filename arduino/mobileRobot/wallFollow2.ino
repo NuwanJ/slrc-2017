@@ -4,7 +4,7 @@ float irWall_LeftSensorHistory[10];
 float irWall_RightSensorHistory[10];
 
 float irWall_SensorAdaptiveFactor = 0.1;
-float irWall_kP = 15.0f, irWall_kD = 0.0f, irWall_kI = 0.0f;
+float irWall_kP = 10.0f, irWall_kD = 0.0f, irWall_kI = 0.0f;
 
 float irWall_expectedReading = 70.0f;
 

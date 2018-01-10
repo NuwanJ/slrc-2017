@@ -53,6 +53,7 @@ enum {eP, eI, eD, eMax, eBase, eDebug};
 #define PIN_RW 24 // For LCD Module
 
 #define PIN_BOX_SENSOR A8
+
 //-------------------------------------------------------------------------------------------------------------- IR Sensors Array
 
 #define NUM_SENSORS 6
@@ -89,8 +90,9 @@ int drift = 0;
 
 //-------------------------------------------------------------------------------------------------------------- Wall following
 double dist[4];
-double prev = 0;
 double hist[5][4];
+bool currentlyFollowing = true; // true - left, false - right
+int currentTurn = 0; // 0 - no action, 1 - turn right, -1 - turn left
 //-------------------------------------------------------------------------------------------------------------- Sonar Sensors
 
 #define NUM_SONAR 4
@@ -119,6 +121,33 @@ boolean boxFound = false;
 
 #define BOX_FOUND_THERSOLD 50
 
-
 //---Harshana
-boolean currentlyFollowing=false;
+//boolean currentlyFollowing=false; Already defined -Nuwan
+
+//------------------------------------------------------------------------------------------------------------- Wall Following 2
+
+#define PIN_SERVO 19
+
+
+#define irWall_LeftSensorPin A9
+#define irWall_RightSensorPin A10
+#define irWall_FrontSensorPin A11
+
+float irWall_LeftSensorHistory[10];
+float irWall_RightSensorHistory[10];
+
+// Updated variables for front sensor too -Nuwan
+float irWall_FrontSensorHistory[10];
+
+float irWall_SensorAdaptiveFactor = 0.1;
+float irWall_kP = 10.0f, irWall_kD = 0.0f, irWall_kI = 0.0f;
+
+float irWall_expectedReading = 70.0f;
+
+// TODO: Need to adjust front sensor expected reading -Nuwan
+float irWall_frontExpectedReading = 70.0f;
+
+bool is_init = false;
+bool is_changed = false;
+
+

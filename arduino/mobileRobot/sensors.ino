@@ -173,6 +173,11 @@ double readSonar(int sensor) {
     distance = duration / 58;
   }
 
+  // #################### CHECK THESE VALUES ################
+  if (sensor == 0 or sensor == 3) {
+    distance -= 3;
+  }
+
   /*distance = max(1, distance);
     distance = min(100, distance);*/
   /*if (distance > maxDistance) {

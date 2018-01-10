@@ -1,11 +1,12 @@
-  Functions
-  ---------------------------------------------------------------------------*/
+/*---------------------------------------------------------------------------*/
 
-// Contributor : harshana
-// Last Update : 6/1/2018
+// Contributor : ????
+// Last Update : ?/1/2018
 
 /* Remarks ------------------------------------
- *  These are the functions written by Hashana, dont mix with what Gihan has written on the file wallFollow2.ino
+
+  Removed Sonar mode
+  
   ----------------------------------------------*/
 
 int fit(double front, double back, int flag, int baseSpeed) {
@@ -13,27 +14,43 @@ int fit(double front, double back, int flag, int baseSpeed) {
   double thresh = 10;
   if (front < thresh && back > thresh) { // front is too close to wall. going forward may hit the wall. therefore spin
     beep(1);
-    motorWrite(75 - 75 * flag, 75 + 75 * flag); delay(50); motorWrite(0, 0);
+    lcd.setCursor(0, 0);
+    lcd.print("FrontTooClose");
+    motorWrite(75 - 75 * flag, 75 + 75 * flag); delay(100); motorWrite(0, 0);
 
     left = 150; right = 150; // go forward a little
 
   } else if (front > thresh && back < thresh) { // back is too close. if go forward, front may cross the line. spin!
     beep(1);
-    motorWrite(75 + 75 * flag, 75 - 75 * flag); delay(50); motorWrite(0, 0);
+    lcd.setCursor(0, 0);
+    lcd.print("BackTooClose");
+    motorWrite(150, 150); delay(100); motorWrite(0, 0);
+    motorWrite(75 + 75 * flag, 75 - 75 * flag); delay(100); motorWrite(0, 0);
 
     left = 150; right = 150; // go forward a little
 
-  } else if (front < thresh && back < thresh) { // TODO: side is too close!! what to do???
+  } else if (front < thresh && back < thresh) { // side is too close!! move away
     beep(1);
-    motorWrite(75 - 75 * flag, 75 + 75 * flag); delay(50); motorWrite(0, 0);
-    left = 0; right = 0;
+    lcd.setCursor(0, 0);
+    lcd.print("BothTooClose");
+    motorWrite(75 - 75 * flag, 75 + 75 * flag); delay(100); motorWrite(0, 0);
+    motorWrite(150, 150); delay(50); motorWrite(0, 0);
+    left = 75 + 75 * flag; right = 75 - 75 * flag;
+
+  } else if (abs(front - back) > 15) { // diff too much. do the last turn
+    beep(2);
+    if (currentTurn == -1) {
+      motorWrite(-150, 150); delay(50); motorWrite(0, 0);
+    } else {
+      motorWrite(150, -150); delay(50); motorWrite(0, 0);
+    }
+    left = 100; right = 100;
+  } else if (front >15 and back>15) { // too far away both
+    motorWrite(75 + 75 * flag, 75 - 75 * flag); delay(50); motorWrite(0, 0);
+    motorWrite(150, 150); delay(50); motorWrite(0, 0);
+    left = 75 - 75 * flag; right = 75 + 75 * flag;
 
   } else {
-    if (abs(front - back) > 5) {
-      beep(2);
-      front = 0; back = 0;
-      return ; //<<<<< @Harshana: There is a mistake on ur https://github.com/harshana95/slrc-2017/blob/master/arduino/mobileRobot/wallFollow.ino
-    }
     double P = (front - back) * flag * 30;
     double I = 0;
 
@@ -53,25 +70,18 @@ int fit(double front, double back, int flag, int baseSpeed) {
     Serial.print(I);
     Serial.println("");
 
-    left = baseSpeed - (P + I);
-    right = baseSpeed + (P + I);
+    left = baseSpeed + (P + I);
+    right = baseSpeed - (P + I);
   }
+
   motorWrite(left, right);
   delay(50);
   motorWrite(0, 0);
-  lcd.clear();
-  lcd.setCursor(0, 0);
-  lcd.print(left);
-  lcd.setCursor(10, 0);
-  lcd.print(right);
-  lcd.setCursor(0, 1);
-  lcd.print(front);
-  lcd.setCursor(10, 1);
-  lcd.print(back);
 
 }
 
 
+/*master
 int wallFollowSonar(int baseSpeed) {
   int thresh = 10;
   for (int i = 0; i < 4; i++) {
@@ -79,101 +89,166 @@ int wallFollowSonar(int baseSpeed) {
       hist[i][j] = hist[i + 1][j];
     }
   }
+*/
 
+void getReadingsFromRotating(double * dist) {
+  double minReadingLeft, minReadingRight;
+  int minAngleLeft = 0;
+  int minAngleRight = 0;
+
+
+  // finding the left front angle
+  minAngleLeft = verifyMinAngle(0, 70, 7 , LEFT);
+  minAngleLeft = verifyMinAngle(minAngleLeft - 5, minAngleLeft + 5, 2 , LEFT);
+  rotateServo(LEFT, minAngleLeft);
+  dist[0] = readSonar(0);
+  minReadingLeft = dist[0];
+  lcd.setCursor(0, 0);
+  lcd.print(dist[0]);
+
+  // finding the right front angle
+  minAngleRight = verifyMinAngle(0, 70, 7 , RIGHT);
+  minAngleRight = verifyMinAngle(minAngleRight - 5, minAngleRight + 5, 2, RIGHT);
+  rotateServo(RIGHT, minAngleRight);
+  dist[3] = readSonar(3);
+  minReadingRight = dist[3];
+  lcd.setCursor(10, 0);
+  lcd.print(dist[3]);
+
+  // turning according to the angles and distances got from front sonar
+  if (currentlyFollowing) {
+    if (minReadingLeft < 15) {
+      motorWrite(150, -150);
+      delay(50 * minAngleLeft / 10);
+      motorWrite(100, 100);
+      delay(50);
+      motorWrite(0, 0);
+      currentTurn = 1;
+    } else {
+      if (minReadingRight < 15) {
+        currentlyFollowing = false;
+      } else {
+        motorWrite(150, 150);
+        delay(250);
+        motorWrite(-150, 150);
+        delay(50);
+        motorWrite(0, 0);
+        currentTurn = -1;
+      }
+    }
+  } else {
+    if (minReadingRight < 15) {
+      motorWrite(-150, 150);
+      delay(50 * minAngleRight / 10);
+      motorWrite(100, 100);
+      delay(50);
+      motorWrite(0, 0);
+      currentTurn = -1;
+    } else {
+      if (minReadingLeft < 15) {
+        currentlyFollowing = true;
+      } else {
+        motorWrite(150, 150);
+        delay(250);
+        motorWrite(150, -150);
+        delay(50);
+        motorWrite(0, 0);
+        currentTurn = 1;
+      }
+    }
+  }
+}
+
+
+// Removed Sonar Wall Following
+/*
+int wallFollow(int baseSpeed) {
+
+  if (currentlyFollowing) {
+    ledOn(LED_GREEN);
+  } else {
+    ledOff(LED_GREEN);
+  }
+
+  // adjusting the history to add the new entry
+  for (int i = 3; i >= 0; i--) {
+    for (int j = 0; j < 4; j++) {
+      hist[i + 1][j] = hist[i][j];
+    }
+  }
+
+  // rotate the servo to initial position
+  rotateServo(LEFT, 0);
+  rotateServo(RIGHT, 0);
+
+  // reading the values
   for (int i = 0; i < 4; i++) {
     dist[i] = readSonar(i);
     if (dist[i] > 200) {
       dist[i] = 200;
     }
-    hist[4][i] = dist[i];
+    hist[0][i] = dist[i];
   }
-  
-  
-  
-  
-  
-    int cost[2]; // cost to fit the robot. 0th-left 1st-right
-    cost[0] = dist[0] + dist[1];
-    cost[1] = dist[2] + dist[3];
+  lcd.clear();
+  lcd.setCursor(0, 0);
+  lcd.print(dist[0]);
+  lcd.setCursor(10, 0);
+  lcd.print(dist[3]);
+  lcd.setCursor(0, 1);
+  lcd.print(dist[1]);
+  lcd.setCursor(10, 1);
+  lcd.print(dist[2]);
 
-    if (1 || cost[0] < cost[1]) { // easy to fit the robot to the left wall
-      fit(dist[0], dist[1], -1, baseSpeed);
-    } else { // easy to fit to right wall
-      //fit(dist[3], dist[2], 1, baseSpeed);
-    }
-  
-}
-
-
-
-/*
-int wallFollow(int baseSpeed) {
-  int thresh = 10;
-  int diff[4];
-
-  for (int i = 0; i < 4; i++) {
-    dist[i] = readSonar(i);
-    if (dist[i] > 200) {
-      motorWrite(0, 0);
-      return -1;
-    }
-    diff[i] = thresh - dist[i];
+  // check if the distances are ok
+  if (!verify(dist)) {
+    getReadingsFromRotating(dist);
+    return 1;
   }
-  followLeft(dist[0], dist[1]);
+  if (currentlyFollowing) {
+    fit(dist[0], dist[1], -1, baseSpeed);
+  } else {
+    fit(dist[3], dist[2], 1, baseSpeed);
+  }
 }
 */
-int fitpid(int front, int back, int flag, int baseSpeed) {
 
-  return 0;
-}
 
-int fit(int front, int back, int flag, int baseSpeed) {
-  int left, right;
-  if (front > 0 && back < 0) { // front is too close to wall. going forward may hit the wall. therefore spin
-    motorWrite(75 - 75 * flag, 75 + 75 * flag);
-    delay(50);
-    motorWrite(0, 0);
-
-    left = 150; right = 150; // go forward a little
-  } else if (back > 0 && front < 0) { // back is too close. if go forward, front may cross the line. spin!
-    motorWrite(75 + 75 * flag, 75 - 75 * flag);
-    delay(50);
-    motorWrite(0, 0);
-
-    left = 150; right = 150; // go forward a little
-  } else if (front > 0 && back > 0) { // TODO: side is too close!! what to do???
-    motorWrite(75 - 75 * flag, 75 + 75 * flag);
-    delay(50);
-    motorWrite(0, 0);
-    left = 0;
-    right = 0;
-
-  } else if (back == front) { // oriented towards the wall.
-    left = baseSpeed;
-    right = baseSpeed;
-  } else if (back < front) {
-    left = 150;
-    right = 0;
-  } else { // oriented outwards to the wall
-    int val = -1 * (front * 50 + back * 10); // more weight to the front sensor
-    left = baseSpeed - val * flag;
-    right = baseSpeed + val * flag;
-
-    left = 0;
-    right = 150;
+int verifyMinAngle(int minAngle, int maxAngle, int steps, int wall) {
+  double minDist = 10000000;
+  int ans;
+  int index;
+  if (wall == LEFT) {
+    index = 0;
+  } else {
+    index = 3;
   }
-  motorWrite(left, right);
-  delay(50);
-  motorWrite(0, 0);
 
+  for (int i = minAngle; i < maxAngle + 1; i += (maxAngle - minAngle) / steps) {
+    rotateServo(wall, i);
+    dist[index] = readSonar(index);
+    if (wall == LEFT) {
+      lcd.setCursor(0, 0);
+    } else {
+      lcd.setCursor(10, 0);
+    }
+    lcd.print(dist[index]);
+
+    if (dist[index] < minDist) {
+      minDist = dist[index];
+      ans = i;
+    }
+  }
+
+  return ans;
 }
 
-int fitToLeft(int * diff, int baseSpeed) {
-  fit(diff[0], diff[1], -1, baseSpeed);
-  //fitpid(diff[0], diff[1], -1, baseSpeed);
-}
+bool verify(double * dist) {
+  if (currentlyFollowing and dist[0] > 30) {
+    return false;
+  }
+  if (!currentlyFollowing and dist[3] > 30) {
+    return false;
+  }
+  return true;
 
-
-int fitToRight(int * diff, int baseSpeed) {
-  fit(diff[3], diff[2], 1, baseSpeed);
 }

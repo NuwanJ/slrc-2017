@@ -36,7 +36,6 @@ void serialEvent() {
     digitalWrite(LED_RED, LOW);
   }
 }
-
 void SerialEvent3() {
   //This happens if the stationary bot says it finished shooting
 

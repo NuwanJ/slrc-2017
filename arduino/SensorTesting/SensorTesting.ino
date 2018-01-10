@@ -7,7 +7,7 @@ void loop() {
   float reading=0;
   while(true){
     //159,141
-    reading=(reading*(1.0f-adaptingParameter))+ (adaptingParameter*(1024.0f-analogRead(A0)));
+    reading=(reading*(1.0f-adaptingParameter))+ (adaptingParameter*(1024.0f-analogRead(A10)));
     Serial.println(reading);
     delay(100);
   }

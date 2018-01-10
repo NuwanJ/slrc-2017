@@ -1,6 +1,4 @@
-/*---------------------------------------------------------------------------
-  Functions
-  ---------------------------------------------------------------------------*/
+/*---------------------------------------------------------------------------*/
 
 // Contributor : harshana
 // Last Update : 6/1/2018
@@ -81,6 +79,15 @@ int fit(double front, double back, int flag, int baseSpeed) {
 }
 
 
+/*master
+int wallFollowSonar(int baseSpeed) {
+  int thresh = 10;
+  for (int i = 0; i < 4; i++) {
+    for (int j = 0; j < 4; j++) {
+      hist[i][j] = hist[i + 1][j];
+    }
+  }
+*/
 
 void getReadingsFromRotating(double * dist) {
   double minReadingLeft, minReadingRight;

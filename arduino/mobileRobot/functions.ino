@@ -104,12 +104,19 @@ int findBoxOld() {
       if (gFound > (int)(COLOUR_CONFIDENCE * TRIES))return COLOR_GREEN;
       if (bFound > (int)(COLOUR_CONFIDENCE * TRIES))return COLOR_BLUE;
 
+
     }
 
   }
   return COLOR_OPEN;
 
 }
+
+
+
+
+
+
 
 
 
@@ -152,10 +159,6 @@ int util_nonRejectSum(int* array, boolean reject[]) {
 }
 
 
-int readIRSensors(){
-    return readIRSensors(sensor_values);
-}
-
 void alignToPath(int dir) {
   /*
      New version, uses rejection techniques
@@ -173,10 +176,11 @@ void alignToPath(int dir) {
     cornerSensor = 0;
   }
 
-  readIRSensors();
-  while(sensor_values[cornerSensor]==1){
+  readIRSensors(sensor_values);
+  while (sensor_values[cornerSensor] == 1) {
     goForward();
-    readIRSensors();
+    readIRSensors(sensor_values);
+
   }
 
   boolean reject[] = {true, true, true, true, true, true};
@@ -186,12 +190,14 @@ void alignToPath(int dir) {
   while (reject[cornerSensor]) {
     motorWrite(motorSpeeds[0], motorSpeeds[1]);
     delay(20);
-    motorWrite(0, 0);   
-    delay(50);          
+    motorWrite(0, 0);
+    delay(50);
     util_readSensorAndUpdateRejectListCW(sensor_values, reject, dir);
     if (allIn)if (checkEnd())return;
   }
   motorWrite(0, 0);
+
+
 
   beep(2);
   delay(500);
@@ -206,6 +212,9 @@ void alignToPath(int dir) {
     delay(20);
     util_readSensorAndUpdateRejectListCW(sensor_values, reject, dir);
     i++;
+    if (i >= 10) {
+      //for(int x=0;x<6;x++)reject[x]=false;
+    }
   }
 
 
@@ -242,6 +251,7 @@ void alignToPath(int dir) {
       motorWrite(0, 0);
       break;
     }
+
     delay(50);
     motorWrite(0, 0);
     delay(20);
@@ -250,6 +260,7 @@ void alignToPath(int dir) {
 
   }
   //The sensor panel is alligned to the line, move forward
+
 }
 
 
@@ -337,9 +348,4 @@ boolean checkEnd() {
 
 }
 
-
-
-void motorWrite(float l,float r){
-  motorWrite((int)l,(int)r);
-}
 

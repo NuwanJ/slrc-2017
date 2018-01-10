@@ -15,7 +15,6 @@ void shootBall() {
 
   motorOn();
   delay(5000);
-
   //------------------------------------------------------------------- Release
 
   servoMotor.attach(PIN_SERVO);

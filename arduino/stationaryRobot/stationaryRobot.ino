@@ -19,9 +19,19 @@ void setup() {
   pinMode(PIN_STEPPER_EN, INPUT);
   pinMode(PIN_SPINNER, OUTPUT);
 
+  pinMode(PIN_R, OUTPUT);
+  pinMode(PIN_G, OUTPUT);
+  pinMode(PIN_B, OUTPUT);
+
   analogWrite(PIN_SPINNER, 0);
 
   Serial.println(">> Robot : Begin");
+
+
+  servoMotor.attach(PIN_SERVO);
+  servoMotor.write(SERVO_LOAD);
+  delay(1000);
+  servoMotor.detach();
 
 }
 

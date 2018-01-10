@@ -14,11 +14,14 @@ enum{RED_BOX, GREEN_BOX, BLUE_BOX, FINAL_BOX};
 #define PIN_SERVO 10
 #define PIN_SPINNER 4
 
-#define SERVO_RELEASE 170
-#define SERVO_LOAD 90
+#define SERVO_RELEASE 170 //170
+#define SERVO_LOAD 90 //90
 
 #define SPINNER_PWM 100
 
+#define PIN_R 52
+#define PIN_G 50
+#define PIN_B 48
 
-int x[] = {20, 35, 50, 40};
+int x[] = {34, 55, 73, 150};
 int y[] = {5,5, 5, 0};

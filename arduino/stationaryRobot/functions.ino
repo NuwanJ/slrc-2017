@@ -37,6 +37,8 @@ void processColor(char c) {
 
   if (c == 'r') {
     Serial.println(">> Target : Red Box");
+    digitalWrite(PIN_R, HIGH);
+
     moveRobot(x[RED_BOX], y[RED_BOX]);
     Serial.println(">> Shooting : Red Box");
     //shootBall();
@@ -47,6 +49,8 @@ void processColor(char c) {
 
   } else if (c == 'g') {
     Serial.println(">> Target : Green Box");
+    digitalWrite(PIN_G, HIGH);
+
     moveRobot(x[GREEN_BOX], y[GREEN_BOX]);
     Serial.println(">> Shooting : Green Box");
     //shootBall();
@@ -57,6 +61,8 @@ void processColor(char c) {
 
   } else if (c == 'b') {
     Serial.println(">> Target : Blue Box");
+    digitalWrite(PIN_B, HIGH);
+
     moveRobot(x[BLUE_BOX], y[BLUE_BOX]);
     Serial.println(">> Shooting : Blue Box");
     //shootBall();
@@ -66,6 +72,9 @@ void processColor(char c) {
     Serial.println(">> Done");
   }
 
+  digitalWrite(PIN_R, LOW);
+  digitalWrite(PIN_G, LOW);
+  digitalWrite(PIN_B, LOW);
 }
 
 void motorOn() {

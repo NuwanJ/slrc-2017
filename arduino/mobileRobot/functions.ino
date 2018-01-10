@@ -155,6 +155,13 @@ void alignToPath(int dir) {
     cornerSensor = 0;
   }
 
+  readIRSensors(sensor_values);
+  while (sensor_values[cornerSensor] == 1) {
+    goForward();
+    readIRSensors(sensor_values);
+
+  }
+
   boolean reject[] = {true, true, true, true, true, true};
 
   //Turn until the sensor panel leaves the first line.
@@ -165,7 +172,7 @@ void alignToPath(int dir) {
     motorWrite(0, 0);
     delay(50);
     util_readSensorAndUpdateRejectListCW(sensor_values, reject, dir);
-    if (allIn)if(checkEnd())return;
+    if (allIn)if (checkEnd())return;
   }
   motorWrite(0, 0);
 
@@ -310,7 +317,7 @@ boolean checkEnd() {
     if (sum == 6)allInCount++;
   }
 
-  if (allInCount == T-1) {
+  if (allInCount == T - 1) {
     mode = FINISH_MAZE;
     return true;
   }

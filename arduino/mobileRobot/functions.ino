@@ -238,8 +238,6 @@ void alignToPath(int dir) {
     beep(1);
 
   }
-  lcdWrite(1, "----");
-
   //The sensor panel is alligned to the line, move forward
 
 }

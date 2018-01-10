@@ -53,6 +53,10 @@ enum {eP, eI, eD, eMax, eBase, eDebug};
 #define PIN_RW 24 // For LCD Module
 
 #define PIN_BOX_SENSOR A8
+
+#define irWall_LeftSensorPin A10
+#define irWall_RightSensorPin A9
+
 //-------------------------------------------------------------------------------------------------------------- IR Sensors Array
 
 #define NUM_SENSORS 6

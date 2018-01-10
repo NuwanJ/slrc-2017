@@ -1,5 +1,4 @@
 #include <Arduino.h>
-
 #include "define.h"
 
 #include <EEPROM.h>
@@ -53,37 +52,8 @@ void test() {
   //readBoxColor();
   //lcdIRSensorUpdate();
   //alignToPath(CW);
-  //lcdSonarUpdate();
+  lcdSonarUpdate();
 
 
-  //  showFrontLeftSonar();
-  //  delay(200);
-
-
-
-//  checkFrontRightSonar();
-  /*
-    boolean found = isBoxFound();
-
-    if (found) {
-
-      // Suggestion : while (all are not same) take 5
-
-      readBoxColor();
-      if (boxColor == 1)Serial.println("R");
-      else if (boxColor == 2)Serial.println("G");
-      else if (boxColor == 3)Serial.println("B");
-      else Serial.println("None");
-
-      // Send the char to Stationary robot
-      // Mode = WAIT_UNTIL_FEEDBACK
-      // ------------------------
-    } else {
-      Serial.println("0");
-    }
-
-  */
-  //lcdBoxSensorUpdate();
-  //lcdSonarUpdate();
-  //delay(1500);
+ 
 }

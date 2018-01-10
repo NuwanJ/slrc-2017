@@ -46,9 +46,11 @@ void setup() {
 }
 
 void test() {
-
-
-  irWall_WallFollow();
+  
+  Serial.print('r');
+  Serial3.print('r');
+  delay(4000);
+  //irWall_WallFollow();
   
   //readBoxColor();
   //lcdIRSensorUpdate();

@@ -20,6 +20,7 @@ Servo rightServo;
 //Ultrasonic sonar0(pinTrig[0], pinEcho[0]);
 
 volatile int mode = BEGIN;
+int oldMode = mode;
 
 void setup() {
 
@@ -39,7 +40,6 @@ void setup() {
 
   //leftServo.attach(18);
 
-
   ledOn(LED_RED);
 
   beginDebugger();
@@ -51,22 +51,15 @@ void setup() {
 
   ledOff(LED_RED);
 
-
 }
 
 void test() {
 
-  rotateServo(LEFT, 0);
-
-  rotateServo(RIGHT, 0);
+    irWall_FollowLeft();
   //readBoxColor();
   //lcdIRSensorUpdate();
   //alignToPath(CW);
   lcdSonarUpdate();
-
-
-
-
 
 
   /*

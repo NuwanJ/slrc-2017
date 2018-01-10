@@ -46,12 +46,31 @@ void loop() {
       Serial.println(">> Robot : Homing GRBL");
       homing();
 
-    } else if (inByte == 't') {      
+    } else if (inByte == 't') {
       Serial.println(">> Robot : Test");
       test();
 
+      //------------------------------------------------------------------------------RGB
+
+    } else if (inByte == 'R') {
+      Serial.println(">> Robot : Red");
+      processColor('r');
+
+    } else if (inByte == 'K') {
+      Serial.println(">> Robot : Green");
+      processColor('g');
+
+    } else if (inByte == 'B') {
+      Serial.println(">> Robot : Blue");
+      processColor('b');
+
+
+      //------------------------------------------------------------------------------
+
+
     } else {
       // Reply String to GRBL
+      Serial.write(inByte);
       Serial2.write(inByte);
     }
 
@@ -99,9 +118,21 @@ void loop() {
   // read from port 2, send to port 3:   GRBL -> PC
   if (Serial2.available()) {
     char inByte = Serial2.read();
-
     // Incomming data need to process from here
     Serial.write(inByte);
+
+    if (inByte == 'r') {
+      Serial.println(">> Robot : Red");
+      processColor('r');
+
+    } else if (inByte == 'g') {
+      Serial.println(">> Robot : Green");
+      processColor('g');
+
+    } else if (inByte == 'b') {
+      Serial.println(">> Robot : Blue");
+      processColor('b');
+
+    }
   }
 }
-

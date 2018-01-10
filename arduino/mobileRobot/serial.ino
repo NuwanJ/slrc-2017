@@ -1,7 +1,3 @@
-/*---------------------------------------------------------------------------
-
-  ---------------------------------------------------------------------------*/
-
 
 void serialEvent() {
 
@@ -36,13 +32,11 @@ void serialEvent() {
     digitalWrite(LED_RED, LOW);
   }
 }
-
-
 void SerialEvent3() {
   //This happens if the stationary bot says it finished shooting
 
+  digitalWrite(LED_RED, HIGH);
   while (Serial3.available()) {
-    digitalWrite(LED_RED, HIGH);
 
     int r = Serial3.read();
     char inChar = (char)r;
@@ -71,6 +65,8 @@ void shoot(int color) {
       Serial3.print('b');
       break;
   }
+
+  delay(100);
   timeOfShootCommand = millis();
   mode = WAIT_UNTIL_FEEDBACK;
 

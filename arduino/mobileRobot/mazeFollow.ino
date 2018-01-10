@@ -13,7 +13,6 @@ boolean util_missedWallToLeft() {
   return (a + b) == 2;
 }
 
-
 void mazeFollow() {
 
   pos = readIRSensors(sensor_values);
@@ -49,7 +48,6 @@ void mazeFollow() {
     lineFollow(); //Just one step
   }
 }
-
 
 void returnToMaze() {
   readIRSensors(sensor_values);

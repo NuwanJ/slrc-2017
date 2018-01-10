@@ -91,7 +91,7 @@ int drift = 0;
 //-------------------------------------------------------------------------------------------------------------- Wall following
 double dist[4];
 double hist[5][4];
-bool currentlyFollowing = true; // true - left, false - right
+bool currentlyFollowing = false; // true - left, false - right
 int currentTurn = 0; // 0 - no action, 1 - turn right, -1 - turn left
 //-------------------------------------------------------------------------------------------------------------- Sonar Sensors
 

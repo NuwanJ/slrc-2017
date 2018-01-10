@@ -54,13 +54,11 @@ void setup() {
 }
 
 void test() {
-
-    irWall_FollowLeft();
   //readBoxColor();
   //lcdIRSensorUpdate();
   //alignToPath(CW);
-  lcdSonarUpdate();
-
+  //lcdSonarUpdate();
+  //rotateServo(LEFT,0);
 
   /*
     boolean found = isBoxFound();

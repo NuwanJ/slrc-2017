@@ -150,7 +150,7 @@ void getReadingsFromRotating(double * dist) {
   }
 }
 
-int wallFollow(int baseSpeed) {
+int wallFollowSonar(int baseSpeed) {
 
   if (currentlyFollowing) {
     ledOn(LED_GREEN);

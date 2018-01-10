@@ -56,6 +56,8 @@ void setup() {
 
 void test() {
 
+
+    irWall_FollowLeft();
   //readBoxColor();
   //lcdIRSensorUpdate();
   //alignToPath(CW);
@@ -64,6 +66,6 @@ void test() {
   //  showFrontLeftSonar();
   //  delay(200);
   
-  shoot(COLOR_RED);
+  //shoot(COLOR_RED);
   
 }

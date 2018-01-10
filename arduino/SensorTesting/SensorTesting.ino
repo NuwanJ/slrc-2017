@@ -3,11 +3,12 @@ void setup() {
 }
 
 void loop() {
-  float learningRate=0.2;
+  float adaptingParameter=0.1;
   float reading=0;
   while(true){
     //159,141
-    reading=(reading*(1.0f-learingRate))+ (learningRate*analogRead(A0));
+    reading=(reading*(1.0f-adaptingParameter))+ (adaptingParameter*(1024.0f-analogRead(A0)));
     Serial.println(reading);
+    delay(100);
   }
 }

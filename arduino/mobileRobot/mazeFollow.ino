@@ -3,7 +3,6 @@
   Contributor : Gihan
   Last Update : 06/01/2018
   --------------------------------------------------------------------------*/
-  
 boolean util_missedWallToLeft() {
   //A small calculation to see whether there was a turn to right
   int a = 0, b = 0;
@@ -14,6 +13,8 @@ boolean util_missedWallToLeft() {
   return (a + b) == 2;
 }
 
+
+
 void mazeFollow() {
 
   pos = readIRSensors(sensor_values);
@@ -22,6 +23,7 @@ void mazeFollow() {
 
   if (allIn) {
     if(checkEnd())return;
+
   }
 
   if (sensor_values[5] == 1) {
@@ -49,6 +51,7 @@ void mazeFollow() {
     lineFollow(); //Just one step
   }
 }
+
 
 void returnToMaze() {
   readIRSensors(sensor_values);

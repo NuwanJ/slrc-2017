@@ -32,14 +32,7 @@ void motorBegin() {
 }
 
 
-// General calling
 void motorWrite(int leftMotorSpeed, int rightMotorSpeed) {
-  motorWrite( leftMotorSpeed, rightMotorSpeed, false);
-
-}
-
-// Overidded function
-void motorWrite(int leftMotorSpeed, int rightMotorSpeed, boolean lineFollow) {
 
   //leftMotorSpeed += drift;
   //rightMotorSpeed -= drift;
@@ -52,13 +45,7 @@ void motorWrite(int leftMotorSpeed, int rightMotorSpeed, boolean lineFollow) {
       digitalWrite(leftMotor2, LOW);
 
     } else if (leftMotorSpeed < 0) {
-
-      if (lineFollow) {
-        leftMotorSpeed  *= - slowFactor;
-      } else {
-        leftMotorSpeed  *= - 1;
-      }
-
+      leftMotorSpeed  *= - slowFactor;
       digitalWrite(leftMotor1, LOW);
       digitalWrite(leftMotor2, HIGH);
 
@@ -75,13 +62,7 @@ void motorWrite(int leftMotorSpeed, int rightMotorSpeed, boolean lineFollow) {
       digitalWrite(rightMotor1, HIGH);
       digitalWrite(rightMotor2, LOW);
     } else if (rightMotorSpeed < 0) {
-
-      if (lineFollow) {
-        leftMotorSpeed  *= - slowFactor;
-      } else {
-        leftMotorSpeed  *= - 1;
-      }
-
+      rightMotorSpeed *= - slowFactor;
       digitalWrite(rightMotor1, LOW);
       digitalWrite(rightMotor2, HIGH);
     } else {
@@ -100,7 +81,7 @@ void motorWrite(int leftMotorSpeed, int rightMotorSpeed, boolean lineFollow) {
     Serial.print(">> L:"); Serial.print(leftMotorSpeed); Serial.print(" R:"); Serial.println(rightMotorSpeed);
   }
 
-  // Real time motor speed update to LCD Display
+// Real time motor speed update to LCD Display
 #ifdef REALTIME_MOTOR_SPEEDS
   lcdMotorUpdate();
 #endif

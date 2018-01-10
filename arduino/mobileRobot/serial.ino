@@ -37,35 +37,6 @@ void serialEvent() {
   }
 }
 
-void serialEvent3() {
-
-  while (Serial3.available()) {
-
-    digitalWrite(LED_RED, HIGH);
-
-    int r = Serial3.read();
-    char inChar = (char)r;
-
-#ifdef LCD_SERIAL_DEBUG
-    // Need to implement
-    Serial.println(inChar);
-    lcdWrite(0, "");
-#endif
-
-    //-------------------------------------------------------------------------------------------------------------- s -> stopvnlv ,nvxcbvxcvmxcvmcxv
-    if (inChar == 's') {
-      mode = BEGIN;
-      motorWrite(0, 0);
-    }
-
-    //-------------------------------------------------------------------------------------------------------------- t -> test
-    else if (inChar == 't') {
-
-    }
-
-    digitalWrite(LED_RED, LOW);
-  }
-}
 
 void SerialEvent3() {
   //This happens if the stationary bot says it finished shooting

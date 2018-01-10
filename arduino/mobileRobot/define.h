@@ -89,8 +89,9 @@ int drift = 0;
 
 //-------------------------------------------------------------------------------------------------------------- Wall following
 double dist[4];
-double prev = 0;
 double hist[5][4];
+bool currentlyFollowing = true; // true - left, false - right
+int currentTurn = 0; // 0 - no action, 1 - turn right, -1 - turn left
 //-------------------------------------------------------------------------------------------------------------- Sonar Sensors
 
 #define NUM_SONAR 4

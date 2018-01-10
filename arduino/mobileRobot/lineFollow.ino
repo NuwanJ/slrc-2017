@@ -35,8 +35,8 @@ void lineFollow() {
     int motorSpeed = calculatePID(error);
 
     //Assigning motor speeds
-    int rightMotorSpeed = baseSpeed- motorSpeed;
-    int leftMotorSpeed = baseSpeed +motorSpeed;
+    int rightMotorSpeed = baseSpeed - motorSpeed;
+    int leftMotorSpeed = baseSpeed + motorSpeed;
 
     //Remapping motor speed
     motorWrite(leftMotorSpeed, rightMotorSpeed);

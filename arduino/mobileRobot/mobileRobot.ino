@@ -1,6 +1,5 @@
 
 #include <Arduino.h>
-
 #include "define.h"
 
 #include <EEPROM.h>
@@ -57,18 +56,19 @@ void setup() {
 
 void test() {
 
+  rotateServo(LEFT, 0);
+
+  rotateServo(RIGHT, 0);
   //readBoxColor();
   //lcdIRSensorUpdate();
   //alignToPath(CW);
-  //lcdSonarUpdate();
-
-
-  //  showFrontLeftSonar();
-  //  delay(200);
+  lcdSonarUpdate();
 
 
 
-  checkFrontRightSonar();
+
+
+
   /*
     boolean found = isBoxFound();
 

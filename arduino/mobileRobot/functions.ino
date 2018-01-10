@@ -6,7 +6,7 @@
 
   void buttonRead(n)    n = [BUTTON_0,BUTTON_1,BUTTON_2,BUTTON_3,BUTTON_4]
 
-  void ledOb(n)         n = [LED_GREEN, LED_RED]
+  void ledOn(n)         n = [LED_GREEN, LED_RED]
   void ledOff(n)        n = [LED_GREEN, LED_RED]
   void ledBlink(n,c)    n = [LED_GREEN, LED_RED], c = count
 
@@ -23,9 +23,10 @@
 
 void rotateServo(int n, int deg) {
 
-  deg = max(10, deg);
-  deg = min(170, deg);
+  deg = max(-90, deg);
+  deg = min(90, deg);
 
+  deg = 90 - deg;
   if (n == LEFT) {
     //  < =90  ^=10    \|/=170
     leftServo.attach(18);

@@ -23,5 +23,8 @@ enum{RED_BOX, GREEN_BOX, BLUE_BOX, FINAL_BOX};
 #define PIN_G 50
 #define PIN_B 48
 
+
+// 28
+// 12
 int x[] = {34, 55, 73, 150};
 int y[] = {5,5, 5, 0};

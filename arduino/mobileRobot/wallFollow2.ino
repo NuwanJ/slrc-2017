@@ -35,7 +35,7 @@ void irWall_FollowLeft() {
   float PID=P*irWall_kP + D*irWall_kD + irWall_kI*I;
 
   motorWrite(150-PID,150+PID);
-  delay(50);
+  delay(30);
   motorWrite(0,0);
   delay(30);
 

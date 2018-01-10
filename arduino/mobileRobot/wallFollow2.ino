@@ -3,10 +3,10 @@
 float irWall_LeftSensorHistory[10];
 float irWall_RightSensorHistory[10];
 float irWall_SensorAdaptiveFactor = 0.1;
-float irWall_kP = 10.0f, irWall_kD = 0.0f, irWall_kI = 0.0f;
-float irWall_expectedLeftReading = 500.0f;
-int irWall_LeftSensorPin=A0;
-int irWall_RightSensorPin=A1;
+float irWall_kP = 5.0f, irWall_kD = 0.0f, irWall_kI = 0.0f;
+float irWall_expectedLeftReading = 705.0f;
+int irWall_LeftSensorPin=A10;
+int irWall_RightSensorPin=A9;
 
 void irWall_ReadSensors() {
   for (int x = 1; x < 10; x++) {
@@ -22,17 +22,20 @@ void irWall_ReadSensors() {
 
 void irWall_FollowLeft() {
 
-  irWall_ReadSensors();
+  for(int x=0;x<10;x++){
+    irWall_ReadSensors();
+  }
   float P = irWall_LeftSensorHistory[0] - irWall_expectedLeftReading;
   float D = (irWall_LeftSensorHistory[0] - irWall_expectedLeftReading) - (irWall_LeftSensorHistory[1] - irWall_expectedLeftReading);
   float I = 0.0f;
   for (int x = 1; x < 10; x++)I += irWall_LeftSensorHistory[x] - irWall_expectedLeftReading;
 
+  Serial.print(P);Serial.print(" ");Serial.print(0);Serial.print(" ");Serial.print(D);Serial.println(" ");
+  
   float PID=P*irWall_kP + D*irWall_kD + irWall_kI*I;
-  int absPID=min(250,abs((int)PID));
 
-  motorWrite(absPID*sign(PID),-1*absPID*sign(PID));
-  delay(30);
+  motorWrite(150-PID,150+PID);
+  delay(50);
   motorWrite(0,0);
   delay(30);
 

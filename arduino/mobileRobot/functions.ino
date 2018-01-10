@@ -337,3 +337,8 @@ boolean checkEnd() {
 }
 
 
+
+void motorWrite(float l,float r){
+  motorWrite((int)l,(int)r);
+}
+

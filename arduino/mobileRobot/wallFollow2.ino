@@ -4,7 +4,7 @@ float irWall_LeftSensorHistory[10];
 float irWall_RightSensorHistory[10];
 
 float irWall_SensorAdaptiveFactor = 0.1;
-float irWall_kP = 15.0f, irWall_kD = 0.0f, irWall_kI = 0.0f;
+float irWall_kP = 10.0f, irWall_kD = 0.0f, irWall_kI = 0.0f;
 
 float irWall_expectedReading = 70.0f;
 
@@ -12,10 +12,6 @@ int irWall_LeftSensorPin = A10;
 int irWall_RightSensorPin = A9;
 bool is_init = false;
 bool is_changed = false;
-
-void irWall_ReadSensors(int iterations) {
-  for (int i = 0; i < iterations; i++)irWall_ReadSensors();
-}
 
 void irWall_ReadSensors() {
   for (int x = 9; x > 0; x--) {
@@ -28,12 +24,19 @@ void irWall_ReadSensors() {
   irWall_LeftSensorHistory[0] = (irWall_LeftSensorHistory[0] * irWall_SensorAdaptiveFactor) + ((1 - irWall_SensorAdaptiveFactor) * irWall_LeftSensorHistory[1]);
   irWall_RightSensorHistory[0] = (irWall_RightSensorHistory[0] * irWall_SensorAdaptiveFactor) + ((1 - irWall_SensorAdaptiveFactor) * irWall_RightSensorHistory[1]);
 
+  lcd.clear();
+  lcd.setCursor(0, 1);
+  lcd.print(irWall_LeftSensorHistory[0]);
+  lcd.setCursor(8, 1);
+  lcd.print(irWall_RightSensorHistory[0]);
 }
 
 
 void irWall_Follow(int baseSpeed, int side) {
 
-  irWall_ReadSensors(10);
+  for (int x = 0; x < 10; x++) {
+    irWall_ReadSensors();
+  }
 
 
   float* ir_hist;
@@ -42,11 +45,6 @@ void irWall_Follow(int baseSpeed, int side) {
   } else {
     ir_hist = irWall_RightSensorHistory;
   }
-  lcd.clear();
-  lcd.setCursor(0, 1);
-  lcd.print(irWall_LeftSensorHistory[0]);
-  lcd.setCursor(8, 1);
-  lcd.print(irWall_RightSensorHistory[0]);
   float P = ir_hist[0] - irWall_expectedReading;
   float D = ir_hist[0] - ir_hist[1];
   float I = 0.0f;
@@ -61,31 +59,9 @@ void irWall_Follow(int baseSpeed, int side) {
     motorWrite(baseSpeed + PID, baseSpeed - PID);
   }
   delay(30);
+  motorWrite(0,0);
+  delay(10);
 }
-
-
-void irWall_WallFollow() {
-  int currentSide = RIGHT;
-  while (true) {
-    irWall_ReadSensors(10);
-    if (currentSide==RIGHT && irWall_RightSensorHistory[0] >= irWall_LeftSensorHistory[0]) {
-      motorWrite(0, 0);
-      int i = 0, shouldTurn = 1;
-      for (i = 0; i < 10; i++) {
-        goForward();
-        irWall_ReadSensors(10);
-        if (irWall_RightSensorHistory[0] >= irWall_LeftSensorHistory[0])shouldTurn++;
-      }
-      if (shouldTurn > 8) {
-
-        currentSide = LEFT;
-        beep(3);
-      }
-    }
-    irWall_Follow(80, currentSide);
-  }
-}
-
 
 int wallFollow(int baseSpeed) {
   for (int x = 0; x < 10; x++) {
@@ -112,11 +88,11 @@ int wallFollow(int baseSpeed) {
       is_changed = true;
     }
   } else {
-    is_changed = false;
 
   }
 
   if (currentlyFollowing) {
+    rotateServo(LEFT, 45);
     ledOn(LED_GREEN);
     irWall_Follow(baseSpeed, LEFT);
   } else {

@@ -8,7 +8,7 @@ int lineType =  BLACK;
 
 #define slave_address 8
 
-enum{RED_BOX, GREEN_BOX, BLUE_BOX, FINAL_BOX};
+enum {RED_BOX, GREEN_BOX, BLUE_BOX, FINAL_BOX};
 
 #define PIN_STEPPER_EN 22
 #define PIN_SERVO 10
@@ -24,7 +24,7 @@ enum{RED_BOX, GREEN_BOX, BLUE_BOX, FINAL_BOX};
 #define PIN_B 48
 
 
-// 28
-// 12
-int x[] = {34, 55, 73, 150};
-int y[] = {5,5, 5, 0};
+// 28 52 76
+// 5 5 5
+int x[] = {28, 52, 77, 180};
+int y[] = {5, 5, 5, 0};

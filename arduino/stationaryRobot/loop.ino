@@ -85,6 +85,10 @@ void loop() {
       Serial.println(">> Color Received");
       processColor(inByte);
 
+    }else if (inByte=='h'){
+      Serial.println(">> Homing");
+      homing();
+      
     } else {
       Serial.write(inByte);
     }

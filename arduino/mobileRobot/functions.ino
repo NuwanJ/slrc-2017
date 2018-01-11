@@ -21,12 +21,12 @@
    Procedure to see whether there is a box and get the colour
 */
 
-void backStep(){
+void backStep() {
   // for backToMaze only
-  motorWrite(0,0);
+  motorWrite(0, 0);
   motorReverse(150);
   delay(10);
-  motorWrite(0,0);
+  motorWrite(0, 0);
   delay(40);
 }
 
@@ -47,34 +47,34 @@ void rotateServo(int deg) {
 }
 
 int findBox() {
-  motorWrite(0,0);
+  motorWrite(0, 0);
   delay(1000);
-  float ir_FrontThresoldForBox=500.0f;
+  float ir_FrontThresoldForBox = 500.0f;
 
 
   int TRIES = 12; //This is a TUNE-ABLE parameter
   float COLOUR_CONFIDENCE = 0.7; ////This is a TUNE-ABLE parameter
-  int STEPS = 15; //This is the number of steps the robot is going to go forward looking for a box;
+  int STEPS = 13; //This is the number of steps the robot is going to go forward looking for a box;
   int boxFound = 0;
   int rFound = 0, gFound = 0, bFound = 0;
 
-/*
+  /*
 
-  irWall_ReadSensors(10);
-  Serial.print("The IR reading of box infront is: ");
-  Serial.println(irWall_FrontSensorHistory[0]);
+    irWall_ReadSensors(10);
+    Serial.print("The IR reading of box infront is: ");
+    Serial.println(irWall_FrontSensorHistory[0]);
 
-  if(irWall_FrontSensorHistory[0]>ir_FrontThresoldForBox){
-    return COLOR_OPEN;
-  }
+    if(irWall_FrontSensorHistory[0]>ir_FrontThresoldForBox){
+      return COLOR_OPEN;
+    }
 
-*/
+  */
   readIRSensors(sensor_values);
   int s = 0;
   while (allOut & s < STEPS) {
-    motorWrite(120,120);
+    motorWrite(120, 120);
     delay(20);
-    motorWrite(0,0);
+    motorWrite(0, 0);
     delay(50);
     readIRSensors(sensor_values);
     s++;
@@ -204,7 +204,7 @@ void alignToPath(int dir) {
   while (sensor_values[cornerSensor] == 1) {
     goForward();
     readIRSensors(sensor_values);
-    if(checkEnd())return;
+    if (checkEnd())return;
   }
 
   boolean reject[] = {true, true, true, true, true, true};
@@ -399,3 +399,101 @@ void rotateServo(int n, int deg) {
     leftServo.detach();
     rightServo.detach();*/
 }
+
+
+void fff() {
+  readIRSensors(sensor_values);
+  while (arsum(sensor_values) >= 4) {
+    motorWrite(150, 150);
+    delay(10);
+    motorWrite(0, 0);
+    delay(40);
+    readIRSensors(sensor_values);
+  }
+  readIRSensors(sensor_values);
+
+
+
+  while (sensor_values[0] == 0) {
+    motorWrite(150, 150);
+    delay(10);
+    motorWrite(0, 0);
+    delay(40);
+    readIRSensors(sensor_values);
+  }
+  motorWrite(0, 0);
+  delay(200);
+
+  alignToPath(CCW);
+
+  readIRSensors(sensor_values);
+  while (arsum(sensor_values) < 5) {
+    lineFollow();
+    delay(10);
+    motorWrite(0, 0);
+    delay(40);
+    readIRSensors(sensor_values);
+  }
+  beep(10);
+
+  float boxThres = 700.0f;
+  int state = 0;
+  int cc = 0;
+  int cEnter, cLeave, cEnd;
+
+
+
+
+  readIRSensors(sensor_values);
+  for (int x = 0; x < 10; x++) {
+    lineFollow();
+    delay(20);
+    motorWrite(0, 0);
+    delay(40);
+    readIRSensors(sensor_values);
+    cc++;
+    irWall_ReadSensors(10);
+
+  }
+
+  while (arsum(sensor_values) < 4) {
+    lineFollow();
+    delay(20);
+    motorWrite(0, 0);
+    delay(40);
+    readIRSensors(sensor_values);
+    cc++;
+
+    irWall_ReadSensors(10);
+
+  //  Serial.println(irWall_LeftSensorHistory[0]);
+    if (state == 0) {
+      if (irWall_LeftSensorHistory[0] < boxThres) {
+        state = 1;
+        cEnter = cc;
+      }
+    }
+    else if (state == 1) {
+      if (irWall_LeftSensorHistory[0] > boxThres) {
+        state = 2;
+        cLeave = cc;
+      }
+    }
+    else if (state = 2) {
+      readIRSensors(sensor_values);
+      if (arsum(sensor_values) >= 4) {
+        cEnd = cc;
+        motorWrite(0, 0);
+        break;
+      }
+    }
+  }
+
+  motorWrite(0, 0);
+  beep(10);
+  Serial.print("Enter :");Serial.print(cEnter); Serial.print(" ");
+  Serial.print(" Leave :");Serial.print(cLeave); Serial.print(" ");
+  Serial.print(" End :");Serial.print(cEnd); Serial.println(" ");
+
+}
+

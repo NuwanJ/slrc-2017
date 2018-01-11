@@ -12,18 +12,18 @@ void loop() {
       if (buttonRead(BUTTON_0) == 1) {
         // Button0 Option
         delay(150);
-        mode = TEST;
+        mode = BEGIN_BIG_BOX;
 
       } else if (buttonRead(BUTTON_1) == 1) {
         // Button1 Option
         beep();
-        mode = BEGIN_BIG_BOX;
+        mode = ENTER_WALL_FOLLOW;
         delay(150);
 
       } else if (buttonRead(BUTTON_2) == 1) {
         // Button2 Option
         beep();
-        mode = WALL_FOLLOW;
+        mode = BEFORE_FINAL_TASK;
         delay(150);
 
       } else if (buttonRead(BUTTON_3) == 1) {   // Temporally not working
@@ -75,8 +75,19 @@ void loop() {
     //-------------------------------------------------------------------------------------------------------------- Enter to the wall following mode
     case ENTER_WALL_FOLLOW:
 
-      // Do necessary arrangements to enter wall following mode
-      // after, mode = WALL_FOLLOW;
+      // Copied from FINISH_MAZE
+      motorWrite(150, 150);
+      readIRSensors(sensor_values);
+
+      while (allIn == 1) {
+        delay(10);
+        readIRSensors(sensor_values);
+      }
+      motorWrite(0, 0);
+      delay(300);
+      beep(5);
+      mode = WALL_FOLLOW;
+
       delay(300);
       break;
 
@@ -101,8 +112,19 @@ void loop() {
     //-------------------------------------------------------------------------------------------------------------- Finish the maze
     case FINISH_MAZE:
       motorWrite(0, 0);
-      beep(10);
+      beep(5);
       delay(3000);
+
+      motorWrite(150, 150);
+      readIRSensors(sensor_values);
+
+      while (allIn == 1) {
+        delay(10);
+        readIRSensors(sensor_values);
+      }
+      motorWrite(0, 0);
+      delay(300);
+      beep(5);
       mode = WALL_FOLLOW;
 
     // ----------------------------------------------------------------------------------------------------------------Finished wall follow
@@ -110,6 +132,94 @@ void loop() {
     case FINISH_WALL:
       motorWrite(0, 0);
       beep(5);
+      break;
+
+    case BEFORE_FINAL_TASK:
+
+      readIRSensors(sensor_values);
+      if (allIn == 0) {
+        motorWrite(0, 0);
+        mode = FINAL_TASK;
+      } else {
+        // Go forward
+        motorWrite(150, 150);
+        delay(10);
+        motorWrite(0, 0);
+        delay(20);
+      }
+
+    case FINAL_TASK:
+      // Go forward until cross line
+
+      readIRSensors(sensor_values);
+
+      if ((sensor_values[0] + sensor_values[5]) >= 1) { //Implement
+        motorWrite(150, 150);
+        delay(300);
+
+        motorWrite(0, 0);
+        delay(1000);
+        beep(3);
+        mode = FINAL_TASK_FORWARD;
+      } else {
+        // Need to implement to take 90deg turns
+        lineFollow();
+      }
+
+      break;
+
+    //--------------------------------------------------------------------------------------------------------------
+    case FINAL_TASK_FORWARD:
+      fff();
+    case FINAL_TASK_FORWARD2:
+
+      readIRSensors(sensor_values);
+      irWall_ReadSensors();
+
+      if (allIn == 1) {
+        motorWrite(0, 0);
+        delay(1000);
+        beep(3);
+        mode = FINAL;
+        // Need to send some detail to stationary robot
+
+        Serial.print("Enter: ");
+        Serial.println(finalEnterCounterValue);
+
+        Serial.print("Leave: ");
+        Serial.println(finalLeaveCounterValue);
+
+        Serial.print("End: ");
+        Serial.println(finalCounter);
+
+        // time taken = finalCounter
+        int finalBoxPosition = (finalEnterCounterValue + finalLeaveCounterValue) / 2;
+
+        //int boxRegion = map(finalBoxPosition)
+
+      } else {
+        lineFollow();
+
+        finalCounter += 1;
+
+        if ((irWall_LeftSensorHistory[0] < FINAL_BOX_FIND_THRESHOLD) && finalEnterCounterValue == 0) { // FINAL_BOX_FIND_THRESHOLD should be update
+          // Enter to box region
+          finalEnterCounterValue = finalCounter;
+
+        } else if ((irWall_LeftSensorHistory[0] > FINAL_BOX_FIND_THRESHOLD) && finalEnterCounterValue != 0) {
+          // Exit from the box region
+          finalLeaveCounterValue = finalCounter;
+
+        } else {
+          //Nothing
+        }
+        delay(10);
+      }
+      break;
+
+    //--------------------------------------------------------------------------------------------------------------
+    case FINAL:
+      mode = BEGIN;
       break;
 
     //-------------------------------------------------------------------------------------------------------------- Test

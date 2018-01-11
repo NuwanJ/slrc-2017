@@ -1,4 +1,5 @@
 
+
 #define BLACK 0
 #define WHITE 1
 
@@ -16,7 +17,7 @@ int linePos = 0 ;
 #define DEBUG_PORT 1
 
 // Modes
-enum {BEGIN, TEST, BLUETOOTH, BEGIN_BIG_BOX,MAZE_FOLLOW, WALL_FOLLOW, LINE_FOLLOW, WAIT_UNTIL_FEEDBACK, RETURN_TO_MAZE, ENTER_WALL_FOLLOW,FINISH_MAZE,FINISH_WALL};
+enum {FINAL_TASK_FORWARD2, BEGIN, TEST, BLUETOOTH, BEGIN_BIG_BOX, MAZE_FOLLOW, WALL_FOLLOW, LINE_FOLLOW, WAIT_UNTIL_FEEDBACK, RETURN_TO_MAZE, ENTER_WALL_FOLLOW, FINISH_MAZE, FINISH_WALL, BEFORE_FINAL_TASK, FINAL_TASK, FINAL_TASK_FORWARD, FINAL};
 enum {CCW, CW};
 // EEPROM
 enum {eP, eI, eD, eMax, eBase, eDebug};
@@ -144,5 +145,19 @@ float irWall_frontExpectedReading = 70.0f;
 
 bool is_init = false;
 bool is_changed = false;
+
+
+
+//------------------------------------------------------------------------------------------------------------- Final step
+
+int finalEnterCounterValue = 0, finalLeaveCounterValue = 0, finalCounter = 0;
+
+#define FINAL_BOX_FIND_THRESHOLD 60
+
+
+
+
+
+
 
 

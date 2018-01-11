@@ -11,13 +11,15 @@ void moveRobot(int x, int y) {
 
   // Wait until robot finish it's rotation
 
+  delay(500);
+  
   while (isRobotMoving()) {
     delay(100);
   }
 }
 
 boolean isRobotMoving() {
-  // LOW = ON, HIGH = OFF
+  // 0 = OFF, 5v = ON
   boolean r = digitalRead(PIN_STEPPER_EN);
   //Serial.println(r);
   return  (r == LOW);
@@ -36,8 +38,8 @@ void homing() {
 
 }
 
-void unlock(){
-   Serial2.println("$X");
+void unlock() {
+  Serial2.println("$X");
 }
 
 

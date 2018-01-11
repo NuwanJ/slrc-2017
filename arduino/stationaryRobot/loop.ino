@@ -7,7 +7,7 @@
 // d = shooting (full prograss)
 
 // h = home
-// x = unlock
+// u = unlock
 // t = call test function
 //--------------------------------------------------------------
 
@@ -38,7 +38,7 @@ void loop() {
       Serial.println(">> Shooting : Load");
       shootBall();
 
-    } else if (inByte == 'x') {
+    } else if (inByte == 'u') {
       Serial.println(">> Robot : Unlock GRBL");
       unlock();
 
@@ -64,9 +64,7 @@ void loop() {
       Serial.println(">> Robot : Blue");
       processColor('b');
 
-
       //------------------------------------------------------------------------------
-
 
     } else {
       // Reply String to GRBL
@@ -75,6 +73,7 @@ void loop() {
     }
 
   }
+
 
   // read from port 2, send to port 3:   Mobile -> Mega
   if (Serial3.available()) {
@@ -89,50 +88,34 @@ void loop() {
     } else {
       Serial.write(inByte);
     }
-    /*---------------------------------------------------------------------------
-      char targetColor = '\0';
-      char temp = '\0';
-
-      while ((temp = Serial3.read()) != '\0')targetColor = temp;
-
-      unsigned long time = millis();
-      while (!mySerial.available() & (millis() - time < 10000)) {
-      //wait
-      }
-
-      String responseFromGRBL = "";
-      while (mySerial.available()) {
-      responseFromGRBL = responseFromGRBL + mySerial.read();
-      }
-      if (0 == strcmp(responseFromGRBL.c_str() , "ok")) { //strcmp return 0 when equal
-      Serial.write("done");
-      }
-      else {
-      Serial.write("error");
-      }
-      Serial.flush();
-      //---------------------------------------------------------------------------*/
   }
 
+  /*
+    // read from port 2, send to port 3:   Mobile -> PC
+    if (Serial3.available()) {
+      char inByte = Serial3.read();
+      // Incomming data need to process from here
+      Serial.write(inByte);
 
-  // read from port 2, send to port 3:   GRBL -> PC
-  if (Serial2.available()) {
-    char inByte = Serial2.read();
-    // Incomming data need to process from here
-    Serial.write(inByte);
+      if (inByte == 'r') {
+        Serial.println(">> Robot : Red");
+        processColor('r');
 
-    if (inByte == 'r') {
-      Serial.println(">> Robot : Red");
-      processColor('r');
+      } else if (inByte == 'g') {
+        Serial.println(">> Robot : Green");
+        processColor('g');
 
-    } else if (inByte == 'g') {
-      Serial.println(">> Robot : Green");
-      processColor('g');
+      } else if (inByte == 'b') {
+        Serial.println(">> Robot : Blue");
+        processColor('b');
 
-    } else if (inByte == 'b') {
-      Serial.println(">> Robot : Blue");
-      processColor('b');
-
+      }
     }
-  }
+*/
+    // Printing commands that come FROM the GRBL->Mega
+    if (Serial2.available()) {
+      char inByte = Serial2.read();
+      // Incomming data need to process from here
+      Serial.write(inByte);
+    }
 }

@@ -46,6 +46,6 @@ void setup() {
 void test() {
 
   //homing();
-  moveRobot(20, 3);
+  //moveRobot(20, 3);
 
 }

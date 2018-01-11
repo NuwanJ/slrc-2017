@@ -44,7 +44,7 @@ int findBox() {
   float ir_FrontThresoldForBox=500.0f;
 
   
-  int TRIES = 10; //This is a TUNE-ABLE parameter
+  int TRIES = 17; //This is a TUNE-ABLE parameter
   float COLOUR_CONFIDENCE = 0.7; ////This is a TUNE-ABLE parameter
   int STEPS = 15; //This is the number of steps the robot is going to go forward looking for a box;
   int boxFound = 0;

@@ -46,11 +46,11 @@ int findBox() {
   
   int TRIES = 10; //This is a TUNE-ABLE parameter
   float COLOUR_CONFIDENCE = 0.7; ////This is a TUNE-ABLE parameter
-  int STEPS = 10; //This is the number of steps the robot is going to go forward looking for a box;
+  int STEPS = 15; //This is the number of steps the robot is going to go forward looking for a box;
   int boxFound = 0;
   int rFound = 0, gFound = 0, bFound = 0;
   
-
+/*
   
   irWall_ReadSensors(10);
   Serial.print("The IR reading of box infront is: ");
@@ -60,7 +60,7 @@ int findBox() {
     return COLOR_OPEN;
   }
   
-
+*/
 
   readIRSensors(sensor_values);
   int s = 0;

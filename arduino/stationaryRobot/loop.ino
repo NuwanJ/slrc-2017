@@ -64,9 +64,11 @@ void loop() {
       Serial.println(">> Robot : Blue");
       processColor('b');
 
-
       //------------------------------------------------------------------------------
 
+    } else if (inByte >= '1' && inByte <= 5) {
+      int pos = inByte - '1';
+      moveRobot(finalX[pos], finalY[pos]);
 
     } else {
       // Reply String to GRBL

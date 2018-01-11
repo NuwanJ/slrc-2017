@@ -28,3 +28,19 @@ enum {RED_BOX, GREEN_BOX, BLUE_BOX, FINAL_BOX};
 // 5 5 5
 int x[] = {28, 52, 77, 180};
 int y[] = {5, 5, 5, 0};
+
+// Need to try and error 
+int finalX[] = {280, 260, 240, 220, 200};
+int finalY[] = {0, 0, 0, 0, 0};
+
+
+
+
+
+
+
+
+
+
+
+

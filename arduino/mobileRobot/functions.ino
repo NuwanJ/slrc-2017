@@ -37,7 +37,6 @@ void rotateServo(int deg) {
 }
 
 
-
 int findBox() {
   motorWrite(0,0);
   delay(1000);

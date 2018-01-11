@@ -6,7 +6,7 @@
 
   void buttonRead(n)    n = [BUTTON_0,BUTTON_1,BUTTON_2,BUTTON_3,BUTTON_4]
 
-  void ledOb(n)         n = [LED_GREEN, LED_RED]
+  void ledOn(n)         n = [LED_GREEN, LED_RED]
   void ledOff(n)        n = [LED_GREEN, LED_RED]
   void ledBlink(n,c)    n = [LED_GREEN, LED_RED], c = count
 
@@ -20,6 +20,42 @@
 /*
    Procedure to see whether there is a box and get the colour
 */
+
+void rotateServo(int deg) {
+
+  // -85 <--- 0 ---> 85
+
+  deg = max(-85, deg);
+  deg = min(85, deg);
+
+  deg = (-1 * deg) + 90 + 0; // 6 = +correction moves servo to < side
+
+  servoMotor.attach(PIN_SERVO);
+  servoMotor.write(deg);
+  delay(500); // Need to give enough time to rotate eto it's destination
+  servoMotor.detach();
+}
+
+
+// Discontinued function
+void rotateServo(int n, int deg) {
+  /*deg = max(-90, deg);
+    deg = min(90, deg);
+
+    deg = 90 - deg;
+    if (n == LEFT) {
+    //  < =90  ^=10 a   \|/=170
+    leftServo.attach(18);
+    leftServo.write(deg);
+    } else {
+    rightServo.attach(19);
+    rightServo.write(180 - deg);
+    }
+    delay(500);
+
+    leftServo.detach();
+    rightServo.detach();*/
+}
 
 int findBox() {
   int TRIES = 10; //This is a TUNE-ABLE parameter
@@ -300,7 +336,6 @@ void beginBigBox() {
   while (allIn) {
     goForward();
     readIRSensors(sensor_values);
-
   }
 }
 
@@ -326,5 +361,3 @@ boolean checkEnd() {
 
 
 }
-
-

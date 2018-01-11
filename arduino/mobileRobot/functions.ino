@@ -58,6 +58,13 @@ void rotateServo(int n, int deg) {
 }
 
 int findBox() {
+  irWall_ReadSensors(10);
+
+  if(irWall_FrontSensorHistory[0]>500.0f){
+    return COLOR_OPEN;
+  }
+  
+
   int TRIES = 10; //This is a TUNE-ABLE parameter
   float COLOUR_CONFIDENCE = 0.7; ////This is a TUNE-ABLE parameter
   int STEPS = 10; //This is the number of steps the robot is going to go forward looking for a box;
@@ -360,4 +367,11 @@ boolean checkEnd() {
 
 
 
+}
+
+
+float sign(float x) {
+  if (x > 0.0001f)return 1.0f;
+  if (x < -0.0001f)return -1.0f;
+  return 0.0f;
 }

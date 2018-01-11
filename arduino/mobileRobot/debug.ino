@@ -162,7 +162,6 @@ void lcdIRSharpUpdate(){
 
   // Reading values
   irWall_ReadSensors();
-  irWall_ReadFrontSensor();
 
   lcd.clear();
 

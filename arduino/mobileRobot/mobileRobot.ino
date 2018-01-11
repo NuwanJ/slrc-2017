@@ -1,4 +1,4 @@
-
+ 
 #include <Arduino.h>
 #include "define.h"
 
@@ -52,7 +52,7 @@ void setup() {
 }
 
 void test() {
-
-  Serial.println(irWall_FrontSensorHistory[0]);
+ 
+  //Serial.println(irWall_FrontSensorHistory[0]);
   delay(100);
 }

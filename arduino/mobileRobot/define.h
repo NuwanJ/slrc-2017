@@ -121,9 +121,6 @@ boolean boxFound = false;
 
 #define BOX_FOUND_THERSOLD 50
 
-//---Harshana
-//boolean currentlyFollowing=false; Already defined -Nuwan
-
 //------------------------------------------------------------------------------------------------------------- Wall Following 2
 
 #define PIN_SERVO 19

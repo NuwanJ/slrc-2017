@@ -63,7 +63,7 @@ enum {eP, eI, eD, eMax, eBase, eDebug};
 
 unsigned int sensor_values[NUM_SENSORS];
 const unsigned int irPins[] = {23, 25, 27, 49, 51, 53}; // 53, 51, 49, 27, 25, 23
-int irHistory[5][6];
+int irHistory[10][6];
 
 boolean allOut = 0, allIn = 0;
 String irLineString = "000000";
@@ -135,14 +135,9 @@ boolean boxFound = false;
 
 float irWall_LeftSensorHistory[10];
 float irWall_RightSensorHistory[10];
-
-// Updated variables for front sensor too -Nuwan
 float irWall_FrontSensorHistory[10];
 
-float irWall_SensorAdaptiveFactor = 0.1;
-float irWall_kP = 10.0f, irWall_kD = 0.0f, irWall_kI = 0.0f;
 
-float irWall_expectedReading = 70.0f;
 
 // TODO: Need to adjust front sensor expected reading -Nuwan
 float irWall_frontExpectedReading = 70.0f;

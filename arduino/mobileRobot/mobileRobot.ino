@@ -56,15 +56,8 @@ void test() {
   //irWall_WallFollow();
   //lcdIRSharpUpdate();
   //Serial.println(analogRead(A11));
-  delay(300);
+  irWall_ReadSensors(10);
 
-  rotateServo(0);
-  delay(2000);
-  rotateServo(-45);
-  delay(1000);
-
-  for (int i = -45; i < 45; i += 10) {
-    rotateServo(i);
-    //delay(200);
-  }
+  Serial.println(irWall_FrontSensorHistory[0]);
+  delay(100);
 }

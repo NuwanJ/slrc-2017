@@ -98,8 +98,11 @@ void loop() {
 
 //-------------------------------------------------------------------------------------------------------------- Finish the maze
     case FINISH_MAZE:
+      motorWrite(0,0);
       while(true){
-        beep(3);
+        
+        beep(10);
+        delay(2000);
       }
 
       break;

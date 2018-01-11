@@ -1,9 +1,12 @@
+
 #include <Arduino.h>
 #include "define.h"
 
 #include <EEPROM.h>
 #include <Wire.h>
 #include <LiquidCrystal.h>
+#include <Servo.h>
+
 //#include <Ultrasonic.h>
 
 #include <Adafruit_Sensor.h>
@@ -12,7 +15,7 @@
 Adafruit_TCS34725 colorSensor = Adafruit_TCS34725(TCS34725_INTEGRATIONTIME_154MS, TCS34725_GAIN_1X);  // Integration=50, Grain [1,4]
 LiquidCrystal lcd(22, 26, 36, 38, 40, 42);    //RS,EN,D4,D5,D6,D7
 
-//Ultrasonic sonar0(pinTrig[0], pinEcho[0]);
+Servo servoMotor;
 
 volatile int mode = BEGIN;
 
@@ -34,6 +37,9 @@ void setup() {
 
   ledOn(LED_RED);
 
+  // Rotate to initilize position
+  rotateServo(4);
+
   beginDebugger();
   motorBegin();
   lcdBegin();
@@ -47,5 +53,18 @@ void setup() {
 
 void test() {
 
-  irWall_WallFollow();
+  //irWall_WallFollow();
+  //lcdIRSharpUpdate();
+  //Serial.println(analogRead(A11));
+  delay(300);
+
+  rotateServo(0);
+  delay(2000);
+  rotateServo(-45);
+  delay(1000);
+
+  for (int i = -45; i < 45; i += 10) {
+    rotateServo(i);
+    //delay(200);
+  }
 }

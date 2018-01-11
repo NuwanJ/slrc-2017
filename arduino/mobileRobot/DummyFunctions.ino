@@ -11,7 +11,6 @@
 
 
 
-
 int arsum(int ar[]) {
   //This should work for both arrays and pointers
   int ssum = 0;

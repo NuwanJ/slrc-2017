@@ -1,10 +1,12 @@
 /*---------------------------------------------------------------------------*/
 
-// Contributor : harshana
-// Last Update : 6/1/2018
+// Contributor : ????
+// Last Update : ?/1/2018
 
 /* Remarks ------------------------------------
 
+  Removed Sonar mode
+  
   ----------------------------------------------*/
 
 int fit(double front, double back, int flag, int baseSpeed) {
@@ -157,6 +159,9 @@ void getReadingsFromRotating(double * dist) {
   }
 }
 
+
+// Removed Sonar Wall Following
+/*
 int wallFollow(int baseSpeed) {
 
   if (currentlyFollowing) {
@@ -204,9 +209,9 @@ int wallFollow(int baseSpeed) {
   } else {
     fit(dist[3], dist[2], 1, baseSpeed);
   }
-
-
 }
+*/
+
 
 int verifyMinAngle(int minAngle, int maxAngle, int steps, int wall) {
   double minDist = 10000000;

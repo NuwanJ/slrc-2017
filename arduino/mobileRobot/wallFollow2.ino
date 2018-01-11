@@ -1,17 +1,21 @@
+
+
 ///~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~IR WALL FOLLOW ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~START
 
-float irWall_LeftSensorHistory[10];
-float irWall_RightSensorHistory[10];
+// Pin numbers moved to define.h tab, otherwise it gives some compile errors
 
-float irWall_SensorAdaptiveFactor = 0.1;
-float irWall_kP = 10.0f, irWall_kD = 0.0f, irWall_kI = 0.0f;
 
-float irWall_expectedReading = 70.0f;
+// New function written for front sensor -Nuwan
+void irWall_ReadFrontSensor(){
 
-// Pin numbers moved to define.h tab
+  for (int x = 30; x > 0; x--) {   // Read 30 times
+    irWall_FrontSensorHistory[x - 1] = irWall_FrontSensorHistory[x];
+  }
+  irWall_FrontSensorHistory[0] = 1024 - analogRead(irWall_FrontSensorPin);
+  irWall_FrontSensorHistory[0] = (irWall_FrontSensorHistory[0] * irWall_SensorAdaptiveFactor) + ((1 - irWall_SensorAdaptiveFactor) * irWall_FrontSensorHistory[1]);
 
-bool is_init = false;
-bool is_changed = false;
+}
+//-----------------------------------------------
 
 void irWall_ReadSensors() {
   for (int x = 9; x > 0; x--) {
@@ -24,11 +28,7 @@ void irWall_ReadSensors() {
   irWall_LeftSensorHistory[0] = (irWall_LeftSensorHistory[0] * irWall_SensorAdaptiveFactor) + ((1 - irWall_SensorAdaptiveFactor) * irWall_LeftSensorHistory[1]);
   irWall_RightSensorHistory[0] = (irWall_RightSensorHistory[0] * irWall_SensorAdaptiveFactor) + ((1 - irWall_SensorAdaptiveFactor) * irWall_RightSensorHistory[1]);
 
-  lcd.clear();
-  lcd.setCursor(0, 1);
-  lcd.print(irWall_LeftSensorHistory[0]);
-  lcd.setCursor(8, 1);
-  lcd.print(irWall_RightSensorHistory[0]);
+  // Moved lcd part to irWall_Follow, to reduce processing power -Nuwan
 }
 
 
@@ -37,6 +37,17 @@ void irWall_Follow(int baseSpeed, int side) {
   for (int x = 0; x < 10; x++) {
     irWall_ReadSensors();
   }
+
+  /*lcd.clear();
+  lcd.setCursor(0, 1);
+  lcd.print(irWall_LeftSensorHistory[0]);
+  lcd.setCursor(8, 1);
+  lcd.print(irWall_RightSensorHistory[0]);*/
+
+  /*irWall_ReadFrontSensor();
+  lcd.setCursor(8, 1);
+  lcd.print(irWall_FrontSensorHistory[0]);*/
+
 
   float* ir_hist;
   if (side == LEFT) {

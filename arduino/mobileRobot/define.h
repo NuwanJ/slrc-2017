@@ -54,9 +54,6 @@ enum {eP, eI, eD, eMax, eBase, eDebug};
 
 #define PIN_BOX_SENSOR A8
 
-#define irWall_LeftSensorPin A10
-#define irWall_RightSensorPin A9
-
 //-------------------------------------------------------------------------------------------------------------- IR Sensors Array
 
 #define NUM_SENSORS 6
@@ -124,6 +121,33 @@ boolean boxFound = false;
 
 #define BOX_FOUND_THERSOLD 50
 
-
 //---Harshana
-boolean currentlyFollowing=false;
+//boolean currentlyFollowing=false; Already defined -Nuwan
+
+//------------------------------------------------------------------------------------------------------------- Wall Following 2
+
+#define PIN_SERVO 19
+
+
+#define irWall_LeftSensorPin A9
+#define irWall_RightSensorPin A10
+#define irWall_FrontSensorPin A11
+
+float irWall_LeftSensorHistory[10];
+float irWall_RightSensorHistory[10];
+
+// Updated variables for front sensor too -Nuwan
+float irWall_FrontSensorHistory[10];
+
+float irWall_SensorAdaptiveFactor = 0.1;
+float irWall_kP = 10.0f, irWall_kD = 0.0f, irWall_kI = 0.0f;
+
+float irWall_expectedReading = 70.0f;
+
+// TODO: Need to adjust front sensor expected reading -Nuwan
+float irWall_frontExpectedReading = 70.0f;
+
+bool is_init = false;
+bool is_changed = false;
+
+

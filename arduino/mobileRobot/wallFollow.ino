@@ -163,6 +163,7 @@ void getReadingsFromRotating(double * dist) {
 // Removed Sonar Wall Following
 /*
 int wallFollow(int baseSpeed) {
+>>>>>>> refs/remotes/origin/master
 
   if (currentlyFollowing) {
     ledOn(LED_GREEN);

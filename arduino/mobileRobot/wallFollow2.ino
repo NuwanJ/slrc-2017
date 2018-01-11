@@ -1,20 +1,20 @@
-
-
 ///~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~IR WALL FOLLOW ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~START
 
-// Pin numbers moved to define.h tab, otherwise it gives some compile errors
 
 float irWall_SensorAdaptiveFactor = 0.1;
-float irWall_kP = 10.0f, irWall_kD = 0.0f, irWall_kI = 0.0f;
+float irWall_kP = 5.0f, irWall_kD = 10.0f, irWall_kI = 3.0f;
+float irWall_kF = -100.0f;
 
-float irWall_expectedReading = 700.0f;
+float irWall_expectedReading = 800.0f;
+float wallExcistThresh = 850.0f;
 
+bool recheck = false;
 
 void irWall_ReadSensors() {
   for (int x = 9; x > 0; x--) {
-    irWall_LeftSensorHistory[x] = irWall_LeftSensorHistory[x-1];
-    irWall_RightSensorHistory[x] = irWall_RightSensorHistory[x-1];
-    irWall_FrontSensorHistory[x] = irWall_FrontSensorHistory[x-1];
+    irWall_LeftSensorHistory[x] = irWall_LeftSensorHistory[x - 1];
+    irWall_RightSensorHistory[x] = irWall_RightSensorHistory[x - 1];
+    irWall_FrontSensorHistory[x] = irWall_FrontSensorHistory[x - 1];
   }
   irWall_LeftSensorHistory[0] = 1024 - analogRead(irWall_LeftSensorPin);
   irWall_RightSensorHistory[0] = 1024 - analogRead(irWall_RightSensorPin);
@@ -34,11 +34,7 @@ void irWall_ReadSensors(int iterations) {
 
 
 void irWall_Follow(int baseSpeed, int side) {
-  /*
-   * GIHAN'S single iteration of PID algo
-   * Should be used with both HARSHANA's wallFollow(int baseSpeed) and GIHAN's irWall_WallFollow()
-   */
-  
+
   irWall_ReadSensors(10);
 
 
@@ -48,91 +44,117 @@ void irWall_Follow(int baseSpeed, int side) {
   } else {
     ir_hist = irWall_RightSensorHistory;
   }
-  lcd.clear();
-  lcd.setCursor(0, 1);
-  lcd.print(irWall_LeftSensorHistory[0]);
-  lcd.setCursor(8, 1);
-  lcd.print(irWall_RightSensorHistory[0]);
-  float P = ir_hist[0] - irWall_expectedReading;
-  float D = ir_hist[0] - ir_hist[1];
+  float P = (ir_hist[0] - irWall_expectedReading) / 10;
+  float D = (ir_hist[0] - ir_hist[1]);
   float I = 0.0f;
   for (int x = 1; x < 10; x++)I += ir_hist[x] - irWall_expectedReading;
+  I *= 0.001;
 
-  Serial.print(P); Serial.print(" "); Serial.print(0); Serial.print(" "); Serial.print(D); Serial.println(" ");
+  if (P > 0) {
+    irWall_kP = 15.0f;
+    irWall_kD = 50.0f;
+    irWall_kI = 10.0f;
+  }
+  float  F = exp(-(irWall_FrontSensorHistory[0] / 100 - 7.2));
+  F = F * F;
+  Serial.print(P * irWall_kP);  Serial.print(" "); Serial.print( D * irWall_kD ); Serial.print(" "); Serial.print(irWall_kI * I); Serial.print(" ");
+  Serial.print(irWall_kF * F); Serial.print(" ");
+  float PID = P * irWall_kP + D * irWall_kD + irWall_kI * I + irWall_kF * F;
+  Serial.print(PID); Serial.println("");
 
-  float PID = P * irWall_kP + D * irWall_kD + irWall_kI * I;
+  if (abs(PID) > baseSpeed) {
+    PID = (PID / abs(PID)) * baseSpeed;
+  }
+
   if (side == LEFT) {
     motorWrite(baseSpeed - PID, baseSpeed + PID);
   } else {
     motorWrite(baseSpeed + PID, baseSpeed - PID);
   }
   delay(30);
+  //motorWrite(0, 0);
+  //delay(10);
 }
 
-
-void irWall_WallFollow() {
-  /*
-   * GIHAN'S FUNCTION. Do Not mix with HARSHANA's wallFollow(int baseSpeed)
-   */
-  
-  int currentSide = RIGHT;
-  while (true) {
-    irWall_ReadSensors(10);
-    if (currentSide==RIGHT && irWall_RightSensorHistory[0] >= irWall_LeftSensorHistory[0]) {
-      motorWrite(0, 0);
-      int i = 0, shouldTurn = 1;
-      for (i = 0; i < 10; i++) {
-        goForward();
-        irWall_ReadSensors(10);
-        if (irWall_RightSensorHistory[0] >= irWall_LeftSensorHistory[0])shouldTurn++;
-      }
-      if (shouldTurn > 8) {
-
-        currentSide = LEFT;
-        beep(3);
-      }
-    }
-    irWall_Follow(80, currentSide);
+void adjustServo(bool following) {
+  if (following) {
+    rotateServo(30);
+  } else {
+    rotateServo(-30);
   }
 }
-
-
-
 
 int wallFollow(int baseSpeed) {
-  /*
-   * HARSHANA'S FUNCTION. Do Not mix with GIHAN's irWall_WallFollow()
-   */
-  
-  for (int x = 0; x < 10; x++) {
-    irWall_ReadSensors();
+
+  irWall_ReadSensors(10);
+
+  // recheck if we get a smaller reading from the unused IR wall following sensor
+  if (currentlyFollowing and (irWall_RightSensorHistory[0] < irWall_LeftSensorHistory[0])) {
+    beep(2);
+    recheck = true;
+    is_changed = false;
+  } else if (!currentlyFollowing and (irWall_RightSensorHistory[0] > irWall_LeftSensorHistory[0])) {
+    beep(2);
+    recheck = true;
+    is_changed = false;
+  } else {
+    recheck = false;
   }
+
+  // if not initialized, initialize.
   if (!is_init) {
+    beep(3);
+    lcd.setCursor(0, 1);
+    lcd.print("init");
+    rotateServo(0);
+    irWall_ReadSensors(100);
 
     // do we need to check if the robot is in correct orientation??
-    if (irWall_RightSensorHistory[0] < irWall_LeftSensorHistory[0]) {
+    if (irWall_RightSensorHistory[0] < wallExcistThresh) {
       currentlyFollowing = false;
-      //irWall_expectedReading = irWall_RightSensorHistory[0];
-    } else {
+      is_init = true;
+      lcd.setCursor(0, 0);
+      lcd.print(irWall_RightSensorHistory[0]);
+    } else if (irWall_LeftSensorHistory[0] < wallExcistThresh) {
       currentlyFollowing = true;
-      //irWall_expectedReading =irWall_LeftSensorHistory[0];
+      is_init = true;
+
+      lcd.setCursor(0, 0);
+      lcd.print(irWall_LeftSensorHistory[0]);
     }
-    is_init = true;
+    motorWrite(100, 100);
+    delay(60);
+    motorWrite(0, 0);
+    adjustServo(currentlyFollowing);
     return 0;
   }
 
   // check if there are both left and right walls. if so, switch the wall
-  if (abs(irWall_LeftSensorHistory[0] - irWall_expectedReading) < 10 and abs(irWall_RightSensorHistory[0] - irWall_expectedReading) < 10) {
+  if ((irWall_LeftSensorHistory[0] < wallExcistThresh and irWall_RightSensorHistory[0] < wallExcistThresh) or recheck) {
+
     if (!is_changed) {
-      currentlyFollowing = !currentlyFollowing;
-      is_changed = true;
+      // rotate the servo to 0 position and check again
+      motorWrite(0, 0);
+      rotateServo(0);
+      irWall_ReadSensors(10);
+      if (irWall_LeftSensorHistory[0] < wallExcistThresh and irWall_RightSensorHistory[0] < wallExcistThresh) {
+        currentlyFollowing = !currentlyFollowing;
+        is_changed = true;
+      } else if (currentlyFollowing and (irWall_RightSensorHistory[0] < irWall_LeftSensorHistory[0])) {
+        currentlyFollowing = !currentlyFollowing;
+        is_changed = true;
+      } else if (!currentlyFollowing and (irWall_RightSensorHistory[0] > irWall_LeftSensorHistory[0])) {
+        currentlyFollowing = !currentlyFollowing;
+        is_changed = true;
+      }
+
+      adjustServo(currentlyFollowing);
     }
   } else {
-
+    is_changed = false;
   }
 
   if (currentlyFollowing) {
-    rotateServo(LEFT, 45);
     ledOn(LED_GREEN);
     irWall_Follow(baseSpeed, LEFT);
   } else {
@@ -140,9 +162,11 @@ int wallFollow(int baseSpeed) {
     irWall_Follow(baseSpeed, RIGHT);
   }
 
+  lcd.clear();
+  lcd.setCursor(0, 1);
+  lcd.print(irWall_LeftSensorHistory[0]);
+  lcd.setCursor(8, 1);
+  lcd.print(irWall_RightSensorHistory[0]);
 }
 
 ///~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~IR WALL FOLLOW ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~END
-
-
-

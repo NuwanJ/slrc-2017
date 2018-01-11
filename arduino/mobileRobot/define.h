@@ -91,7 +91,7 @@ int drift = 0;
 //-------------------------------------------------------------------------------------------------------------- Wall following
 double dist[4];
 double hist[5][4];
-bool currentlyFollowing = false; // true - left, false - right
+bool currentlyFollowing = true; // true - left, false - right
 int currentTurn = 0; // 0 - no action, 1 - turn right, -1 - turn left
 //-------------------------------------------------------------------------------------------------------------- Sonar Sensors
 
@@ -116,10 +116,13 @@ int boxColor = 0;
 #define WHITE_THERSOLD  800 // **This depends with the distance from sensor to the object
 #define RED_GB_GAP 100
 
-int boxSensor = 150;
+int boxSensor = 0;
 boolean boxFound = false;
 
 #define BOX_FOUND_THERSOLD 50
+
+//---Harshana
+//boolean currentlyFollowing=false; Already defined -Nuwan
 
 //------------------------------------------------------------------------------------------------------------- Wall Following 2
 

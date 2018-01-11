@@ -36,7 +36,6 @@ void rotateServo(int deg) {
   servoMotor.detach();
 }
 
-
 // Discontinued function
 void rotateServo(int n, int deg) {
   /*deg = max(-90, deg);

@@ -7,7 +7,7 @@ void moveRobot(int x, int y) {
   Serial2.print(x);
   Serial2.print("Y");
   Serial2.print(y);
-  Serial2.println("F400"); // Suitable feed rate
+  Serial2.println("F300"); // Suitable feed rate
 
   // Wait until robot finish it's rotation
 

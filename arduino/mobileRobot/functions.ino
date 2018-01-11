@@ -37,25 +37,6 @@ void rotateServo(int deg) {
 }
 
 
-// Discontinued function
-void rotateServo(int n, int deg) {
-  /*deg = max(-90, deg);
-    deg = min(90, deg);
-
-    deg = 90 - deg;
-    if (n == LEFT) {
-    //  < =90  ^=10 a   \|/=170
-    leftServo.attach(18);
-    leftServo.write(deg);
-    } else {
-    rightServo.attach(19);
-    rightServo.write(180 - deg);
-    }
-    delay(500);
-
-    leftServo.detach();
-    rightServo.detach();*/
-}
 
 int findBox() {
   motorWrite(0,0);
@@ -389,3 +370,26 @@ float sign(float x) {
   if (x < -0.0001f)return -1.0f;
   return 0.0f;
 }
+
+
+
+// Discontinued function
+void rotateServo(int n, int deg) {
+  /*deg = max(-90, deg);
+    deg = min(90, deg);
+
+    deg = 90 - deg;
+    if (n == LEFT) {
+    //  < =90  ^=10 a   \|/=170
+    leftServo.attach(18);
+    leftServo.write(deg);
+    } else {
+    rightServo.attach(19);
+    rightServo.write(180 - deg);
+    }
+    delay(500);
+
+    leftServo.detach();
+    rightServo.detach();*/
+}
+

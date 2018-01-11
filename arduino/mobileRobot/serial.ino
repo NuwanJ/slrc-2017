@@ -38,18 +38,18 @@ void serialEvent() {
 }
 void SerialEvent3() {
   //This happens if the stationary bot says it finished shooting
-
+  digitalWrite(LED_RED, HIGH);
+  
   while (Serial3.available()) {
-    digitalWrite(LED_RED, HIGH);
-
+    beep();
     int r = Serial3.read();
     char inChar = (char)r;
-
+    Serial.println(inChar);
     if (inChar == 'd') {
       mode = RETURN_TO_MAZE;
     }
   }
-  delay(50);
+  delay(100);
   digitalWrite(LED_RED, LOW);
 }
 

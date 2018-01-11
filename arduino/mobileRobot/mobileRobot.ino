@@ -1,4 +1,4 @@
- 
+
 #include <Arduino.h>
 #include "define.h"
 
@@ -56,11 +56,12 @@ void test() {
   //irWall_WallFollow();
   //lcdIRSharpUpdate();
   //Serial.println(analogRead(A11));
-  irWall_ReadSensors(10);
+/*  irWall_ReadSensors(10);
 
   Serial.print(irWall_FrontSensorHistory[0]);Serial.print(" ");
   Serial.print(irWall_LeftSensorHistory[0]);Serial.print(" ");
   Serial.print(irWall_RightSensorHistory[0]);Serial.println(" ");
-
-  delay(100);
+*/
+  lcdBoxSensorUpdate();
+  delay(2000);
 }

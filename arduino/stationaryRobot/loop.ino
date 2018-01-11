@@ -21,7 +21,7 @@ void loop() {
     if (inByte == 'a') {
       // Turn on motor
       Serial.println(">> Motor : ON");
-      motorOn();
+      motorOn(BLUE_BOX);
 
     } else if (inByte == 'b') {
       // Turn off motor
@@ -36,7 +36,7 @@ void loop() {
     } else if (inByte == 'd') {
       // Shooting
       Serial.println(">> Shooting : Load");
-      shootBall();
+      shootBall(DEF);
 
     } else if (inByte == 'u') {
       Serial.println(">> Robot : Unlock GRBL");

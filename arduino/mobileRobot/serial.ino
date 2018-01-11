@@ -39,7 +39,7 @@ void serialEvent() {
 void SerialEvent3() {
   //This happens if the stationary bot says it finished shooting
   digitalWrite(LED_RED, HIGH);
-  
+
   while (Serial3.available()) {
     beep();
     int r = Serial3.read();
@@ -52,9 +52,6 @@ void SerialEvent3() {
   delay(100);
   digitalWrite(LED_RED, LOW);
 }
-
-
-
 
 void shoot(int color) {
 

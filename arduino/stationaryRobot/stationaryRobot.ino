@@ -32,7 +32,6 @@ void setup() {
 
   Serial.println(">> Robot : Begin");
 
-  // Motor Direction Set
   digitalWrite(PIN_MA, LOW);
   digitalWrite(PIN_MB, HIGH);
 

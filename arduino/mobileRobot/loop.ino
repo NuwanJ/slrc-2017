@@ -40,9 +40,10 @@ void loop() {
     //-------------------------------------------------------------------------------------------------------------- Start here
     case BEGIN_BIG_BOX:
       beginBigBox();
-      mode=MAZE_FOLLOW;
+      mode = MAZE_FOLLOW;
+      Serial3.print('h');
       break;
-    
+
     //-------------------------------------------------------------------------------------------------------------- Explore the Maze
     case MAZE_FOLLOW:
 
@@ -54,7 +55,8 @@ void loop() {
 
     //-------------------------------------------------------------------------------------------------------------- WAIT_UNTIL_FEEDBACK
     case WAIT_UNTIL_FEEDBACK:
-      if (millis() - timeOfShootCommand < 10000) {
+      if (millis() - timeOfShootCommand > 12000) {
+        // Overflow option for max safety, adjust 12000 if necessary
         beep(3);
         mode = RETURN_TO_MAZE;
       }
@@ -96,20 +98,20 @@ void loop() {
 
       break;
 
-//-------------------------------------------------------------------------------------------------------------- Finish the maze
+    //-------------------------------------------------------------------------------------------------------------- Finish the maze
     case FINISH_MAZE:
-      motorWrite(0,0);
+      motorWrite(0, 0);
       beep(10);
       delay(3000);
-      mode=WALL_FOLLOW;
-      
- // ----------------------------------------------------------------------------------------------------------------Finished wall follow
+      mode = WALL_FOLLOW;
+
+    // ----------------------------------------------------------------------------------------------------------------Finished wall follow
 
     case FINISH_WALL:
-      motorWrite(0,0);
+      motorWrite(0, 0);
       beep(5);
       break;
-    
+
     //-------------------------------------------------------------------------------------------------------------- Test
     case TEST:
       test();

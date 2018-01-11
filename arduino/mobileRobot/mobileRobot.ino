@@ -49,6 +49,7 @@ void setup() {
 
   ledOff(LED_RED);
   beep();
+
 }
 
 void test() {

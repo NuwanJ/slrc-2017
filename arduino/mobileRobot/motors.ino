@@ -31,6 +31,20 @@ void motorBegin() {
   motorWrite(0, 0);
 }
 
+void motorReverse(int spd){
+  
+  // Going back with given speed
+  digitalWrite(leftMotor1, LOW);
+  digitalWrite(leftMotor2, HIGH);
+
+  digitalWrite(rightMotor1, LOW);
+  digitalWrite(rightMotor2, HIGH);
+
+  if (spd > maxSpeed ) spd = maxSpeed;
+
+  analogWrite(leftMotorPWM, spd);
+  analogWrite(rightMotorPWM, spd);
+}
 
 void motorWrite(int leftMotorSpeed, int rightMotorSpeed) {
 
@@ -138,7 +152,3 @@ void calibrateSpeed() {
     delay(100);
   }
 }
-
-
-
-

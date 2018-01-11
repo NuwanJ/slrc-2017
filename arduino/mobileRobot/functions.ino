@@ -21,6 +21,16 @@
    Procedure to see whether there is a box and get the colour
 */
 
+void backStep(){
+  // for backToMaze only
+  motorWrite(0,0);
+  motorReverse(150);
+  delay(10);
+  motorWrite(0,0);
+  delay(40);
+}
+
+
 void rotateServo(int deg) {
 
   // -85 <--- 0 ---> 85
@@ -36,31 +46,29 @@ void rotateServo(int deg) {
   servoMotor.detach();
 }
 
-
 int findBox() {
   motorWrite(0,0);
   delay(1000);
   float ir_FrontThresoldForBox=500.0f;
 
-  
-  int TRIES = 17; //This is a TUNE-ABLE parameter
+
+  int TRIES = 12; //This is a TUNE-ABLE parameter
   float COLOUR_CONFIDENCE = 0.7; ////This is a TUNE-ABLE parameter
   int STEPS = 15; //This is the number of steps the robot is going to go forward looking for a box;
   int boxFound = 0;
   int rFound = 0, gFound = 0, bFound = 0;
-  
+
 /*
-  
+
   irWall_ReadSensors(10);
   Serial.print("The IR reading of box infront is: ");
   Serial.println(irWall_FrontSensorHistory[0]);
-  
+
   if(irWall_FrontSensorHistory[0]>ir_FrontThresoldForBox){
     return COLOR_OPEN;
   }
-  
-*/
 
+*/
   readIRSensors(sensor_values);
   int s = 0;
   while (allOut & s < STEPS) {
@@ -71,7 +79,7 @@ int findBox() {
     readIRSensors(sensor_values);
     s++;
   }
-  
+
   if (!isBoxFound())return COLOR_OPEN;
   else {
     for (int t = 0; t < TRIES; t++) {
@@ -391,4 +399,3 @@ void rotateServo(int n, int deg) {
     leftServo.detach();
     rightServo.detach();*/
 }
-

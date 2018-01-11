@@ -1,6 +1,6 @@
 /* --------------------------------------------------------------------------
   Contributor : Gihan
-  Last Update : 06/01/2018
+  Last Update : 11/01/2018
   --------------------------------------------------------------------------*/
 boolean util_missedWallToLeft() {
   //A small calculation to see whether there was a turn to right
@@ -12,15 +12,11 @@ boolean util_missedWallToLeft() {
   return (a + b) == 2;
 }
 
-
-
 void mazeFollow() {
 
   pos = readIRSensors(sensor_values);
   error = (pos - CENTER_EDGE_READING);
   Serial.println(irLineString);
-
- 
 
   if (allIn) {
     if(checkEnd())return;
@@ -57,11 +53,13 @@ void mazeFollow() {
 void returnToMaze() {
   readIRSensors(sensor_values);
   while (!allOut) {
-    takeOneStepBack();
+    //takeOneStepBack(); // Need to update
+    backStep();
     readIRSensors(sensor_values);
   }
   while (allOut) {
-    takeOneStepBack();
+    //takeOneStepBack();
+    backStep();
     readIRSensors(sensor_values);
   }
   //  for (int s = 0; s < 5; s++)goForward();  //   s < (TUNE-ABLE parameter);
@@ -99,6 +97,3 @@ void temp_debugFunctionBoxDetection(int boxColor) {
       return;
   }
 }
-
-
-

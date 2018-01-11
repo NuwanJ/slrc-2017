@@ -21,33 +21,63 @@
    Procedure to see whether there is a box and get the colour
 */
 
-void rotateServo(int n, int deg) {
+void rotateServo(int deg) {
 
-  deg = max(-90, deg);
-  deg = min(90, deg);
+  // -85 <--- 0 ---> 85
 
-  deg = 90 - deg;
-  if (n == LEFT) {
-    //  < =90  ^=10 a   \|/=170
-    leftServo.attach(18);
-    leftServo.write(deg);
-  } else {
-    rightServo.attach(19);
-    rightServo.write(180 - deg);
-  }
-  delay(500);
+  deg = max(-85, deg);
+  deg = min(85, deg);
 
-  leftServo.detach();
-  rightServo.detach();
+  deg = (-1 * deg) + 90 + 0; // 6 = +correction moves servo to < side
+
+  servoMotor.attach(PIN_SERVO);
+  servoMotor.write(deg);
+  delay(500); // Need to give enough time to rotate eto it's destination
+  servoMotor.detach();
 }
 
 
+// Discontinued function
+void rotateServo(int n, int deg) {
+  /*deg = max(-90, deg);
+    deg = min(90, deg);
+
+    deg = 90 - deg;
+    if (n == LEFT) {
+    //  < =90  ^=10 a   \|/=170
+    leftServo.attach(18);
+    leftServo.write(deg);
+    } else {
+    rightServo.attach(19);
+    rightServo.write(180 - deg);
+    }
+    delay(500);
+
+    leftServo.detach();
+    rightServo.detach();*/
+}
+
 int findBox() {
+  motorWrite(0,0);
+  delay(100);
+  float ir_FrontThresoldForBox=700.0f;
+
+  
   int TRIES = 10; //This is a TUNE-ABLE parameter
   float COLOUR_CONFIDENCE = 0.7; ////This is a TUNE-ABLE parameter
   int STEPS = 10; //This is the number of steps the robot is going to go forward looking for a box;
   int boxFound = 0;
   int rFound = 0, gFound = 0, bFound = 0;
+  
+
+  
+  irWall_ReadSensors(10);
+  
+  if(irWall_FrontSensorHistory[0]>ir_FrontThresoldForBox){
+    return COLOR_OPEN;
+  }
+  
+
 
   readIRSensors(sensor_values);
   int s = 0;
@@ -56,6 +86,7 @@ int findBox() {
     readIRSensors(sensor_values);
     s++;
   }
+  
   if (!isBoxFound())return COLOR_OPEN;
   else {
     for (int t = 0; t < TRIES; t++) {
@@ -104,12 +135,19 @@ int findBoxOld() {
       if (gFound > (int)(COLOUR_CONFIDENCE * TRIES))return COLOR_GREEN;
       if (bFound > (int)(COLOUR_CONFIDENCE * TRIES))return COLOR_BLUE;
 
+
     }
 
   }
   return COLOR_OPEN;
 
 }
+
+
+
+
+
+
 
 
 
@@ -152,10 +190,6 @@ int util_nonRejectSum(int* array, boolean reject[]) {
 }
 
 
-int readIRSensors(){
-    return readIRSensors(sensor_values);
-}
-
 void alignToPath(int dir) {
   /*
      New version, uses rejection techniques
@@ -173,10 +207,11 @@ void alignToPath(int dir) {
     cornerSensor = 0;
   }
 
-  readIRSensors();
-  while(sensor_values[cornerSensor]==1){
+  readIRSensors(sensor_values);
+  while (sensor_values[cornerSensor] == 1) {
     goForward();
-    readIRSensors();
+    readIRSensors(sensor_values);
+    if(checkEnd())return;
   }
 
   boolean reject[] = {true, true, true, true, true, true};
@@ -186,12 +221,14 @@ void alignToPath(int dir) {
   while (reject[cornerSensor]) {
     motorWrite(motorSpeeds[0], motorSpeeds[1]);
     delay(20);
-    motorWrite(0, 0);   
-    delay(50);          
+    motorWrite(0, 0);
+    delay(50);
     util_readSensorAndUpdateRejectListCW(sensor_values, reject, dir);
     if (allIn)if (checkEnd())return;
   }
   motorWrite(0, 0);
+
+
 
   beep(2);
   delay(500);
@@ -206,6 +243,9 @@ void alignToPath(int dir) {
     delay(20);
     util_readSensorAndUpdateRejectListCW(sensor_values, reject, dir);
     i++;
+    if (i >= 10) {
+      //for(int x=0;x<6;x++)reject[x]=false;
+    }
   }
 
 
@@ -242,6 +282,7 @@ void alignToPath(int dir) {
       motorWrite(0, 0);
       break;
     }
+
     delay(50);
     motorWrite(0, 0);
     delay(20);
@@ -250,6 +291,7 @@ void alignToPath(int dir) {
 
   }
   //The sensor panel is alligned to the line, move forward
+
 }
 
 
@@ -310,7 +352,6 @@ void beginBigBox() {
   while (allIn) {
     goForward();
     readIRSensors(sensor_values);
-
   }
 }
 
@@ -338,8 +379,8 @@ boolean checkEnd() {
 }
 
 
-
-void motorWrite(float l,float r){
-  motorWrite((int)l,(int)r);
+float sign(float x) {
+  if (x > 0.0001f)return 1.0f;
+  if (x < -0.0001f)return -1.0f;
+  return 0.0f;
 }
-

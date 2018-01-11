@@ -157,6 +157,26 @@ void lcdSonarUpdate() {
   delay(20);
 }
 
+
+void lcdIRSharpUpdate(){
+
+  // Reading values
+  irWall_ReadSensors();
+
+  lcd.clear();
+
+  // Front
+  lcd.setCursor(6, 0);
+  lcd.print(irWall_FrontSensorHistory[0]);
+
+  // Left - Right
+  lcd.setCursor(0, 1);
+  lcd.print(irWall_LeftSensorHistory[0]);
+  lcd.setCursor(8, 1);
+  lcd.print(irWall_RightSensorHistory[0]);
+
+}
+
 void lcdBoxSensorUpdate() {
 
   // Update latest status
@@ -188,4 +208,3 @@ void lcdBoxSensorUpdate() {
     lcd.print(raw_green);
   }
 }
-

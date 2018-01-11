@@ -1,12 +1,12 @@
-/*---------------------------------------------------------------------------
-  Functions
-  ---------------------------------------------------------------------------*/
+/*---------------------------------------------------------------------------*/
 
-// Contributor : harshana
-// Last Update : 6/1/2018
+// Contributor : ????
+// Last Update : ?/1/2018
 
 /* Remarks ------------------------------------
 
+  Removed Sonar mode
+  
   ----------------------------------------------*/
 
 int fit(double front, double back, int flag, int baseSpeed) {
@@ -81,6 +81,15 @@ int fit(double front, double back, int flag, int baseSpeed) {
 }
 
 
+/*master
+int wallFollowSonar(int baseSpeed) {
+  int thresh = 10;
+  for (int i = 0; i < 4; i++) {
+    for (int j = 0; j < 4; j++) {
+      hist[i][j] = hist[i + 1][j];
+    }
+  }
+*/
 
 void getReadingsFromRotating(double * dist) {
   double minReadingLeft, minReadingRight;
@@ -150,7 +159,11 @@ void getReadingsFromRotating(double * dist) {
   }
 }
 
-int wallFollowSonar(int baseSpeed) {
+
+// Removed Sonar Wall Following
+/*
+int wallFollow(int baseSpeed) {
+>>>>>>> refs/remotes/origin/master
 
   if (currentlyFollowing) {
     ledOn(LED_GREEN);
@@ -197,9 +210,9 @@ int wallFollowSonar(int baseSpeed) {
   } else {
     fit(dist[3], dist[2], 1, baseSpeed);
   }
-
-
 }
+*/
+
 
 int verifyMinAngle(int minAngle, int maxAngle, int steps, int wall) {
   double minDist = 10000000;

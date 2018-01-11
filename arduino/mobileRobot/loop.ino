@@ -1,4 +1,4 @@
-
+int oldMode = mode;
 
 void loop() {
   displayLoopStatus(mode);
@@ -40,9 +40,9 @@ void loop() {
     //-------------------------------------------------------------------------------------------------------------- Start here
     case BEGIN_BIG_BOX:
       beginBigBox();
-      mode = MAZE_FOLLOW;
+      mode=MAZE_FOLLOW;
       break;
-
+    
     //-------------------------------------------------------------------------------------------------------------- Explore the Maze
     case MAZE_FOLLOW:
 
@@ -54,15 +54,14 @@ void loop() {
 
     //-------------------------------------------------------------------------------------------------------------- WAIT_UNTIL_FEEDBACK
     case WAIT_UNTIL_FEEDBACK:
-      if (0) {
-        //if (millis() - timeOfShootCommand < 12000) {
+      if (millis() - timeOfShootCommand < 10000) {
         beep(3);
         mode = RETURN_TO_MAZE;
       }
-
       delay(1000);
       beep();
       break;
+
 
     //-------------------------------------------------------------------------------------------------------------- RETURN_TO_MAZE
     case RETURN_TO_MAZE:
@@ -97,15 +96,18 @@ void loop() {
 
       break;
 
-    //-------------------------------------------------------------------------------------------------------------- Finish the maze
+//-------------------------------------------------------------------------------------------------------------- Finish the maze
     case FINISH_MAZE:
-      while (true) {
-        beep(3);
+      motorWrite(0,0);
+      while(true){
+        
+        beep(10);
+        delay(2000);
       }
 
       break;
 
-
+    
     //-------------------------------------------------------------------------------------------------------------- Test
     case TEST:
       test();
@@ -119,3 +121,81 @@ void loop() {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// !!! Don't add functions here, this section is only for display status !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+void displayLoopStatus(int mode) {
+
+  if (mode != oldMode) {
+    oldMode = mode;
+    Serial.println(F("--------------------------------------------------"));
+    switch (mode) {
+      case BEGIN:
+        Serial.println(F("BEGIN"));
+        //lcdWrite(0,"Mode: Begin");
+        break;
+
+      case MAZE_FOLLOW:
+        Serial.println(F(">>MazeFollow"));
+        lcdWrite(0, "Mode:MazeFollow");
+        break;
+
+      case WAIT_UNTIL_FEEDBACK:
+        Serial.println(F(">>Wait until a feedback"));
+        lcdWrite(0, "Mode:WaitFeed");
+        break;
+
+      case ENTER_WALL_FOLLOW:
+        Serial.println(F(">>Enter to wall following mode"));
+        lcdWrite(0, "Mode:EnterWall");
+        break;
+
+      case LINE_FOLLOW:
+        Serial.println(F(">>LineFollow"));
+        lcdWrite(0, "Mode:LineFollow");
+        break;
+
+      case WALL_FOLLOW:
+        Serial.println(F(">>WallFollow"));
+        lcdWrite(0, "Mode:WallFollow");
+        break;
+
+      case RETURN_TO_MAZE:
+        Serial.println(F(">>Return to Maze"));
+        lcdWrite(0, "Mode:ReturnMaze");
+        break;
+
+      case TEST:
+        Serial.println(F("TEST"));
+        lcdWrite(0, "Mode: Test");
+        break;
+    }
+    Serial.println(F("--------------------------------------------------"));
+  }
+}
+
+
+
+void debugProcedure() {
+  //TODO: Need to implement a debugging
+
+}

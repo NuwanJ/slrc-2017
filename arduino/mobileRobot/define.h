@@ -7,7 +7,6 @@ int buttonStatus = 1;
 int lineType =  WHITE;
 int linePos = 0 ;
 
-
 #define FRONT 8
 #define LEFT 4
 #define RIGHT 6
@@ -54,6 +53,7 @@ enum {eP, eI, eD, eMax, eBase, eDebug};
 #define PIN_RW 24 // For LCD Module
 
 #define PIN_BOX_SENSOR A8
+
 //-------------------------------------------------------------------------------------------------------------- IR Sensors Array
 
 #define NUM_SENSORS 6
@@ -63,7 +63,7 @@ enum {eP, eI, eD, eMax, eBase, eDebug};
 
 unsigned int sensor_values[NUM_SENSORS];
 const unsigned int irPins[] = {23, 25, 27, 49, 51, 53}; // 53, 51, 49, 27, 25, 23
-int irHistory[5][6];
+int irHistory[10][6];
 
 boolean allOut = 0, allIn = 0;
 String irLineString = "000000";
@@ -80,7 +80,7 @@ int error = 0;
 int previousErrors[] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}; //zero initializing with 10 elements
 
 int leftSpd = 0, rightSpd = 0;
-const double slowFactor =0.5, speedFactor = 1;
+const double slowFactor = 0.5, speedFactor = 1;
 int rightMotorSpeed = 0, leftMotorSpeed = 0;
 
 int maxSpeed = 250;
@@ -120,4 +120,29 @@ int boxSensor = 150;
 boolean boxFound = false;
 
 #define BOX_FOUND_THERSOLD 50
+
+//---Harshana
+//boolean currentlyFollowing=false; Already defined -Nuwan
+
+//------------------------------------------------------------------------------------------------------------- Wall Following 2
+
+#define PIN_SERVO 19
+
+
+#define irWall_LeftSensorPin A9
+#define irWall_RightSensorPin A10
+#define irWall_FrontSensorPin A11
+
+float irWall_LeftSensorHistory[10];
+float irWall_RightSensorHistory[10];
+float irWall_FrontSensorHistory[10];
+
+
+
+// TODO: Need to adjust front sensor expected reading -Nuwan
+float irWall_frontExpectedReading = 70.0f;
+
+bool is_init = false;
+bool is_changed = false;
+
 

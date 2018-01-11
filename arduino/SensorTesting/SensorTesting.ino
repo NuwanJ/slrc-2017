@@ -23,11 +23,8 @@ void loop() {
     irWall_LeftSensorHistory[0] = (irWall_LeftSensorHistory[0] * irWall_SensorAdaptiveFactor) + ((1 - irWall_SensorAdaptiveFactor) * irWall_LeftSensorHistory[1]);
       
     //159,141
-    reading = (reading * (1.0f - adaptingParameter)) + (adaptingParameter * (1024.0f - analogRead(A11)));
-    Serial.print(analogRead(A11));
-    Serial.print(" ");
-    Serial.print(irWall_LeftSensorHistory[0]);
-    Serial.print(" ");
+    reading=(reading*(1.0f-adaptingParameter))+ (adaptingParameter*(1024.0f-analogRead(A10)));
+
     Serial.println(reading);
     delay(100);
   }

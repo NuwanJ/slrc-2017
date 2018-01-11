@@ -69,6 +69,9 @@ void processColor(char c) {
     moveRobot(x[GREEN_BOX], y[GREEN_BOX]);
     Serial.println(">> Shooting : Green Box");
     shootBall(GREEN_BOX);
+    motorReverse();
+    delay(3000);
+    shootBall(GREEN_BOX);
 
     // Reply as done
     writeMobile("d");
@@ -80,8 +83,10 @@ void processColor(char c) {
 
     moveRobot(x[BLUE_BOX], y[BLUE_BOX]);
     Serial.println(">> Shooting : Blue Box");
-    shootBall(DEF);
-
+    shootBall(BLUE_BOX);
+    motorReverse();
+    delay(3000);
+    shootBall(BLUE_BOX);
 
     // Reply as done
     writeMobile("d");

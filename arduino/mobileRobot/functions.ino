@@ -36,52 +36,38 @@ void rotateServo(int deg) {
   servoMotor.detach();
 }
 
-// Discontinued function
-void rotateServo(int n, int deg) {
-  /*deg = max(-90, deg);
-    deg = min(90, deg);
-
-    deg = 90 - deg;
-    if (n == LEFT) {
-    //  < =90  ^=10 a   \|/=170
-    leftServo.attach(18);
-    leftServo.write(deg);
-    } else {
-    rightServo.attach(19);
-    rightServo.write(180 - deg);
-    }
-    delay(500);
-
-    leftServo.detach();
-    rightServo.detach();*/
-}
 
 int findBox() {
   motorWrite(0,0);
-  delay(100);
-  float ir_FrontThresoldForBox=700.0f;
+  delay(1000);
+  float ir_FrontThresoldForBox=500.0f;
 
   
-  int TRIES = 10; //This is a TUNE-ABLE parameter
+  int TRIES = 17; //This is a TUNE-ABLE parameter
   float COLOUR_CONFIDENCE = 0.7; ////This is a TUNE-ABLE parameter
-  int STEPS = 10; //This is the number of steps the robot is going to go forward looking for a box;
+  int STEPS = 15; //This is the number of steps the robot is going to go forward looking for a box;
   int boxFound = 0;
   int rFound = 0, gFound = 0, bFound = 0;
   
-
+/*
   
   irWall_ReadSensors(10);
+  Serial.print("The IR reading of box infront is: ");
+  Serial.println(irWall_FrontSensorHistory[0]);
   
   if(irWall_FrontSensorHistory[0]>ir_FrontThresoldForBox){
     return COLOR_OPEN;
   }
   
-
+*/
 
   readIRSensors(sensor_values);
   int s = 0;
   while (allOut & s < STEPS) {
-    goForward();
+    motorWrite(120,120);
+    delay(20);
+    motorWrite(0,0);
+    delay(50);
     readIRSensors(sensor_values);
     s++;
   }
@@ -383,3 +369,26 @@ float sign(float x) {
   if (x < -0.0001f)return -1.0f;
   return 0.0f;
 }
+
+
+
+// Discontinued function
+void rotateServo(int n, int deg) {
+  /*deg = max(-90, deg);
+    deg = min(90, deg);
+
+    deg = 90 - deg;
+    if (n == LEFT) {
+    //  < =90  ^=10 a   \|/=170
+    leftServo.attach(18);
+    leftServo.write(deg);
+    } else {
+    rightServo.attach(19);
+    rightServo.write(180 - deg);
+    }
+    delay(500);
+
+    leftServo.detach();
+    rightServo.detach();*/
+}
+

@@ -10,6 +10,9 @@ float wallExcistThresh = 850.0f;
 
 bool recheck = false;
 
+bool foundWhite = true;
+bool passedInitialWhiteArea = false;
+
 void irWall_ReadSensors() {
   for (int x = 9; x > 0; x--) {
     irWall_LeftSensorHistory[x] = irWall_LeftSensorHistory[x - 1];
@@ -84,6 +87,23 @@ void adjustServo(bool following) {
   }
 }
 
+void checkIR() {
+  readIRSensors(sensor_values);
+  int x = 1;
+  int y = 0;
+  for (int i = 0; i < 6; i++) {
+    x *= sensor_values[i];
+    y += sensor_values[i];
+  }
+  if (x == 0) {
+    foundWhite = false;
+    passedInitialWhiteArea = true;
+  }
+  if (y > 0) {
+    foundWhite = true;
+  }
+}
+
 int wallFollow(int baseSpeed) {
 
   irWall_ReadSensors(10);
@@ -103,7 +123,7 @@ int wallFollow(int baseSpeed) {
 
   // if not initialized, initialize.
   if (!is_init) {
-    beep(3);
+
     lcd.setCursor(0, 1);
     lcd.print("init");
     rotateServo(0);
@@ -152,6 +172,12 @@ int wallFollow(int baseSpeed) {
     }
   } else {
     is_changed = false;
+  }
+
+  checkIR();
+  if (passedInitialWhiteArea and foundWhite) {
+    mode = FINISH_WALL;
+    return 0;
   }
 
   if (currentlyFollowing) {

@@ -5,6 +5,10 @@
 // Pin numbers moved to define.h tab, otherwise it gives some compile errors
 
 
+float irWall_SensorAdaptiveFactor = 0.1;
+float irWall_kP = 10.0f, irWall_kD = 0.0f, irWall_kI = 0.0f;
+
+
 // New function written for front sensor -Nuwan
 void irWall_ReadFrontSensor(){
 

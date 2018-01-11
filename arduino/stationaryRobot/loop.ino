@@ -66,6 +66,12 @@ void loop() {
 
       //------------------------------------------------------------------------------
 
+
+    /*} else if (inByte >= '1' &&  inByte <= '5') {
+      specialShoot(inByte - '1');*/
+
+      //else if (in)
+
     } else {
       // Reply String to GRBL
       Serial.write(inByte);
@@ -85,10 +91,10 @@ void loop() {
       Serial.println(">> Color Received");
       processColor(inByte);
 
-    }else if (inByte=='h'){
+    } else if (inByte == 'h') {
       Serial.println(">> Homing");
       homing();
-      
+
     } else {
       Serial.write(inByte);
     }
@@ -115,11 +121,11 @@ void loop() {
 
       }
     }
-*/
-    // Printing commands that come FROM the GRBL->Mega
-    if (Serial2.available()) {
-      char inByte = Serial2.read();
-      // Incomming data need to process from here
-      Serial.write(inByte);
-    }
+  */
+  // Printing commands that come FROM the GRBL->Mega
+  if (Serial2.available()) {
+    char inByte = Serial2.read();
+    // Incomming data need to process from here
+    Serial.write(inByte);
+  }
 }

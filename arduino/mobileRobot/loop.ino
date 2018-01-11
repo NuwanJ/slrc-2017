@@ -55,7 +55,7 @@ void loop() {
 
     //-------------------------------------------------------------------------------------------------------------- WAIT_UNTIL_FEEDBACK
     case WAIT_UNTIL_FEEDBACK:
-      if (millis() - timeOfShootCommand > 12000) {
+      if (millis() - timeOfShootCommand > 25000) {
         // Overflow option for max safety, adjust 12000 if necessary
         beep(3);
         mode = RETURN_TO_MAZE;

@@ -8,8 +8,8 @@ float irWall_kP = 10.0f, irWall_kD = 0.0f, irWall_kI = 0.0f;
 
 float irWall_expectedReading = 70.0f;
 
-int irWall_LeftSensorPin = A10;
-int irWall_RightSensorPin = A9;
+// Pin numbers moved to define.h tab
+
 bool is_init = false;
 bool is_changed = false;
 
@@ -38,19 +38,26 @@ void irWall_Follow(int baseSpeed, int side) {
     irWall_ReadSensors();
   }
 
-
   float* ir_hist;
   if (side == LEFT) {
     ir_hist = irWall_LeftSensorHistory;
   } else {
     ir_hist = irWall_RightSensorHistory;
   }
+
+  // Debugging
+  lcd.clear();
+  lcd.setCursor(0, 1);
+  lcd.print(irWall_LeftSensorHistory[0]);
+  lcd.setCursor(8, 1);
+  lcd.print(irWall_RightSensorHistory[0]);
+
   float P = ir_hist[0] - irWall_expectedReading;
   float D = ir_hist[0] - ir_hist[1];
   float I = 0.0f;
   for (int x = 1; x < 10; x++)I += ir_hist[x] - irWall_expectedReading;
 
-  Serial.print(P); Serial.print(" "); Serial.print(0); Serial.print(" "); Serial.print(D); Serial.println(" ");
+  Serial.print(P); Serial.print(" "); Serial.print(I); Serial.print(" "); Serial.print(D); Serial.println(" ");
 
   float PID = P * irWall_kP + D * irWall_kD + irWall_kI * I;
   if (side == LEFT) {
@@ -62,6 +69,30 @@ void irWall_Follow(int baseSpeed, int side) {
   motorWrite(0,0);
   delay(10);
 }
+
+/*------------------ Not found on Harshana's repo
+void irWall_WallFollow() {
+  int currentSide = RIGHT;
+  while (true) {
+    irWall_ReadSensors(10);
+    if (currentSide==RIGHT && irWall_RightSensorHistory[0] >= irWall_LeftSensorHistory[0]) {
+      motorWrite(0, 0);
+      int i = 0, shouldTurn = 1;
+      for (i = 0; i < 10; i++) {
+        goForward();
+        irWall_ReadSensors(10);
+        if (irWall_RightSensorHistory[0] >= irWall_LeftSensorHistory[0])shouldTurn++;
+      }
+      if (shouldTurn > 8) {Side = LEFT;
+        beep(3);
+      }
+    }
+    irWall_Follow(80, currentSide);
+  }
+}
+
+------------------ */
+
 
 int wallFollow(int baseSpeed) {
   for (int x = 0; x < 10; x++) {
@@ -105,16 +136,8 @@ int wallFollow(int baseSpeed) {
 ///~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~IR WALL FOLLOW ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~END
 
 
-
-
-
-
 float sign(float x) {
   if (x > 0.0001f)return 1.0f;
   if (x < -0.0001f)return -1.0f;
   return 0.0f;
 }
-
-
-
-

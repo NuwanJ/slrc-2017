@@ -42,18 +42,10 @@ void setup() {
   sonarSensorBegin();
 
   ledOff(LED_RED);
+  beep();
 }
 
 void test() {
 
-
   irWall_WallFollow();
-  
-  //readBoxColor();
-  //lcdIRSensorUpdate();
-  //alignToPath(CW);
-  lcdSonarUpdate();
-
-
- 
 }

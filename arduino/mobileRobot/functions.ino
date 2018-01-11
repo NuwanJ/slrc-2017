@@ -321,7 +321,6 @@ void beginBigBox() {
   while (allIn) {
     goForward();
     readIRSensors(sensor_values);
-
   }
 }
 
@@ -347,5 +346,3 @@ boolean checkEnd() {
 
 
 }
-
-

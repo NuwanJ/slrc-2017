@@ -7,14 +7,14 @@
 float irWall_SensorAdaptiveFactor = 0.1;
 float irWall_kP = 10.0f, irWall_kD = 0.0f, irWall_kI = 0.0f;
 
-float irWall_expectedReading = 70.0f;
+float irWall_expectedReading = 700.0f;
 
 
 void irWall_ReadSensors() {
   for (int x = 9; x > 0; x--) {
-    irWall_LeftSensorHistory[x - 1] = irWall_LeftSensorHistory[x];
-    irWall_RightSensorHistory[x - 1] = irWall_RightSensorHistory[x];
-    irWall_FrontSensorHistory[x - 1] = irWall_FrontSensorHistory[x];
+    irWall_LeftSensorHistory[x] = irWall_LeftSensorHistory[x-1];
+    irWall_RightSensorHistory[x] = irWall_RightSensorHistory[x-1];
+    irWall_FrontSensorHistory[x] = irWall_FrontSensorHistory[x-1];
   }
   irWall_LeftSensorHistory[0] = 1024 - analogRead(irWall_LeftSensorPin);
   irWall_RightSensorHistory[0] = 1024 - analogRead(irWall_RightSensorPin);

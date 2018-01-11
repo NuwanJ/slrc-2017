@@ -20,6 +20,8 @@ void mazeFollow() {
   error = (pos - CENTER_EDGE_READING);
   Serial.println(irLineString);
 
+ 
+
   if (allIn) {
     if(checkEnd())return;
 

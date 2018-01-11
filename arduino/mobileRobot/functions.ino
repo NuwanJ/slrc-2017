@@ -58,18 +58,26 @@ void rotateServo(int n, int deg) {
 }
 
 int findBox() {
-  irWall_ReadSensors(10);
+  motorWrite(0,0);
+  delay(100);
+  float ir_FrontThresoldForBox=700.0f;
 
-  if(irWall_FrontSensorHistory[0]>500.0f){
-    return COLOR_OPEN;
-  }
   
-
   int TRIES = 10; //This is a TUNE-ABLE parameter
   float COLOUR_CONFIDENCE = 0.7; ////This is a TUNE-ABLE parameter
   int STEPS = 10; //This is the number of steps the robot is going to go forward looking for a box;
   int boxFound = 0;
   int rFound = 0, gFound = 0, bFound = 0;
+  
+
+  
+  irWall_ReadSensors(10);
+  
+  if(irWall_FrontSensorHistory[0]>ir_FrontThresoldForBox){
+    return COLOR_OPEN;
+  }
+  
+
 
   readIRSensors(sensor_values);
   int s = 0;
@@ -78,6 +86,7 @@ int findBox() {
     readIRSensors(sensor_values);
     s++;
   }
+  
   if (!isBoxFound())return COLOR_OPEN;
   else {
     for (int t = 0; t < TRIES; t++) {
@@ -202,7 +211,7 @@ void alignToPath(int dir) {
   while (sensor_values[cornerSensor] == 1) {
     goForward();
     readIRSensors(sensor_values);
-
+    if(checkEnd())return;
   }
 
   boolean reject[] = {true, true, true, true, true, true};

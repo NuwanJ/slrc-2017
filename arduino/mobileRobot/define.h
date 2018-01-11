@@ -63,7 +63,7 @@ enum {eP, eI, eD, eMax, eBase, eDebug};
 
 unsigned int sensor_values[NUM_SENSORS];
 const unsigned int irPins[] = {23, 25, 27, 49, 51, 53}; // 53, 51, 49, 27, 25, 23
-int irHistory[5][6];
+int irHistory[10][6];
 
 boolean allOut = 0, allIn = 0;
 String irLineString = "000000";

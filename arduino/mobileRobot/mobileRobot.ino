@@ -58,6 +58,9 @@ void test() {
   //Serial.println(analogRead(A11));
   irWall_ReadSensors(10);
 
-  Serial.println(irWall_FrontSensorHistory[0]);
+  Serial.print(irWall_FrontSensorHistory[0]);Serial.print(" ");
+  Serial.print(irWall_LeftSensorHistory[0]);Serial.print(" ");
+  Serial.print(irWall_RightSensorHistory[0]);Serial.println(" ");
+
   delay(100);
 }

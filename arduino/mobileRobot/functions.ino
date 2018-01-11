@@ -59,8 +59,8 @@ void rotateServo(int n, int deg) {
 
 int findBox() {
   motorWrite(0,0);
-  delay(100);
-  float ir_FrontThresoldForBox=700.0f;
+  delay(1000);
+  float ir_FrontThresoldForBox=500.0f;
 
   
   int TRIES = 10; //This is a TUNE-ABLE parameter
@@ -72,6 +72,8 @@ int findBox() {
 
   
   irWall_ReadSensors(10);
+  Serial.print("The IR reading of box infront is: ");
+  Serial.println(irWall_FrontSensorHistory[0]);
   
   if(irWall_FrontSensorHistory[0]>ir_FrontThresoldForBox){
     return COLOR_OPEN;
@@ -82,7 +84,10 @@ int findBox() {
   readIRSensors(sensor_values);
   int s = 0;
   while (allOut & s < STEPS) {
-    goForward();
+    motorWrite(120,120);
+    delay(20);
+    motorWrite(0,0);
+    delay(50);
     readIRSensors(sensor_values);
     s++;
   }

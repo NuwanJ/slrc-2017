@@ -127,7 +127,7 @@ void lcdMotorUpdate() {
 }
 
 void lcdSonarUpdate() {
-
+  /*
   for (int i = 0; i < 4; i++) {
     sonarDist[i] = readSonar(i);
   }
@@ -155,6 +155,7 @@ void lcdSonarUpdate() {
   lcd.print(sonarDist[1]);
 
   delay(20);
+  */
 }
 
 

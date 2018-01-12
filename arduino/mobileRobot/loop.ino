@@ -8,7 +8,9 @@ void loop() {
     //-------------------------------------------------------------------------------------------------------------- Begin
     case BEGIN:
 
-
+      lcdBoxSensorUpdate();
+      delay(500);
+      
       if (buttonRead(BUTTON_0) == 1) {
         // Button0 Option
         delay(150);
@@ -55,8 +57,8 @@ void loop() {
 
     //-------------------------------------------------------------------------------------------------------------- WAIT_UNTIL_FEEDBACK
     case WAIT_UNTIL_FEEDBACK:
-      if (millis() - timeOfShootCommand > 25000) {
-        // Overflow option for max safety, adjust 12000 if necessary
+      if (millis() - timeOfShootCommand > 24000) {
+        // Overflow option for max safety, adjust 40000 if necessary
         beep(3);
         mode = RETURN_TO_MAZE;
       }
@@ -76,13 +78,13 @@ void loop() {
     case ENTER_WALL_FOLLOW:
 
       // Copied from FINISH_MAZE
-      motorWrite(150, 150);
-      readIRSensors(sensor_values);
-
-      while (allIn == 1) {
-        delay(10);
+      /*motorWrite(150, 150);
         readIRSensors(sensor_values);
-      }
+
+            while (allIn == 1) {
+              delay(10);
+              readIRSensors(sensor_values);
+            }*/
       motorWrite(0, 0);
       delay(300);
       beep(5);
@@ -114,16 +116,6 @@ void loop() {
       motorWrite(0, 0);
       beep(5);
       delay(3000);
-
-      motorWrite(150, 150);
-      readIRSensors(sensor_values);
-
-      while (allIn == 1) {
-        delay(10);
-        readIRSensors(sensor_values);
-      }
-      motorWrite(0, 0);
-      delay(300);
       beep(5);
       mode = WALL_FOLLOW;
 

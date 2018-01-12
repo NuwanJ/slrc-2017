@@ -44,7 +44,7 @@ void setup() {
 
 void test() {
 
-  specialShoot(4);
+specialShoot(4);
   //homing();
   //moveRobot(20, 3);
 

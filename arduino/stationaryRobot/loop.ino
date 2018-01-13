@@ -66,6 +66,9 @@ void loop() {
 
       //------------------------------------------------------------------------------
 
+    } else if (inByte >= '1' && inByte <= 5) {
+      int pos = inByte - '1';
+      moveRobot(finalX[pos], finalY[pos]);
 
       /*} else if (inByte >= '1' &&  inByte <= '5') {
         specialShoot(inByte - '1');*/

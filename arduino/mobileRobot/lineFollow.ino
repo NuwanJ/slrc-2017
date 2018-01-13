@@ -48,7 +48,6 @@ void lineFollow() {
 
 }
 
-
 float kP = 20, kD = 5, kI = 0.5;
 //kP=18 works
 
@@ -68,8 +67,3 @@ int calculatePID(int error) {
   return (int)(P + I + D);
 
 }
-
-
-
-
-

@@ -221,9 +221,6 @@ void alignToPath(int dir) {
   }
   motorWrite(0, 0);
 
-
-
-  beep(2);
   delay(500);
 
   //Turn until the sensor panel finds the new line.
@@ -247,9 +244,6 @@ void alignToPath(int dir) {
   motorWrite(motorSpeeds[0], motorSpeeds[1]);
   delay(20);
   motorWrite(0, 0);
-  delay(50);
-
-  beep(3);
   delay(500);
 
 
@@ -281,7 +275,6 @@ void alignToPath(int dir) {
     delay(20);
     i = i + 1;
     beep(1);
-
   }
   //The sensor panel is alligned to the line, move forward
 
@@ -434,7 +427,7 @@ void fff() {
     delay(40);
     readIRSensors(sensor_values);
   }
-  beep(10);
+  beep(1);
 
   float boxThres = 700.0f;
   int state = 0;
@@ -466,7 +459,7 @@ void fff() {
 
     irWall_ReadSensors(10);
 
-  //  Serial.println(irWall_LeftSensorHistory[0]);
+    //  Serial.println(irWall_LeftSensorHistory[0]);
     if (state == 0) {
       if (irWall_LeftSensorHistory[0] < boxThres) {
         state = 1;
@@ -491,9 +484,9 @@ void fff() {
 
   motorWrite(0, 0);
   beep(10);
-  Serial.print("Enter :");Serial.print(cEnter); Serial.print(" ");
-  Serial.print(" Leave :");Serial.print(cLeave); Serial.print(" ");
-  Serial.print(" End :");Serial.print(cEnd); Serial.println(" ");
+  Serial.print("Enter :"); Serial.print(cEnter); Serial.print(" ");
+  Serial.print(" Leave :"); Serial.print(cLeave); Serial.print(" ");
+  Serial.print(" End :"); Serial.print(cEnd); Serial.println(" ");
 
 }
 

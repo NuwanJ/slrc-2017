@@ -17,8 +17,6 @@ void motorReverse() {
   digitalWrite(PIN_MB, LOW);
   analogWrite(PIN_SPINNER, 100);
 
-  /*digitalWrite(PIN_MA, LOW);
-    digitalWrite(PIN_MB, HIGH);*/
 }
 
 void shootBall(int color) {
@@ -26,24 +24,18 @@ void shootBall(int color) {
   motorOn(color);
 
   delay(del[color]);
-
-  //------------------------------------------------------------------- Release
   servoMotor.attach(PIN_SERVO);
-
   servoMotor.write(SERVO_RELEASE);
   delay(2000); // Let some time to turn and release the TT Ball
   servoMotor.write(SERVO_LOAD);
-  //--------------------------------------------------------------------
 
   motorOff();
   analogWrite(PIN_SPINNER, 100);
-
   delay(1000);
   servoMotor.detach();
   motorOff();
+
 }
-
-
 
 void processColor(char c) {
 
@@ -55,7 +47,8 @@ void processColor(char c) {
     Serial.println(">> Shooting : Red Box");
     shootBall(RED_BOX);
     motorReverse();
-    delay(3000);
+    moveRobot(x[RED_BOX] - 1, y[RED_BOX]);
+    delay(2500);
     shootBall(RED_BOX);
 
     // Reply as done
@@ -67,8 +60,8 @@ void processColor(char c) {
     digitalWrite(PIN_G, HIGH);
 
     moveRobot(x[GREEN_BOX], y[GREEN_BOX]);
-    Serial.println(">> Shooting : Green Box");
     shootBall(GREEN_BOX);
+
     motorReverse();
     delay(3000);
     shootBall(GREEN_BOX);
@@ -82,14 +75,14 @@ void processColor(char c) {
     digitalWrite(PIN_B, HIGH);
 
     moveRobot(x[BLUE_BOX], y[BLUE_BOX]);
-    Serial.println(">> Shooting : Blue Box");
     shootBall(BLUE_BOX);
     motorReverse();
+    moveRobot(x[BLUE_BOX] + 1, y[BLUE_BOX]);
     delay(3000);
     shootBall(BLUE_BOX);
 
     // Reply as done
-    writeMobile("d");
+    writeMobile('d');
     Serial.println(">> Done");
   }
 
@@ -108,6 +101,3 @@ void motorOn(int color) {
 void motorOff() {
   analogWrite(PIN_SPINNER, 0);
 }
-
-
-

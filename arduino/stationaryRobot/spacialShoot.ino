@@ -1,4 +1,4 @@
-
+// Not used in the competition
 
 void specialShoot(int k) {
 
@@ -21,4 +21,3 @@ void specialShoot(int k) {
 
   delay(3000);
 }
-

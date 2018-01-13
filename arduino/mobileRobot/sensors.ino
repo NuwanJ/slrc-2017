@@ -16,9 +16,6 @@
   int   irSensorRead
   ---------------------------------------------------------------------------*/
 
-
-
-
 void irSensorBegin() {
 
   for (int i = 0; i < NUM_SENSORS; i++) {
@@ -206,4 +203,3 @@ int irSensorRead(int num) {
   //reading = reading; //BLACK=0, WHITE=1
   return reading;
 }
-

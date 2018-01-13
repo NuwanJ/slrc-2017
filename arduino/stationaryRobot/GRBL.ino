@@ -34,6 +34,7 @@ void homing() {
   while (isRobotMoving()) {
     delay(100);
   }
+  Serial2.println("$X");
   Serial.println(">> Homming Complete");
 
 }

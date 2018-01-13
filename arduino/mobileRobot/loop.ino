@@ -57,12 +57,12 @@ void loop() {
 
     //-------------------------------------------------------------------------------------------------------------- WAIT_UNTIL_FEEDBACK
     case WAIT_UNTIL_FEEDBACK:
-      if (millis() - timeOfShootCommand > 24000) {
+      if (millis() - timeOfShootCommand > 20000) {
         // Overflow option for max safety, adjust 40000 if necessary
-        beep(3);
+        //beep(3);
         mode = RETURN_TO_MAZE;
       }
-      delay(1000);
+      delay(10);
       beep();
       break;
 
@@ -87,7 +87,7 @@ void loop() {
             }*/
       motorWrite(0, 0);
       delay(300);
-      beep(5);
+      beep(1);
       mode = WALL_FOLLOW;
 
       delay(300);
@@ -114,9 +114,8 @@ void loop() {
     //-------------------------------------------------------------------------------------------------------------- Finish the maze
     case FINISH_MAZE:
       motorWrite(0, 0);
-      beep(5);
-      delay(3000);
-      beep(5);
+      delay(500);
+      beep(2);
       mode = WALL_FOLLOW;
 
     // ----------------------------------------------------------------------------------------------------------------Finished wall follow
@@ -150,8 +149,8 @@ void loop() {
         delay(300);
 
         motorWrite(0, 0);
-        delay(1000);
-        beep(3);
+        delay(100);
+        beep(1);
         mode = FINAL_TASK_FORWARD;
       } else {
         // Need to implement to take 90deg turns
@@ -170,8 +169,8 @@ void loop() {
 
       if (allIn == 1) {
         motorWrite(0, 0);
-        delay(1000);
-        beep(3);
+        delay(500);
+        beep(1);
         mode = FINAL;
         // Need to send some detail to stationary robot
 
